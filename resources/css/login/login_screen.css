@@ -1,0 +1,41 @@
+.login-wrap {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 5%;
+    width: 320px;
+    margin: 0 auto;
+    margin-top: 100px;
+    padding: 15px;
+}
+
+.form-group.last {
+    margin-bottom: 7px;
+    font-size: 13px;
+    text-align: center;
+}
+
+.checkbox {
+    color: #6d6d6d;
+}
+
+.top {
+    padding-bottom: 20px;
+}
+
+#footer {
+    color: #6d6d6d;
+    font-size: 12px;
+    text-align: center;
+    width: 320px;
+    margin: 0 auto;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+#footer p {
+    margin-bottom: 0;
+}
+
+#footer a {
+    color: inherit;
+}
