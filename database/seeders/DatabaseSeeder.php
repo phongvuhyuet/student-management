@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +14,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $courses = \App\Models\Course::factory(10)->create();
+        User::factory(2)->hasAttached($courses)
+            ->has(
+                \App\Models\Task::factory()->count(10),
+                'tasksCreated'
+            )
+            ->has(\App\Models\Task::factory()->count(10), 'tasksReceived')
+            ->has(\App\Models\Message::factory()->count(10), 'messagesCreated')
+            ->has(\App\Models\Message::factory()->count(10), 'messagesReceived')
+            ->create();
     }
 }

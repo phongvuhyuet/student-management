@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::apiResource('user', App\Http\Controllers\UserController::class);
+Route::apiResource('task', App\Http\Controllers\TaskController::class);
+Route::apiResource('course', App\Http\Controllers\CourseController::class);
+Route::apiResource('message', App\Http\Controllers\MessageController::class);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
