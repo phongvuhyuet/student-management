@@ -24,7 +24,7 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        $role_id = $this->faker->numberBetween(1, 3);
+        $role_id = $this->faker->numberBetween(1, 2);
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
@@ -35,8 +35,8 @@ class UserFactory extends Factory
             'role_id' => $role_id,
             'faculty' => 'CNTT',
             'class' => 'CJ',
-            'so_lan_nhac_nho' => ($role_id == 3) ? null : 0,
-            'thieu_hoc_phi' => ($role_id == 3) ? null : false
+            'so_lan_nhac_nho' => ($role_id == 1) ? null : 0,
+            'thieu_hoc_phi' => ($role_id == 1) ? null : false
 
         ];
     }
