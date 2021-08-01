@@ -28,7 +28,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::resource('marks', MarkController::class);
     });
     Route::group(['middleware' => 'role:consultant', 'as' => 'consultant.'], function () {
-        Route::resource('students', StudentController::class);
+        Route::get('classes', [StudentController::class, 'classes']);
+        Route::get('class/{id}/students', [StudentController::class, 'index']);
     });
     Route::resource('task', TaskController::class);
 });

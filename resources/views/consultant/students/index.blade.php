@@ -66,7 +66,7 @@
                                 @foreach ($students as $student)
                                     <tr>
                                         <td><input type="checkbox" name="" /></td>
-                                        <td>{{ $student->name }}/td>
+                                        <td>{{ $student->name }}</td>
                                         <td>{{ $student->email }}</td>
                                         <td>{{ $student->msv }}</td>
                                         <td>{{ $student->date_of_birth }}</td>
