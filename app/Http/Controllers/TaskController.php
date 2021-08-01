@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Task;
-use Illuminate\Support\Facades\Validator;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('role:consultant', ['only' => ['create', 'store', 'destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +22,21 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return Task::all();
+        $tasks = Task::all();
+        return view('task.index', ['tasks' => $tasks]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $users = User::where('role_id', 2)->where('class', Auth::user()->class)->where('faculty', Auth::user()->faculty)->get();
+        return view('task.create', [
+            'users' => $users,
+        ]);
     }
 
     /**
@@ -26,25 +47,22 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-
-        $validated = $request->validate([
-            'progress' => 'required|numeric|min:0|max:100',
-            'receiver_id' => 'required|numeric|exists:users,id',
-            'creator_id' => 'required|numeric|exists:users,id',
-            'parent_id' => 'exists:tasks,id'
+        $request->validate([
+            'name'     => 'required',
+            'deadline' => 'required|date',
         ]);
-        // $rules = [
-        //     'progress' => 'required|numeric|min:0|max:100',
-        //     'receiver_id' => 'required|numeric|exists:users,id',
-        //     'creator_id' => 'required|numeric|exists:users,id',
-        //     'parent_id' => 'exists:tasks,id'
-        // ];
-        // $validator = Validator::make($request->all(), $rules);
-
-        // if ($validator->fails()) {
-        //     return response()->json($validator->errors(), 422);
-        // }
-        return Task::create($request->all());
+        foreach ($request->assignees as $assignee) {
+            Task::create([
+                'name'        => $request->name,
+                'deadline'    => $request->deadline,
+                'detail'      => $request->detail ?? null,
+                'receiver_id' => $assignee,
+                'creator_id'  => Auth::user()->id,
+                'progress'    => 0,
+                'status'      => 'new',
+            ]);
+        }
+        return redirect('task');
     }
 
     /**
@@ -55,7 +73,21 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        return Task::find($id);
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $task = Task::find($id);
+        return view('task.edit', [
+            'task' => $task,
+        ]);
     }
 
     /**
@@ -68,10 +100,10 @@ class TaskController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'progress' => 'numeric|min:0|max:100',
+            'progress'    => 'numeric|min:0|max:100',
             'receiver_id' => 'numeric|exists:users,id',
-            'creator_id' => 'numeric|exists:users,id',
-            'parent_id' => 'exists:tasks,id'
+            'creator_id'  => 'numeric|exists:users,id',
+            'parent_id'   => 'exists:tasks,id',
         ]);
         return Task::find($id)->update($request->all());
     }
@@ -84,6 +116,7 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        return Task::find($id)->delete();
+        Task::find($id)->delete();
+        return redirect('/task');
     }
 }

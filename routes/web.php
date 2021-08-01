@@ -1,10 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Consultant\StudentController;
 use App\Http\Controllers\Student\MarkController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +19,10 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('/view-grade', function () {
+    return view('admin.view-grade');
+});
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
@@ -31,6 +34,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::resource('students', StudentController::class);
     });
     Route::group(['middleware' => 'role:admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {
-        Route::resource('users', UserController::class);
+        // Route::resource('users', UserController::class);
     });
 });
+
+Route::get('/marks/{id}', [UserController::class, 'getCourses']);

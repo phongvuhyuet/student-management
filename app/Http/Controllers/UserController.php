@@ -27,13 +27,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|max:255|min:3',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8|max:255',
+            'name'          => 'required|max:255|min:3',
+            'email'         => 'required|email|unique:users,email',
+            'password'      => 'required|min:8|max:255',
             'date_of_birth' => 'required|date',
-            'role_id' => 'required|numeric|min:1|max:3',
-            'faculty' => 'required',
-            'class' => 'required',
+            'role_id'       => 'required|numeric|min:1|max:3',
+            'faculty'       => 'required',
+            'class'         => 'required',
         ]);
         $user = new User($request->all());
         $user->password = Hash::make($user->password);
@@ -61,11 +61,11 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'name' => 'max:255|min:3',
-            'email' => 'email|unique:users,email',
-            'password' => 'min:8|max:255',
+            'name'          => 'max:255|min:3',
+            'email'         => 'email|unique:users,email',
+            'password'      => 'min:8|max:255',
             'date_of_birth' => 'date',
-            'role_id' => 'numeric|min:1|max:3',
+            'role_id'       => 'numeric|min:1|max:3',
         ]);
 
         return User::find($id)->update($request->all());
@@ -80,5 +80,11 @@ class UserController extends Controller
     public function destroy($id)
     {
         return User::find($id)->delete();
+    }
+
+    public function getCourses($id)
+    {
+        $courses = User::find($id)->courses;
+        return view('student.marks.index', ['courses' => $courses]);
     }
 }

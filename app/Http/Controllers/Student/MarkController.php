@@ -14,7 +14,7 @@ class MarkController extends Controller
      */
     public function index()
     {
-        return view('student.marks.index');
+        return view('student.marks.index', ['marks']);
 
     }
 }
