@@ -20,16 +20,6 @@ use App\Http\Controllers\TaskController;
 Route::get('/', function () {
     return view('auth.login');
 });
-Route::get('/users', function () {
-    return view('admin.users.index');
-});
-Route::get('/users/database', function () {
-    return view('admin.users.database_table');
-});
-Route::get('/users/list', function () {
-    return view('admin.users.list');
-});
-
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
@@ -37,11 +27,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['middleware' => 'role:student', 'prefix' => 'student', 'as' => 'student.'], function () {
         Route::resource('marks', MarkController::class);
     });
-    Route::group(['middleware' => 'role:consultant', 'prefix' => 'consultant', 'as' => 'consultant.'], function () {
+    Route::group(['middleware' => 'role:consultant', 'as' => 'consultant.'], function () {
         Route::resource('students', StudentController::class);
-    });
-    Route::group(['middleware' => 'role:admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {
-        Route::resource('users', UserController::class);
     });
     Route::resource('task', TaskController::class);
 });

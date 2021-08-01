@@ -17,7 +17,8 @@ class CreateAttendsTable extends Migration
             $table->engine = 'InnoDB';
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('course_id')->nullable();
-            $table->unsignedInteger('mark')->default(9);
+            $table->unsignedInteger('gk');
+            $table->unsignedInteger('ck');
             $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
             $table->foreign('course_id')->references('id')->on('courses')->nullOnDelete();
         });
