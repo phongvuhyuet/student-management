@@ -32,8 +32,10 @@
                                     <label for="so_TC">Số tín chỉ</label>
                                     <input type="number" class="form-control" id="so_TC" name="so_TC" max="5" min="1">
                                 </div>
-                                <button type="submit" class="btn btn-primary mr-2">Thêm</button>
-                                <a href="/course" class="btn btn-light">Hủy</a>
+                                <a href="/course" class="btn btn-light mr-2"
+                                    style="border-radius: 2px;padding: 10px 37px; background-color: #bec1c3;">Hủy</a>
+                                <button type="submit" class="btn btn-primary "
+                                    style="border-radius: 2px;padding: 10px 37px;">Thêm</button>
                             </form>
 
                         </div>

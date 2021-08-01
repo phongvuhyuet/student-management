@@ -17,19 +17,19 @@
                                     <option class="dropdown-item" value="3">Tất cả</option>
                                 </select>
 
-                                <a href="/course/create">
+                                <a href="/course/create" class=" text-reset flex align-self-center text-decoration-none">
                                     <div class="
-                                                                d-flex
-                                                                flex-row
-                                                                align-items-center align-self-center
-                                                            ">
+                                                                                    d-flex
+                                                                                    flex-row
+                                                                                    align-items-center align-self-center
+                                                                                ">
                                         <p class="p-0 m-0 pr-1">
                                             Thêm môn học
                                         </p>
                                         <ion-icon style="
-                                                                    font-size: 30px;
-                                                                    cursor: pointer;
-                                                                " name="add-circle-outline">
+                                                                                        font-size: 30px;
+                                                                                        cursor: pointer;
+                                                                                    " name="add-circle-outline">
                                         </ion-icon>
                                     </div>
                                 </a>
@@ -74,7 +74,8 @@
                                                 <td>{{ $course->so_TC }}</td>
                                                 <td>
                                                     <div class='d-flex justify-content-start' style="font-size: 20px;">
-                                                        <a href="course/{{ $course->id }}/edit">
+                                                        <a href="course/{{ $course->id }}/edit"
+                                                            class="mr-3 text-reset flex align-self-center text-decoration-none">
                                                             <ion-icon name="create-outline"></ion-icon>
                                                         </a>
                                                         <div></div>
@@ -82,11 +83,8 @@
                                                             class="pl-3">
                                                             @csrf
                                                             @method('delete')
-                                                            <button type="submit">
-
-
+                                                            <button type="submit" class="bg-transparent border-0">
                                                                 <ion-icon name="trash-outline"></ion-icon>
-
                                                             </button>
                                                         </form>
                                                     </div>
