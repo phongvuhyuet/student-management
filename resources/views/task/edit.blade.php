@@ -11,7 +11,7 @@
                                 @csrf
                                 @method("PUT")
                                 @can('manage-tasks')
-                                    <h2>Giao cho {{ $task->receiver->name . ' MSV: ' . $task->receiver->id }}</h2>
+                                    <h2>Giao cho {{ $task->receiver->name . ' MSV: ' . $task->receiver->msv }}</h2>
                                     <div class="form-group mt-4">
                                         <label for="name">Tên Task</label>
                                         <input type="text" class="form-control" id="name" placeholder="Tên Task" name="name"
@@ -29,7 +29,7 @@
                                     </div>
                                 @endcan
                                 @cannot('manage-tasks')
-                                    <h2>Được giao bởi {{ $task->creator->name . ' MCV: ' . $task->creator->id }}</h2>
+                                    <h2>Được giao bởi {{ $task->creator->name . ' MCV: ' . $task->creator->msv }}</h2>
                                     <div class="form-group mt-4">
                                         @php
                                             $selected = [
@@ -38,7 +38,7 @@
                                                 'done' => '',
                                             ];
                                             $selected[$task->status] = 'selected';
-                                            
+
                                         @endphp
                                         <label for="status">Trạng thái</label>
                                         <select class="form-control form-control-lg" id="assignee" name="status">
@@ -61,8 +61,8 @@
                                 @endcannot
                                 <a href="/task" class="btn btn-light mr-2"
                                     style="border-radius: 2px;padding: 10px 37px background-color: #bec1c3;;">Hủy</a>
-                                <a type="submit" class="btn btn-primary "
-                                    style="border-radius: 2px;padding: 10px 37px;">Sửa</a>
+                                <button type="submit" class="btn btn-primary "
+                                    style="border-radius: 2px;padding: 10px 37px;">Sửa</button>
 
                             </form>
                         </div>

@@ -28,7 +28,7 @@
                                         name="assignees[]">
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}">
-                                                {{ $user->name . ' MSV:' . $user->id }}
+                                                {{ $user->name . ' MSV:' . $user->msv }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -41,8 +41,8 @@
                                 <div class="row flex justify-content-center">
                                     <a href="/task" class="btn btn-light mr-2"
                                         style="border-radius: 2px;padding: 10px 37px; background-color: #bec1c3;">Hủy</a>
-                                    <a type="submit" class="btn btn-primary "
-                                        style="border-radius: 2px;padding: 10px 37px;">Thêm</a>
+                                    <button type="submit" class="btn btn-primary "
+                                        style="border-radius: 2px;padding: 10px 37px;">Thêm</button>
 
 
                                 </div>
