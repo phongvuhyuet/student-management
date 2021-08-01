@@ -24,5 +24,21 @@ class DatabaseSeeder extends Seeder
             ->has(\App\Models\Message::factory()->count(10), 'messagesCreated')
             ->has(\App\Models\Message::factory()->count(10), 'messagesReceived')
             ->create();
+        User::create(
+            [
+                'name' => '$this->faker->name()',
+                'email' => 'a@gmail.com',
+                'email_verified_at' => now(),
+                'password' => bcrypt('phong'), // password
+                'remember_token' => "abcdedasdd",
+                'date_of_birth' => '2021/12/31',
+                'role_id' => 1,
+                'faculty' => 'CNTT',
+                'class' => 'CJ',
+                'so_lan_nhac_nho' => null,
+                'thieu_hoc_phi' => null
+
+            ]
+        );
     }
 }
