@@ -25,10 +25,10 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->date('date_of_birth')->default(now());
             $table->unsignedTinyInteger('role_id')->default(3);
-            $table->string('faculty')->default('CNTT');
-            $table->string('class')->default('N/A');
             $table->integer('so_lan_nhac_nho')->default(0)->nullable();
             $table->boolean('thieu_hoc_phi')->default(false)->nullable();
+            $table->unsignedBigInteger('class_id');
+            $table->unsignedBigInteger('msv')->unique();
         });
     }
 

@@ -50,7 +50,7 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        STT
+                                        <input type="checkbox" onclick="checkAll(this)" />
                                     </th>
                                     <th>Họ và Tên</th>
                                     <th>Email</th>
@@ -63,17 +63,35 @@
 
                             {{-- insert data here --}}
                             <tbody class="data_entry">
-                                @foreach ($students as $student)
-                                    <tr>
-                                        <td>{{ $loop->index + 1 }}</td>
-                                        <td>{{ $student->name }}</td>
-                                        <td>{{ $student->email }}</td>
-                                        <td>{{ $student->msv }}</td>
-                                        <td>{{ $student->date_of_birth }}</td>
-                                        <td>{{ $student->class->name }}</td>
-                                        <td>{{ $student->class->faculty }}</td>
-                                    </tr>
-                                @endforeach
+                                <tr>
+                                    <td><input type="checkbox" name="" /></td>
+                                    <td>Tiger Nixon</td>
+                                    <td>System Architect</td>
+                                    <td>Edinburgh</td>
+                                    <td>61</td>
+                                    <td>2011/04/25</td>
+                                    <td>$320,800</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" name="" /></td>
+                                    <td>Mã số sinh viên</td>
+                                    <td>System Architect</td>
+                                    <td>1234534567</td>
+
+                                    <td>2011/04/25</td>
+                                    <td>61</td>
+                                    <td>CNTT</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" name="" /></td>
+                                    <td>Họ và Tên</td>
+                                    <td>System Architect</td>
+                                    <td>1234534567</td>
+
+                                    <td>2011/04/25</td>
+                                    <td>61</td>
+                                    <td>CNTT</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

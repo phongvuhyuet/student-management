@@ -1,10 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Consultant\StudentController;
 use App\Http\Controllers\Student\MarkController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +19,6 @@ use App\Http\Controllers\TaskController;
 Route::get('/', function () {
     return view('auth.login');
 });
-
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
@@ -28,11 +26,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['middleware' => 'role:student', 'prefix' => 'student', 'as' => 'student.'], function () {
         Route::resource('marks', MarkController::class);
     });
-    Route::group(['middleware' => 'role:consultant', 'prefix' => 'consultant', 'as' => 'consultant.'], function () {
-        Route::resource('students', StudentController::class);
-    });
-    Route::group(['middleware' => 'role:admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {
-        Route::resource('users', UserController::class);
+    Route::group(['middleware' => 'role:consultant', 'as' => 'consultant.'], function () {
+        Route::get('classes', [StudentController::class, 'classes']);
+        Route::get('class/{id}/students', [StudentController::class, 'index']);
+        Route::get('classes/test', [StudentController::class, 'test']);
+
     });
     Route::resource('task', TaskController::class);
 });
+// Route::resource('users/test', UserController::class);

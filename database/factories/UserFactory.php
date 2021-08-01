@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
+use App\Models\Classes;
 
 class UserFactory extends Factory
 {
@@ -33,11 +34,10 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'date_of_birth' => $this->faker->date(),
             'role_id' => $role_id,
-            'faculty' => 'CNTT',
-            'class' => 'CJ',
             'so_lan_nhac_nho' => ($role_id == 1) ? null : 0,
-            'thieu_hoc_phi' => ($role_id == 1) ? null : false
-
+            'thieu_hoc_phi' => ($role_id == 1) ? null : false,
+            'class_id' => Classes::factory(),
+            'msv' => $this->faker->unique()->numberBetween(100000, 199999)
         ];
     }
 

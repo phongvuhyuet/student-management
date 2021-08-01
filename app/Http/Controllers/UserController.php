@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -15,7 +14,20 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::all();
+        $users = User::all();
+        // ddd(1);
+        return view('admin.users.index', ['users' => $users]);
+
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -26,18 +38,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|max:255|min:3',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8|max:255',
-            'date_of_birth' => 'required|date',
-            'role_id' => 'required|numeric|min:1|max:3',
-            'faculty' => 'required',
-            'class' => 'required',
-        ]);
-        $user = new User($request->all());
-        $user->password = Hash::make($user->password);
-        return $user->save();
+
     }
 
     /**
@@ -48,7 +49,18 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return User::find($id);
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
     }
 
     /**
@@ -60,15 +72,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'name' => 'max:255|min:3',
-            'email' => 'email|unique:users,email',
-            'password' => 'min:8|max:255',
-            'date_of_birth' => 'date',
-            'role_id' => 'numeric|min:1|max:3',
-        ]);
-
-        return User::find($id)->update($request->all());
+        //
     }
 
     /**
@@ -79,6 +83,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        return User::find($id)->delete();
+        //
     }
 }

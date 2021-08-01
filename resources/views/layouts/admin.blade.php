@@ -18,7 +18,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('js/select.dataTables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/vertical-layout-light/style.css') }}">
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" />
-
 </head>
 
 <body>
@@ -181,7 +180,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/">
+                        <a class="nav-link" href="/classes">
                             <i class="icon-layout menu-icon"></i>
                             <span class="menu-title">Sinh viên</span>
                         </a>
@@ -199,7 +198,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/">
+                        <a class="nav-link" href="/task">
                             <i class="icon-grid-2 menu-icon"></i>
                             <span class="menu-title">Công việc</span>
                         </a>
@@ -217,6 +216,8 @@
             @yield('main')
         </div>
     </div>
+
+
     <script src="{{ asset('vendors/js/vendor.bundle.base.js') }}"></script>
     <script src="{{ asset('vendors/chart.js/Chart.min.js') }}"></script>
     <script src="{{ asset('vendors/datatables.net/jquery.dataTables.js') }}"></script>
@@ -232,6 +233,7 @@
     <script src="https://cdn.lordicon.com/libs/frhvbuzj/lord-icon-2.0.2.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
 </body>
 
 </html>

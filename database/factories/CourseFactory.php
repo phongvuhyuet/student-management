@@ -21,11 +21,13 @@ class CourseFactory extends Factory
      */
     public function definition()
     {
+        $name = $this->faker->unique()->name();
         return [
-            'name' => $this->faker->unique()->name(),
-            'so_TC' => 4,
-            'year' => 2021,
-            'term' => 2
+            'name' => $name,
+            'so_TC' => $this->faker->numberBetween(1, 5),
+            'year' => $this->faker->numberBetween(2016, 2022),
+            'term' => $this->faker->numberBetween(1, 3),
+            'maMH' => preg_replace('/\s/', '_', $name) . '_' . $this->faker->unique()->numberBetween(1, 1000)
         ];
     }
 }
