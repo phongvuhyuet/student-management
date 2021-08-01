@@ -102,15 +102,46 @@
 
     <script>
         $(document).ready(function() {
-            $("#mydata").DataTable({
-                aLengthMenu: [
-                    [5, 10, 25, -1],
-                    [5, 10, 25, "All"],
-                ],
-                iDisplayLength: 5,
-            });
-        });
-        console.log($("#mydata_length"));
+                $("#mydata").DataTable({
+                    // bServerSide: true,
+                    // sPaginationType": "full_numbers"
+                    language: {
+                        search: "Tìm kiếm:",
+                        processing: "Đang tải dữ liệu...",
+                        paginate: {
+                            first: "First",
+                            previous: "<<",
+                            next: ">>",
+                            last: "Last"
+                        },
+                        sZeroRecords: "Không tìm thấy dữ liệu",
+                        lengthMenu: "Hiển thị _MENU_ sinh viên",
+                        info: "Hiển thị _START_ - _END_ / _TOTAL_ sinh viên",
+                    },
+
+                    aLengthMenu: [
+                        [5, 10, 25, -1],
+                        [5, 10, 25, "All"],
+                    ],
+
+                    iDisplayLength: 5,
+                });
+            }
+
+        );
+
+
+
+        function fnClickAddRow() {
+            $('#example').dataTable().fnAddData([
+                giCount + ".1",
+                giCount + ".2",
+                giCount + ".3",
+                giCount + ".4"
+            ]);
+
+            giCount++;
+        }
 
         function checkAll(bx) {
             var cbs = document.getElementsByTagName("input");

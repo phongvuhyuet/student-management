@@ -47,14 +47,12 @@
                         <div class="col-md-12">
                             <h3 class="font-weight-bold">Các lớp học đang quản lý</h3>
                         </div>
-                        <div class="col-md-12 grid-margin transparent">
-
-
-
+                        <div class="col-md-12 d-flex flex-wrap transparent">
                             @foreach ($classes as $class)
-                                <a href="class/{{ $class->id }}/students">
-                                    <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
-                                        <div class="card card-light-blue">
+                                <a href="class/{{ $class->id }}/students"
+                                    class="class_management card-body card-table col-md-6 mb-4 mt-5 mb-lg-0 stretch-card transparent text-decoration-none">
+                                    <div class="col-md-12 mb-4 mb-lg-0 stretch-card transparent">
+                                        <div class="card  card-table card-light-blue">
                                             <div class="class_management card-body">
                                                 <p class=" fs-30 mb-4">{{ $class->name }}</p>
                                                 <p class=" mb-2">Số lượng sinh viên:

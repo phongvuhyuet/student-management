@@ -1,5 +1,54 @@
 @extends('layouts.admin')
 @section('main')
+    <style>
+        table {
+            width: 100%;
+        }
+
+        #mydata_filter {
+            float: right;
+        }
+
+        #mydata_paginate {
+            float: right;
+        }
+
+        label {
+            display: inline-flex;
+            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .table_detail {
+            font-size: 24px;
+            margin: 0;
+            padding: 11px;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .icon_style {
+            font-size: 19px;
+            margin: 0;
+            padding: 16px;
+            display: flex;
+            justify-content: start;
+            align-content: center;
+            align-items: center;
+            cursor: pointer
+        }
+
+    </style>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" />
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 
     <div class="main-panel">
         <div class="content-wrapper">
@@ -8,7 +57,7 @@
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between mb-4">
 
                                 {{-- selector --}}
                                 <select class="btn btn-outline  dropdown-toggle" aria-label="Default select example">
@@ -18,21 +67,21 @@
                                     <option class="dropdown-item" value="3">Tất cả</option>
                                 </select>
                                 @can('manage-tasks')
-                                    <a href="/task/create">
+                                    <a href="/task/create" class=" text-reset flex align-self-center text-decoration-none">
                                         <div
                                             class="
-                                                                                                                                                                                                                                                                            d-flex
-                                                                                                                                                                                                                                                                            flex-row
-                                                                                                                                                                                                                                                                            align-items-center align-self-center
-                                                                                                                                                                                                                                                                        ">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    d-flex
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    flex-row
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    align-items-center align-self-center
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ">
                                             <p class="p-0 m-0 pr-1">
                                                 Thêm công việc
                                             </p>
                                             <ion-icon
                                                 style="
-                                                                                                                                                                                                                                                                                font-size: 30px;
-                                                                                                                                                                                                                                                                                cursor: pointer;
-                                                                                                                                                                                                                                                                            "
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        font-size: 30px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        cursor: pointer;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "
                                                 name="add-circle-outline">
                                             </ion-icon>
                                         </div>
@@ -53,7 +102,7 @@
 
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table id="mydata" class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th class="text-justify">ID</th>
@@ -94,7 +143,7 @@
                                                         } else {
                                                             $progress_type = 'bg-success';
                                                         }
-
+                                                        
                                                     @endphp
                                                     <div class="progress">
                                                         <div class="progress-bar {{ $progress_type }}" role="progressbar"
@@ -126,34 +175,30 @@
                                                         $status = 'Đã xong';
                                                     }
                                                 @endphp
-                                                <td><label class="badge {{ $status_type }}">{{ $status }}</label>
+                                                <td><label
+                                                        class="badge p-2 {{ $status_type }}">{{ $status }}</label>
                                                 </td>
 
-                                                <td
-                                                    style="
-                                                                                                                                font-size: 24px;
-                                                                                                                                margin: 0;
-                                                                                                                                padding: 11px;
-                                                                                                                                display: flex;
-                                                                                                                                justify-content: start;
-                                                                                                                                align-content: center;
-                                                                                                                                align-items: center;
-                                                                                                                                cursor:pointer
-                                                                                                                            ">
+                                                <td class="icon_style" style="  font-size: 19px;
+                                            margin: 0;
+                                            padding: 16px;
+                                            display: flex;
+                                            justify-content: start;
+                                            align-content: center;
+                                            align-items: center;
+                                            cursor: pointer">
 
 
-                                                    <a href="/task/{{ $task->id }}/edit" class="mr-3">
+                                                    <a href="/task/{{ $task->id }}/edit"
+                                                        class="mr-3 text-reset flex align-self-center text-decoration-none">
                                                         <ion-icon name="create-outline"></ion-icon>
                                                     </a>
                                                     @can('manage-tasks')
                                                         <form action='/task/{{ $task->id }}' method='POST'>
                                                             @csrf
                                                             @method('delete')
-                                                            <button type="submit">
-
-
+                                                            <button type="submit" class="bg-transparent border-0">
                                                                 <ion-icon name="trash-outline"></ion-icon>
-
                                                             </button>
                                                         </form>
                                                     @endcan
@@ -164,11 +209,17 @@
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td colspan="12" style="padding: 0 !important">
-                                                    <div class="accordian-body collapse" id="demo{{ $task->id }}">
+                                            <tr class="expanded-row">
+                                                <td colspan="12" class="row-bg" style="padding: 0 !important">
+                                                    <div class="accordian-body p-2 collapse bg-light.bg-gradient"
+                                                        style="background-color: beige" id="demo{{ $task->id }}">
 
-                                                        {{ $task->detail }}
+                                                        <div class="card card-body w-100">
+                                                            <strong class="pb-2 fw-bold">Ghi chú:</strong>
+                                                            <p class="fs-2 fst-italic fw-bold">
+                                                                {{ $task->detail }}
+                                                            </p>
+                                                        </div>
 
                                                     </div>
                                                 </td>
@@ -197,5 +248,34 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.lordicon.com/libs/frhvbuzj/lord-icon-2.0.2.js"></script>
+
+    <script>
+        $(document).ready(function() {
+                $("#mydata").DataTable({
+
+                    language: {
+                        search: "Tìm kiếm:",
+                        processing: "Đang tải dữ liệu...",
+                        paginate: {
+                            first: "First",
+                            previous: "<<",
+                            next: ">>",
+                            last: "Last"
+                        },
+                        sZeroRecords: "Không tìm thấy dữ liệu",
+                        lengthMenu: "Hiển thị _MENU_ sinh viên",
+                        info: "Hiển thị _START_ - _END_ / _TOTAL_ sinh viên",
+                    },
+
+                    aLengthMenu: [
+                        [5, 10, 25, -1],
+                        [5, 10, 25, "All"],
+                    ],
+
+                    iDisplayLength: 8,
+                });
+            }
+
+        );
+    </script>
 @endsection

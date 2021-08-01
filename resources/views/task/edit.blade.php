@@ -38,7 +38,7 @@
                                                 'done' => '',
                                             ];
                                             $selected[$task->status] = 'selected';
-
+                                            
                                         @endphp
                                         <label for="status">Trạng thái</label>
                                         <select class="form-control form-control-lg" id="assignee" name="status">
@@ -59,8 +59,11 @@
                                             value="{{ $task->progress }}" name="progress">
                                     </div>
                                 @endcannot
-                                <button type="submit" class="btn btn-primary mr-2">Sửa</button>
-                                <a href="/task" class="btn btn-light">Hủy</a>
+                                <a href="/task" class="btn btn-light mr-2"
+                                    style="border-radius: 2px;padding: 10px 37px background-color: #bec1c3;;">Hủy</a>
+                                <a type="submit" class="btn btn-primary "
+                                    style="border-radius: 2px;padding: 10px 37px;">Sửa</a>
+
                             </form>
                         </div>
 
