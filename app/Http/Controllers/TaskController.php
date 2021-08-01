@@ -35,7 +35,7 @@ class TaskController extends Controller
     {
         $users = User::where('role_id', 2)->where('class', Auth::user()->class)->where('faculty', Auth::user()->faculty)->get();
         return view('task.create', [
-            'users' => $users,
+            'users' => $users
         ]);
     }
 
@@ -48,18 +48,18 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'     => 'required',
+            'name' => 'required',
             'deadline' => 'required|date',
         ]);
         foreach ($request->assignees as $assignee) {
             Task::create([
-                'name'        => $request->name,
-                'deadline'    => $request->deadline,
-                'detail'      => $request->detail ?? null,
+                'name' => $request->name,
+                'deadline' => $request->deadline,
+                'detail' => $request->detail ?? null,
                 'receiver_id' => $assignee,
-                'creator_id'  => Auth::user()->id,
-                'progress'    => 0,
-                'status'      => 'new',
+                'creator_id' => Auth::user()->id,
+                'progress' => 0,
+                'status' => 'new',
             ]);
         }
         return redirect('task');
@@ -86,7 +86,7 @@ class TaskController extends Controller
     {
         $task = Task::find($id);
         return view('task.edit', [
-            'task' => $task,
+            'task' => $task
         ]);
     }
 
@@ -99,13 +99,8 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'progress'    => 'numeric|min:0|max:100',
-            'receiver_id' => 'numeric|exists:users,id',
-            'creator_id'  => 'numeric|exists:users,id',
-            'parent_id'   => 'exists:tasks,id',
-        ]);
-        return Task::find($id)->update($request->all());
+        Task::find($id)->update($request->all());
+        return redirect('/task');
     }
 
     /**

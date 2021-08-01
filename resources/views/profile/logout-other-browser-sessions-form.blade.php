@@ -1,15 +1,15 @@
 <x-jet-action-section>
     <x-slot name="title">
-        {{ __('Browser Sessions') }}
+        {{ __('Phiên đăng nhập') }}
     </x-slot>
 
     <x-slot name="description">
-        {{ __('Manage and log out your active sessions on other browsers and devices.') }}
+        {{ __('Quản lý và đăng xuất các phiên hoạt động của bạn trên các trình duyệt và thiết bị khác.') }}
     </x-slot>
 
     <x-slot name="content">
         <div class="max-w-xl text-sm text-gray-600">
-            {{ __('If necessary, you may log out of all of your other browser sessions across all of your devices. Some of your recent sessions are listed below; however, this list may not be exhaustive. If you feel your account has been compromised, you should also update your password.') }}
+            {{ __('Nếu cần, bạn có thể đăng xuất khỏi tất cả các phiên trình duyệt khác trên tất cả các thiết bị của mình. Một số phiên gần đây của bạn được liệt kê bên dưới; tuy nhiên, danh sách này có thể không đầy đủ. Nếu bạn cảm thấy tài khoản của mình đã bị xâm phạm, bạn cũng nên cập nhật mật khẩu của mình.') }}
         </div>
 
         @if (count($this->sessions) > 0)
@@ -39,9 +39,9 @@
                                     {{ $session->ip_address }},
 
                                     @if ($session->is_current_device)
-                                        <span class="text-green-500 font-semibold">{{ __('This device') }}</span>
+                                        <span class="text-green-500 font-semibold">{{ __('Thiết bị này') }}</span>
                                     @else
-                                        {{ __('Last active') }} {{ $session->last_active }}
+                                        {{ __('Trực tuyến gần nhất') }} {{ $session->last_active }}
                                     @endif
                                 </div>
                             </div>
@@ -53,26 +53,26 @@
 
         <div class="flex items-center mt-5">
             <x-jet-button wire:click="confirmLogout" wire:loading.attr="disabled">
-                {{ __('Log Out Other Browser Sessions') }}
+                {{ __('Đăng xuất khỏi các thiết bị khác') }}
             </x-jet-button>
 
             <x-jet-action-message class="ml-3" on="loggedOut">
-                {{ __('Done.') }}
+                {{ __('Đăng xuất thành công') }}
             </x-jet-action-message>
         </div>
 
         <!-- Log Out Other Devices Confirmation Modal -->
         <x-jet-dialog-modal wire:model="confirmingLogout">
             <x-slot name="title">
-                {{ __('Log Out Other Browser Sessions') }}
+                {{ __('Đăng xuất khỏi các thiết bị khác') }}
             </x-slot>
 
             <x-slot name="content">
-                {{ __('Please enter your password to confirm you would like to log out of your other browser sessions across all of your devices.') }}
+                {{ __('Vui lòng nhập mật khẩu của bạn để xác nhận rằng bạn muốn đăng xuất khỏi các phiên trình duyệt khác trên tất cả các thiết bị của mình.') }}
 
                 <div class="mt-4" x-data="{}" x-on:confirming-logout-other-browser-sessions.window="setTimeout(() => $refs.password.focus(), 250)">
                     <x-jet-input type="password" class="mt-1 block w-3/4"
-                                placeholder="{{ __('Password') }}"
+                                placeholder="{{ __('Mật khẩu hiện tại') }}"
                                 x-ref="password"
                                 wire:model.defer="password"
                                 wire:keydown.enter="logoutOtherBrowserSessions" />
@@ -83,13 +83,13 @@
 
             <x-slot name="footer">
                 <x-jet-secondary-button wire:click="$toggle('confirmingLogout')" wire:loading.attr="disabled">
-                    {{ __('Cancel') }}
+                    {{ __('Quay lại') }}
                 </x-jet-secondary-button>
 
                 <x-jet-button class="ml-2"
                             wire:click="logoutOtherBrowserSessions"
                             wire:loading.attr="disabled">
-                    {{ __('Log Out Other Browser Sessions') }}
+                    {{ __('Đăng xuất khỏi các thiết bị khác') }}
                 </x-jet-button>
             </x-slot>
         </x-jet-dialog-modal>

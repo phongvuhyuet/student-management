@@ -71,7 +71,6 @@ class User extends Authenticatable
     // {
     //     $this->attributes['password'] = Hash::make($value);
     // }
-
     public function courses()
     {
         return $this->belongsToMany(Course::class, 'attends', 'user_id', 'course_id')->withPivot('mark');
