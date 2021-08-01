@@ -26,8 +26,8 @@ Route::get('/users', function () {
 Route::get('/users/database', function () {
     return view('admin.users.database_table');
 });
-Route::get('/users/detail', function () {
-    return view('admin.users.detail');
+Route::get('/users/list', function () {
+    return view('admin.users.list');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
