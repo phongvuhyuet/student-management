@@ -18,7 +18,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('js/select.dataTables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/vertical-layout-light/style.css') }}">
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" />
-
 </head>
 
 <body>

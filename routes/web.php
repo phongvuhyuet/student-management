@@ -20,6 +20,15 @@ use App\Http\Controllers\TaskController;
 Route::get('/', function () {
     return view('auth.login');
 });
+Route::get('/users', function () {
+    return view('admin.users.index');
+});
+Route::get('/users/database', function () {
+    return view('admin.users.database_table');
+});
+Route::get('/users/detail', function () {
+    return view('admin.users.detail');
+});
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
@@ -36,3 +45,4 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
     Route::resource('task', TaskController::class);
 });
+// Route::resource('users/test', UserController::class);
