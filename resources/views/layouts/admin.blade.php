@@ -180,7 +180,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/">
+                        <a class="nav-link" href="/classes">
                             <i class="icon-layout menu-icon"></i>
                             <span class="menu-title">Sinh viên</span>
                         </a>
@@ -198,7 +198,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/">
+                        <a class="nav-link" href="/task">
                             <i class="icon-grid-2 menu-icon"></i>
                             <span class="menu-title">Công việc</span>
                         </a>
