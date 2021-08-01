@@ -35,6 +35,15 @@
                                     </select>
                                 </div>
 
+
+
+
+
+
+
+
+
+
                                 <div class="form-group">
                                     <label for="detail" class="font-weight-bold card-title">Chi tiết</label>
                                     <textarea class="form-control" id="detail" rows="4" name="detail"></textarea>
@@ -57,5 +66,8 @@
         </div>
     </div>
 
+
+    <!-- plugins:js -->
+  
 
 @endsection

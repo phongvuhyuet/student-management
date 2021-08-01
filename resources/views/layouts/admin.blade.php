@@ -216,6 +216,14 @@
             @yield('main')
         </div>
     </div>
+
+    {{-- multiple select --}}
+    <script src="../../vendors/js/vendor.bundle.base.js"></script>
+
+    <script src="../../vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <script src="../../vendors/select2/select2.min.js"></script>
+    <script src="../../js/select2.js"></script>
+    {{-- multiple select end --}}
     <script src="{{ asset('vendors/js/vendor.bundle.base.js') }}"></script>
     <script src="{{ asset('vendors/chart.js/Chart.min.js') }}"></script>
     <script src="{{ asset('vendors/datatables.net/jquery.dataTables.js') }}"></script>

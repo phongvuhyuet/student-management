@@ -1,10 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Consultant\StudentController;
 use App\Http\Controllers\Student\MarkController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +29,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['middleware' => 'role:consultant', 'as' => 'consultant.'], function () {
         Route::get('classes', [StudentController::class, 'classes']);
         Route::get('class/{id}/students', [StudentController::class, 'index']);
+        Route::get('classes/test', [StudentController::class, 'test']);
+
     });
     Route::resource('task', TaskController::class);
 });
