@@ -87,5 +87,73 @@
                 }
             }
         });
+
+
+        let subjectData = [{
+                id: '0001',
+                name: 'CNTT',
+                gv: 'Nguyễn Văn A',
+                term: 'II_20-21',
+                tc: 4
+            },
+            {
+                id: '0002',
+                name: 'Nhập môn lập trình',
+                gv: 'Phạm Văn B',
+                term: 'II_20-21',
+                tc: 4
+            },
+            {
+                id: '0003',
+                name: 'Giải tích 1',
+                gv: 'Trần Thị C',
+                term: 'II_20-21',
+                tc: 4
+            },
+            {
+                id: '0001',
+                name: 'VLĐC 1',
+                gv: 'Lê Văn D',
+                term: 'II_20-21',
+                tc: 4
+            },
+            {
+                id: '0001',
+                name: 'NL Marx-Lenin',
+                gv: 'Đinh thị G',
+                term: 'II_20-21',
+                tc: 2
+            }
+        ]
+
+        window.onload = () => {
+            loadTableData(subjectData, 3);
+        }
+
+        function changeView() {
+            let index = document.getElementById('viewSelect').value;
+            loadTableData(subjectData, index);
+        }
+
+        function loadTableData(subjectData, index) {
+            const tableBody = document.getElementById('tableData');
+            let dataHTML = '';
+            if (index != 'all') {
+                if (subjectData.length < index) index = subjectData.length;
+                for (let i = 0; i < index; i++) {
+                    let subject = subjectData[i];
+                    dataHTML +=
+                        `<tr><td>${subject.id}</td><td>${subject.name}</td><td>${subject.gv}</td><td>${subject.term}</td><td>${subject.tc}</td><td><div class="d-flex justify-content-around" style="font-size: 20px;"><a href=""><ion-icon name="create-outline"></ion-icon></a><div></div><a href=""><ion-icon name="trash-outline"></ion-icon></a></div></td></tr>`;
+                }
+            } else {
+                for (let subject of subjectData) {
+                    dataHTML +=
+                        `<tr><td>${subject.id}</td><td>${subject.name}</td><td>${subject.gv}</td><td>${subject.term}</td><td>${subject.tc}</td><td><div class="d-flex justify-content-around" style="font-size: 20px;"><a href=""><ion-icon name="create-outline"></ion-icon></a><div></div><a href=""><ion-icon name="trash-outline"></ion-icon></a></div></td></tr>`;
+                }
+            }
+            console.log(dataHTML);
+
+            tableBody.innerHTML = dataHTML;
+        }
     </script>
 @endsection
