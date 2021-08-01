@@ -14,7 +14,19 @@ class CourseController extends Controller
      */
     public function index()
     {
-        return Course::all();
+        return view('course.index', [
+            'courses' => Course::all()
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('course.create');
     }
 
     /**
@@ -25,13 +37,15 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'so_TC' => 'required|numeric|min:0|max:10',
             'year' => 'required|numeric',
             'term' => 'required|numeric|min:1|max:3',
             'name' => 'required|min:3|max:255',
+            'maMH' => 'required',
         ]);
-        return Course::create($request->all());
+        Course::create($request->all());
+        return redirect('course');
     }
 
     /**
@@ -42,7 +56,21 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        return Course::find($id);
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $course = Course::find($id);
+        return view('course.edit', [
+            'course' => $course
+        ]);
     }
 
     /**
@@ -54,13 +82,14 @@ class CourseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
+        $request->validate([
             'so_TC' => 'numeric|min:0|max:10',
             'year' => 'numeric',
             'term' => 'numeric|min:1|max:3',
             'name' => 'min:3|max:255',
         ]);
-        return Course::find($id)->update($request->all());
+        Course::find($id)->update($request->all());
+        return redirect('course');
     }
 
     /**
@@ -71,6 +100,7 @@ class CourseController extends Controller
      */
     public function destroy($id)
     {
-        return Course::find($id)->delete();
+        Course::find($id)->delete();
+        return redirect('course');
     }
 }

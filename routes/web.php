@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Consultant\StudentController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\Student\MarkController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
@@ -33,5 +34,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     });
     Route::resource('task', TaskController::class);
+    Route::resource('course', CourseController::class);
 });
 // Route::resource('users/test', UserController::class);
