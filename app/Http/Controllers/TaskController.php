@@ -33,9 +33,16 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $users = User::where('role_id', 2)->where('class', Auth::user()->class)->where('faculty', Auth::user()->faculty)->get();
+        // $users = User::where('role_id', 2)->where('class', Auth::user()->class)->where('faculty', Auth::user()->faculty)->get();
+        $users = [];
+        foreach (Auth::user()->consult as $class) {
+            foreach ($class->member->where('role_id', 2) as $user) {
+                array_push($users, $user);
+            }
+        }
+
         return view('task.create', [
-            'users' => $users
+            'users' => $users,
         ]);
     }
 
@@ -48,18 +55,18 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name'     => 'required',
             'deadline' => 'required|date',
         ]);
         foreach ($request->assignees as $assignee) {
             Task::create([
-                'name' => $request->name,
-                'deadline' => $request->deadline,
-                'detail' => $request->detail ?? null,
+                'name'        => $request->name,
+                'deadline'    => $request->deadline,
+                'detail'      => $request->detail ?? null,
                 'receiver_id' => $assignee,
-                'creator_id' => Auth::user()->id,
-                'progress' => 0,
-                'status' => 'new',
+                'creator_id'  => Auth::user()->id,
+                'progress'    => 0,
+                'status'      => 'new',
             ]);
         }
         return redirect('task');

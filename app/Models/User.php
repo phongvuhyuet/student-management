@@ -96,4 +96,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Message::class, 'receiver_id');
     }
+
+    public function class()
+    {
+        return $this->belongsTo(Classes::class, 'class_id', 'id');
+    }
+
+    public function consult()
+    {
+        return $this->hasMany(Classes::class, 'consultant_id', 'id');
+    }
 }

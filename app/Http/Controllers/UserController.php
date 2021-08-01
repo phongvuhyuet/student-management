@@ -15,7 +15,20 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::all();
+        $users = User::all();
+        // ddd(1);
+        return view('admin.users.index', ['users' => $users]);
+
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -48,7 +61,18 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return User::find($id);
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
     }
 
     /**
@@ -79,7 +103,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        return User::find($id)->delete();
+        //
     }
 
     public function getCourses($id)

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Consultant;
 
 use App\Http\Controllers\Controller;
+use App\Models\Classes;
 use Illuminate\Support\Facades\Gate;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
@@ -12,13 +15,19 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        if (Gate::denies('manage-students')) {
+        $class = Classes::find($id);
+        if (!Gate::allows('manage-students', $class)) {
             abort(403);
         }
+        $students = $class->member->where('role_id', 2);
+        return view('consultant.students.index', ['students' => $students]);
+    }
 
-        return view('consultant.students.index');
-
+    public function classes()
+    {
+        $classes = Auth::user()->consult;
+        return view('consultant.students.classes', ['classes' => $classes]);
     }
 }
