@@ -11,7 +11,6 @@
                     <div class="card">
                         <div class="card-body">
 
-
                             <form class="forms-sample" action="/task" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
@@ -35,15 +34,6 @@
                                     </select>
                                 </div>
 
-
-
-
-
-
-
-
-
-
                                 <div class="form-group">
                                     <label for="detail" class="font-weight-bold card-title">Chi tiết</label>
                                     <textarea class="form-control" id="detail" rows="4" name="detail"></textarea>
@@ -66,8 +56,13 @@
         </div>
     </div>
 
+    {{-- chi duoc de script nay o day thoi nhe --}}
+    {{-- multiple select --}}
+    <script src="../../vendors/js/vendor.bundle.base.js"></script>
 
-    <!-- plugins:js -->
-  
+    <script src="../../vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <script src="../../vendors/select2/select2.min.js"></script>
+    <script src="../../js/select2.js"></script>
+    {{-- multiple select end --}}
 
 @endsection

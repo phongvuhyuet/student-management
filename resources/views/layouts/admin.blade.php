@@ -217,13 +217,7 @@
         </div>
     </div>
 
-    {{-- multiple select --}}
-    <script src="../../vendors/js/vendor.bundle.base.js"></script>
 
-    <script src="../../vendors/typeahead.js/typeahead.bundle.min.js"></script>
-    <script src="../../vendors/select2/select2.min.js"></script>
-    <script src="../../js/select2.js"></script>
-    {{-- multiple select end --}}
     <script src="{{ asset('vendors/js/vendor.bundle.base.js') }}"></script>
     <script src="{{ asset('vendors/chart.js/Chart.min.js') }}"></script>
     <script src="{{ asset('vendors/datatables.net/jquery.dataTables.js') }}"></script>
@@ -239,6 +233,7 @@
     <script src="https://cdn.lordicon.com/libs/frhvbuzj/lord-icon-2.0.2.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
 </body>
 
 </html>
