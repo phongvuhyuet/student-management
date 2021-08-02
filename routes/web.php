@@ -37,3 +37,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('course', CourseController::class);
 });
 // Route::resource('users/test', UserController::class);
+
+Route::get('/tasks', function () {
+    return view('task.index', ['tasks' => \App\Models\Task::all()] );
+});
+
+Route::get('/courses', function () {
+    return view('course.index', ['courses' => \App\Models\Course::all()] );
+});

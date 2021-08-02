@@ -14,9 +14,9 @@
                                 <select class="btn btn-outline   dropdown-toggle" id="viewSelect"
                                     onchange="changeView({{ $courses }} , this.value)"
                                     onload="customWindowOnload({{ $courses }})" aria-label="Default select example">
-                                    <option class="dropdown-item" selected value="20">20</option>
-                                    <option class="dropdown-item" value="30">30</option>
-                                    <option class="dropdown-item" value="50">50</option>
+                                    <option class="dropdown-item" selected value="2">20</option>
+                                    <option class="dropdown-item" value="3">30</option>
+                                    <option class="dropdown-item" value="5">50</option>
                                     <option class="dropdown-item" value="all">Tất cả</option>
                                 </select>
 
@@ -61,8 +61,8 @@
                                     <thead>
                                         <tr>
                                             <th>STT</th>
-                                            <th>Tên môn học</th>
                                             <th>Mã môn học</th>
+                                            <th>Giảng viên</th>
 
                                             <th>Học kì</th>
                                             <th>Năm học</th>
@@ -73,33 +73,7 @@
                                     <tbody id="tableData">
 
 
-                                        @foreach ($courses as $course)
-                                            <tr>
-                                                <td>{{ $loop->index + 1 }}</td>
-                                                <td>{{ $course->name }}</td>
-                                                <td>{{ $course->maMH }}</td>
-                                                <td>{{ $course->term }}</td>
-                                                <td>{{ $course->year }}</td>
-                                                <td>{{ $course->so_TC }}</td>
-                                                <td>
-                                                    <div class='d-flex justify-content-start' style="font-size: 20px;">
-                                                        <a href="course/{{ $course->id }}/edit"
-                                                            class="mr-3 text-reset flex align-self-center text-decoration-none">
-                                                            <ion-icon name="create-outline"></ion-icon>
-                                                        </a>
-                                                        <div></div>
-                                                        <form action='/course/{{ $course->id }}' method='POST'
-                                                            class="pl-3">
-                                                            @csrf
-                                                            @method('delete')
-                                                            <button type="submit" class="bg-transparent border-0">
-                                                                <ion-icon name="trash-outline"></ion-icon>
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -113,7 +87,10 @@
                                     <li class="page-item"><a class="page-link" href="#">1</a></li>
                                     <li class="page-item"><a class="page-link" href="#">2</a></li>
                                     <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">>></a></li>
+
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">>></a>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>
@@ -130,17 +107,15 @@
 
         function Search() {
             var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("myInput");
-            filter = input.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(
-                /Đ/g, "D").trim();
+            input = document.getElementById("myInput");   
+            filter = input.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").trim();
             table = document.getElementById("myTable");
             tr = table.getElementsByTagName("tr");
             for (i = 0; i < tr.length; i++) {
                 td = tr[i].getElementsByTagName("td")[1];
                 if (td) {
                     txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(
-                            /Đ/g, "D").indexOf(filter) > -1) {
+                    if (txtValue.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").indexOf(filter) > -1) {
                         tr[i].style.display = "";
                     } else {
                         tr[i].style.display = "none";
@@ -148,11 +123,15 @@
                 }
             }
         }
-
+        
+        const subjectData = <?php echo json_encode($courses); ?>;
+        
+    
         window.onload = () => {
-            loadTableData(JSON.parse(course), 20);
+            loadTableData(subjectData, 2);
 
         }
+
 
         function changeView(subjectData) {
             let index = document.getElementById('viewSelect').value;
@@ -165,20 +144,32 @@
             let dataHTML = '';
             if (index != 'all') {
                 if (subjectData.length < index) index = subjectData.length;
-                for (let i = 0; i < index; i++) {
-                    let subject = subjectData[i];
-                    dataHTML +=
-                        `<tr><td>${i+1}</td> <td>${subject.maMH}</td><td>${subject.name}</td><td>${subject.term}</td><td>${subject.year}</td><td>${subject.so_TC}</td><td><div class="d-flex justify-content-around" style="font-size: 20px;"><a href=""><ion-icon name="create-outline"></ion-icon></a><div></div><a href=""><ion-icon name="trash-outline"></ion-icon></a></div></td></tr>`;
-                }
             } else {
-                for (let subject of subjectData) {
-                    dataHTML +=
-                        `<tr><td>${i+1}</td><td>${subject.maMH}</td><td>${subject.name}</td><td>${subject.term}</td><td>${subject.year}</td><td>${subject.so_TC}</td><td><div class="d-flex justify-content-around" style="font-size: 20px;"><a href=""><ion-icon name="create-outline"></ion-icon></a><div></div><a href=""><ion-icon name="trash-outline"></ion-icon></a></div></td></tr>`;
-                }
+                index = subjectData.length;
+            }
+            for (let i = 0; i < index; i++) {
+                let subject = subjectData[i];
+                dataHTML += `<tr>
+                                <td>${i+1}</td>
+                                <td>${subject.maMH}</td>
+                                <td>${subject.name}</td>
+                                <td>${subject.term}</td>
+                                <td>${subject.year}</td>
+                                <td>${subject.so_TC}</td>
+                                <td>
+                                    <div class="d-flex justify-content-around" style="font-size: 20px;">
+                                        <a href=""><ion-icon name="create-outline"></ion-icon></a>
+                                            <div></div>
+                                        <a href=""><ion-icon name="trash-outline"></ion-icon></a>
+                                    </div>
+                                </td>
+                            </tr>`;
             }
             console.log(dataHTML);
 
             tableBody.innerHTML = dataHTML;
         }
+
+        
     </script>
 @endsection
