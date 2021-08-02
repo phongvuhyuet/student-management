@@ -42,6 +42,11 @@ Route::get('/tasks', function () {
     return view('task.index', ['tasks' => \App\Models\Task::all()] );
 });
 
-Route::get('/courses', function () {
-    return view('course.index', ['courses' => \App\Models\Course::all()] );
+Route::get('/courses2', function () {
+    return view('course.index3', ['courses' => \App\Models\Course::all()] );
 });
+
+Route::get('/tasks2', function () {
+    return view('task.index2', ['tasks' => \App\Models\Task::all()] );
+});
+
