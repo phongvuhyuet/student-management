@@ -9,7 +9,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/">
+                <a class="nav-link" href="/classes">
                     <i class="ti-user menu-icon"></i>
                     <span class="menu-title">Sinh viên</span>
                 </a>
@@ -27,7 +27,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/">
+                <a class="nav-link" href="/task">
                     <i class="ti-menu-alt menu-icon"></i>
                     <span class="menu-title">Công việc</span>
                 </a>

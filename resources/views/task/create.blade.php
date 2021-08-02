@@ -56,9 +56,9 @@
         </div>
     </div>
 
-    {{-- chi duoc de script nay o day thoi nhe --}}
+     {{-- chi duoc de script nay o day thoi nhe --}}
     {{-- multiple select --}}
-    <script src="../../vendors/js/vendor.bundle.base.js"></script>
+    {{-- <script src="../../vendors/js/vendor.bundle.base.js"></script> --}}
 
     <script src="../../vendors/typeahead.js/typeahead.bundle.min.js"></script>
     <script src="../../vendors/select2/select2.min.js"></script>

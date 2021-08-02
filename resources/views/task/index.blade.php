@@ -104,111 +104,84 @@
 
                             </div>
                             <div class="table-responsive">
-                                <<<<<<< HEAD <table class="table table-hover">
-                                    =======
-                                    <table id="mydata" class="table table-hover">
-                                        >>>>>>> 1c0d95c4ecfb3a0f8efcd559c375adb26572f664
-                                        <thead>
-                                            <tr>
-                                                <th class="text-justify">ID</th>
-                                                <th class="text-justify">Tên</th>
-                                                <th class="text-justify">Kì hạn</th>
-                                                <th class="text-justify">Tiến độ</th>
+                                <table id="mydata" class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-justify">ID</th>
+                                            <th class="text-justify">Tên</th>
+                                            <th class="text-justify">Kì hạn</th>
+                                            <th class="text-justify">Tiến độ</th>
+                                            @can('manage-tasks')
+                                                <th class="text-justify">Giao cho</th>
+                                            @endcan
+                                            @cannot('manage-tasks')
+                                                <th class="text-justify">Được giao bởi</th>
+                                            @endcannot
+                                            <th class="text-justify">Trạng thái</th>
+                                            <th class="text-justify">Hành động</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($tasks as $task)
+
+                                            <tr data-toggle="collapse" data-target="#demo{{ $task->id }}"
+                                                class="accordion-toggle">
+                                                <td>
+                                                    {{ $task->id }}
+                                                </td>
+                                                <td>
+                                                    {{ $task->name }}
+                                                </td>
+                                                <td>
+                                                    {{ $task->deadline }}
+                                                </td>
+                                                <td>
+                                                    @php
+                                                        $progress_type;
+                                                        if ($task->progress < 33) {
+                                                            $progress_type = 'bg-danger';
+                                                        } elseif ($task->progress < 66) {
+                                                            $progress_type = 'bg-warning';
+                                                        } else {
+                                                            $progress_type = 'bg-success';
+                                                        }
+
+                                                    @endphp
+                                                    <div class="progress">
+                                                        <div class="progress-bar {{ $progress_type }}" role="progressbar"
+                                                            style="width: {{ $task->progress }}%" aria-valuenow="75"
+                                                            aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </td>
                                                 @can('manage-tasks')
-                                                    <th class="text-justify">Giao cho</th>
+                                                    <td>
+                                                        {{ $task->receiver->name . ' MSV: ' . $task->receiver->msv }}
+                                                    </td>
                                                 @endcan
                                                 @cannot('manage-tasks')
-                                                    <th class="text-justify">Được giao bởi</th>
+                                                    <td>
+                                                        {{ $task->creator->name . ' MCV: ' . $task->creator->msv }}
+                                                    </td>
                                                 @endcannot
-                                                <th class="text-justify">Trạng thái</th>
-                                                <th class="text-justify">Hành động</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($tasks as $task)
+                                                @php
+                                                    $status_type;
+                                                    $status;
+                                                    if ($task->status == 'new') {
+                                                        $status_type = 'badge-danger';
+                                                        $status = 'Mới';
+                                                    } elseif ($task->status == 'doing') {
+                                                        $status_type = 'badge-warning';
+                                                        $status = 'Đang hoàn thành';
+                                                    } else {
+                                                        $status_type = 'badge-success';
+                                                        $status = 'Đã xong';
+                                                    }
+                                                @endphp
+                                                <td><label class="badge p-2 {{ $status_type }}"
+                                                        style="min-width: 70px">{{ $status }}</label>
+                                                </td>
 
-                                                <tr data-toggle="collapse" data-target="#demo{{ $task->id }}"
-                                                    class="accordion-toggle">
-                                                    <td>
-                                                        {{ $task->id }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $task->name }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $task->deadline }}
-                                                    </td>
-                                                    <td>
-                                                        @php
-                                                            $progress_type;
-                                                            if ($task->progress < 33) {
-                                                                $progress_type = 'bg-danger';
-                                                            } elseif ($task->progress < 66) {
-                                                                $progress_type = 'bg-warning';
-                                                            } else {
-                                                                $progress_type = 'bg-success';
-                                                            }
-
-                                                        @endphp
-                                                        <div class="progress">
-                                                            <div class="progress-bar {{ $progress_type }}"
-                                                                role="progressbar" style="width: {{ $task->progress }}%"
-                                                                aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    @can('manage-tasks')
-                                                        <td>
-                                                            <<<<<<< HEAD
-                                                                {{ $task->receiver->name }}======={{ $task->receiver->name . ' MSV: ' . $task->receiver->msv }}>
-                                                                >>>>>> 1c0d95c4ecfb3a0f8efcd559c375adb26572f664
-                                                        </td>
-                                                    @endcan
-                                                    @cannot('manage-tasks')
-                                                        <td>
-                                                            <<<<<<< HEAD
-                                                                {{ $task->creator->name }}======={{ $task->creator->name . ' MCV: ' . $task->creator->msv }}>
-                                                                >>>>>> 1c0d95c4ecfb3a0f8efcd559c375adb26572f664
-                                                        </td>
-                                                    @endcannot
-                                                    @php
-                                                        $status_type;
-                                                        $status;
-                                                        if ($task->status == 'new') {
-                                                            $status_type = 'badge-danger';
-                                                            $status = 'Mới';
-                                                        } elseif ($task->status == 'doing') {
-                                                            $status_type = 'badge-warning';
-                                                            $status = 'Đang hoàn thành';
-                                                        } else {
-                                                            $status_type = 'badge-success';
-                                                            $status = 'Đã xong';
-                                                        }
-                                                    @endphp
-                                                    <<<<<<< HEAD <td><label
-                                                            class="badge {{ $status_type }}">{{ $status }}</label>
-                                                        </td>
-
-                                                        <td
-                                                            style="
-                                                                                                                                    font-size: 24px;
-                                                                                                                                    margin: 0;
-                                                                                                                                    padding: 11px;
-                                                                                                                                    display: flex;
-                                                                                                                                    justify-content: start;
-                                                                                                                                    align-content: center;
-                                                                                                                                    align-items: center;
-                                                                                                                                    cursor:pointer
-                                                                                                                                ">
-
-
-                                                            <a href="/task/{{ $task->id }}/edit" class="mr-3">
-                                                                =======
-                                                        <td><label class="badge p-2 {{ $status_type }}"
-                                                                style="min-width: 70px">{{ $status }}</label>
-                                                        </td>
-
-                                                        <td class="icon_style" style="  font-size: 19px;
+                                                <td class="icon_style" style="  font-size: 19px;
                                                                 margin: 0;
                                                                 padding: 16px;
                                                                 display: flex;
@@ -218,73 +191,56 @@
                                                                 cursor: pointer">
 
 
-                                                            <a href="/task/{{ $task->id }}/edit"
-                                                                class="mr-3 text-reset flex align-self-center text-decoration-none">
-                                                                >>>>>>> 1c0d95c4ecfb3a0f8efcd559c375adb26572f664
-                                                                <ion-icon name="create-outline"></ion-icon>
-                                                            </a>
-                                                            @can('manage-tasks')
-                                                                <form action='/task/{{ $task->id }}' method='POST'>
-                                                                    @csrf
-                                                                    @method('delete')
-                                                                    <<<<<<< HEAD <button type="submit">
-
-
-                                                                        <ion-icon name="trash-outline"></ion-icon>
-
-                                                                        =======
-                                                                        <button type="submit" class="bg-transparent border-0">
-                                                                            <ion-icon name="trash-outline"></ion-icon>
-                                                                            >>>>>>> 1c0d95c4ecfb3a0f8efcd559c375adb26572f664
-                                                                        </button>
-                                                                </form>
-                                                            @endcan
-                                                            {{-- <a href="">
+                                                    <a href="/task/{{ $task->id }}/edit"
+                                                        class="mr-3 text-reset flex align-self-center text-decoration-none">
+                                                        <ion-icon name="create-outline"></ion-icon>
+                                                    </a>
+                                                    @can('manage-tasks')
+                                                        <form action='/task/{{ $task->id }}' method='POST'>
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button type="submit" class="bg-transparent border-0">
+                                                                <ion-icon name="trash-outline"></ion-icon>
+                                                            </button>
+                                                        </form>
+                                                    @endcan
+                                                    {{-- <a href="">
                                                         <ion-icon name="create-outline"></ion-icon>
                                                     </a> --}}
 
-                                                        </td>
+                                                </td>
 
-                                                </tr>
-                                                <<<<<<< HEAD <tr>
-                                                    <td colspan="12" style="padding: 0 !important">
-                                                        <div class="accordian-body collapse" id="demo{{ $task->id }}">
+                                            </tr>
+                                            <tr class="expanded-row">
+                                                <td colspan="12" class="row-bg" style="padding: 0 !important">
+                                                    <div class="accordian-body p-2 collapse bg-light.bg-gradient"
+                                                        style="background-color: beige" id="demo{{ $task->id }}">
 
-                                                            {{ $task->detail }}
-                                                            =======
-                                                            <tr class="expanded-row">
-                                                                <td colspan="12" class="row-bg"
-                                                                    style="padding: 0 !important">
-                                                                    <div class="accordian-body p-2 collapse bg-light.bg-gradient"
-                                                                        style="background-color: beige"
-                                                                        id="demo{{ $task->id }}">
+                                                        <div class="card card-body w-100">
+                                                            <strong class="pb-2 fw-bold">Ghi chú:</strong>
+                                                            <p class="fs-2 fst-italic fw-bold">
+                                                                {{ $task->detail }}
+                                                            </p>
+                                                        </div>
 
-                                                                        <div class="card card-body w-100">
-                                                                            <strong class="pb-2 fw-bold">Ghi chú:</strong>
-                                                                            <p class="fs-2 fst-italic fw-bold">
-                                                                                {{ $task->detail }}
-                                                                            </p>
-                                                                        </div>
-                                                                        >>>>>>> 1c0d95c4ecfb3a0f8efcd559c375adb26572f664
+                                                    </div>
+                                                </td>
+                                            </tr>
 
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                        @endforeach
 
-                                            @endforeach
-
-                                        </tbody>
-                                    </table>
-                                    <nav aria-label="Page navigation example" class="mt-3">
-                                        <ul class="pagination d-flex justify-content-end">
-                                            <li class="page-item"><a class="page-link" href="#">Previous</a>
-                                            </li>
-                                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                        </ul>
-                                    </nav>
+                                    </tbody>
+                                </table>
+                                <nav aria-label="Page navigation example" class="mt-3">
+                                    <ul class="pagination d-flex justify-content-end">
+                                        <li class="page-item"><a class="page-link" href="#">Previous</a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                    </ul>
+                                </nav>
                             </div>
 
                         </div>
@@ -294,5 +250,34 @@
             </div>
         </div>
     </div>
-<script src="https://cdn.lordicon.com/libs/frhvbuzj/lord-icon-2.0.2.js"></script>
-    @endsection
+
+    <script>
+        $(document).ready(function() {
+                $("#mydata").DataTable({
+
+                    language: {
+                        search: "Tìm kiếm:",
+                        processing: "Đang tải dữ liệu...",
+                        paginate: {
+                            first: "First",
+                            previous: "<<",
+                            next: ">>",
+                            last: "Last"
+                        },
+                        sZeroRecords: "Không tìm thấy dữ liệu",
+                        lengthMenu: "Hiển thị _MENU_ sinh viên",
+                        info: "Hiển thị _START_ - _END_ / _TOTAL_ sinh viên",
+                    },
+
+                    aLengthMenu: [
+                        [5, 10, 25, -1],
+                        [5, 10, 25, "All"],
+                    ],
+
+                    iDisplayLength: 8,
+                });
+            }
+
+        );
+    </script>
+@endsection

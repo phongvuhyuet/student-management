@@ -1,7 +1,13 @@
-  @extends('layouts.admin') @section('main')
+  @extends(Auth::user()->role_id == 2 ? 'layouts.student' : 'layouts.admin')
+  @section('main')
       <style>
           .class_management {
               cursor: pointer;
+          }
+
+          .carousel-item {
+              height: 600px;
+              object-fit: cover
           }
 
       </style>
@@ -38,20 +44,53 @@
               <div class="row">
                   {{-- banner --}}
                   <div class="col-md-12 grid-margin stretch-card">
-                      <div class="card tale-bg">
-                          <div class="card-people mt-auto">
-                              <img src="{{ asset('images/dashboard/people.svg') }}" alt="people">
-                              <div class="weather-info">
-                                  <div class="d-flex">
-                                      <div>
-                                          <h2 class="mb-0 font-weight-normal"><i class="icon-sun mr-2"></i>31<sup>C</sup>
-                                          </h2>
+                      <div class="card">
+                          <div class="card-body">
+                              <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                  <!-- Indicators -->
+                                  <ol class="carousel-indicators">
+                                      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                                      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                                  </ol>
+                                  <!-- Wrapper for slides -->
+                                  <div class="carousel-inner">
+                                      <div class="carousel-item active">
+                                          <img class="d-block w-100 "
+                                              src="https://scontent.fhan3-1.fna.fbcdn.net/v/t39.30808-6/217827665_2268955103246897_4197327919822402208_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=0debeb&_nc_ohc=j9mzHHdCeFoAX9DnsmE&_nc_ht=scontent.fhan3-1.fna&oh=2e3c171c3f1f52a5d687d364c205442f&oe=610B8ED0"
+                                              data-color="lightblue" alt="First Image">
+                                          <div class="carousel-caption d-md-block">
+                                              <h5>First Image</h5>
+                                          </div>
                                       </div>
-                                      <div class="ml-2">
-                                          <h4 class="location font-weight-normal">Bangalore</h4>
-                                          <h6 class="font-weight-normal">India</h6>
+                                      <div class="carousel-item">
+                                          <img class="d-block w-100"
+                                              src="https://scontent.fhan3-3.fna.fbcdn.net/v/t39.30808-6/228096912_2273250222817385_2977296643895585271_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=0debeb&_nc_ohc=-RseN9n_L9YAX-gtO0t&_nc_ht=scontent.fhan3-3.fna&oh=79910d9e18692093f02f5d279db2ebf6&oe=610AB466"
+                                              data-color="firebrick" alt="Second Image">
+                                          <div class="carousel-caption d-md-block">
+                                              <h5>Second Image</h5>
+                                          </div>
+                                      </div>
+                                      <div class="carousel-item">
+                                          <img class="d-block w-100"
+                                              src="https://scontent.fhan3-2.fna.fbcdn.net/v/t1.6435-9/221941083_814117452635939_8239861762149026769_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=8bfeb9&_nc_ohc=ich9H9kBeqoAX-zvUWN&tn=VbHeUG1J2EAzs6Ob&_nc_ht=scontent.fhan3-2.fna&oh=356d2dc2022ea80c5cb867756b194d64&oe=612A7E45"
+                                              data-color="violet" alt="Third Image">
+                                          <div class="carousel-caption d-md-block">
+                                              <h5>Third Image</h5>
+                                          </div>
                                       </div>
                                   </div>
+                                  <!-- Controls -->
+                                  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
+                                      data-slide="prev">
+                                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                      <span class="sr-only">Previous</span>
+                                  </a>
+                                  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
+                                      data-slide="next">
+                                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                      <span class="sr-only">Next</span>
+                                  </a>
                               </div>
                           </div>
                       </div>
@@ -936,6 +975,28 @@
           <!-- partial:partials/_footer.html -->
 
           <!-- partial -->
+          <script>
+              $('.carousel').carousel({
+                  interval: 6000,
+                  pause: "false",
+
+                  responsive: {
+                      0: {
+                          items: 1,
+                          nav: true
+                      },
+                      600: {
+                          items: 1,
+                          nav: false
+                      },
+                      1000: {
+                          items: 1,
+                          nav: true,
+                          loop: false
+                      }
+                  }
+              });
+          </script>
       </div>
       <!-- main-panel ends -->
   @endsection

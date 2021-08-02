@@ -72,9 +72,9 @@ require 'mark-utils.php';
                                                                     <td>{{ $course->id }}</td>
                                                                     <td>{{ $course->name }}</td>
                                                                     <td>{{ $course->so_TC }}</td>
-                                                                    <td>{{ $course->pivot->mark }}</td>
-                                                                    <td>{{ toCharMark($course->pivot->mark) }}</td>
-                                                                    <td>{{ toFourMark($course->pivot->mark) }}</td>
+                                                                    <td>{{ averageMark($course) }}</td>
+                                                                    <td>{{ toCharMark(averageMark($course)) }}</td>
+                                                                    <td>{{ toFourMark(averageMark($course)) }}</td>
                                                                     <td>
                                                                         <lord-icon
                                                                             src="https://cdn.lordicon.com/nocovwne.json"

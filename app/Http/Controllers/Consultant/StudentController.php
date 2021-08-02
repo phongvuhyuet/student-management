@@ -30,4 +30,10 @@ class StudentController extends Controller
         $classes = Auth::user()->consult;
         return view('consultant.students.classes', ['classes' => $classes]);
     }
+
+    public function getCourses($id)
+    {
+        $courses = User::find($id)->courses;
+        return view('student.marks.index', ['courses' => $courses]);
+    }
 }
