@@ -37,7 +37,7 @@
                                                     </select>
                                                     {{-- search bar --}}
                                                     <div class=" rounded col-4 ">
-                                                        <input type="text" class="form-control rounded"
+                                                        <input onkeyup="search()" id='myInput' type="text" class="form-control rounded"
                                                             placeholder="Nhập tên hoặc mã môn học" aria-label="Search"
                                                             aria-describedby="search-addon" />
                                                         <span
@@ -54,7 +54,7 @@
                                                 </div>
                                                 <div class="table-responsive">
                                                     <br>
-                                                    <table class="table table-hover">
+                                                    <table id="myTable" class="table table-hover">
                                                         <thead>
                                                             <tr>
                                                                 <th>STT</th>
@@ -122,9 +122,9 @@
                                                                             <td>${mark.ck}</td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td colspan="3" align="center">Tổng điểm
+                                                                            <td colspan="3" align="center"><b>Tổng điểm</b>
                                                                             </td>
-                                                                            <td>${mark.gk * 0.4 + mark.ck * 0.6}</td>
+                                                                            <td><b>${mark.gk * 0.4 + mark.ck * 0.6}</b></td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
@@ -146,35 +146,6 @@
                                                             </div>
                                                             <!-- Modal body -->
                                                             <div class="modal-body" id="mbody">
-                                                                {{-- <table class="table table-striped table-bordered">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <td>STT</td>
-                                                                            <td>Loại điểm</td>
-                                                                            <td>Trọng số</td>
-                                                                            <td>Điểm hệ 10</td>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td>1</td>
-                                                                            <td>Thành phần</td>
-                                                                            <td>0.4</td>
-                                                                            <td>10</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>2</td>
-                                                                            <td>Cuối kỳ</td>
-                                                                            <td>0.6</td>
-                                                                            <td>8.3</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td colspan="3" align="center">Tổng điểm
-                                                                            </td>
-                                                                            <td>9.1</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table> --}}
                                                             </div>
                                                             <div class="modal-footer">
                                                             </div>
@@ -192,4 +163,24 @@
             </div>
         </div>
     </div>
+    <script>
+        function search() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").trim();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[2];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
 @endsection

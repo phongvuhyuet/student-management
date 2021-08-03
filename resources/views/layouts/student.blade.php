@@ -9,13 +9,13 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/">
+                <a class="nav-link" href="/marks/{{ auth()->user()->id }}">
                     <i class="ti-bookmark-alt menu-icon"></i>
                     <span class="menu-title">Kết quả học tập</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/">
+                <a class="nav-link" href="/task">
                     <i class="ti-menu-alt menu-icon"></i>
                     <span class="menu-title">Nhiệm vụ</span>
                 </a>

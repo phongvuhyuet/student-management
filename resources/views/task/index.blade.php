@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends(Auth::user()->role_id == 2 ? 'layouts.student' : 'layouts.admin')
 @section('main')
     <style>
         table {
@@ -91,7 +91,7 @@
                                 @endcan
                                 {{-- search bar --}}
                                 <div class=" rounded col-4 ">
-                                    <input type="text" class="form-control rounded" placeholder="Search" aria-label="Search"
+                                    <input onkeyup="search()" id='myInput' type="text" class="form-control rounded" placeholder="Search" aria-label="Search"
                                         aria-describedby="search-addon" />
                                     <span style="cursor:pointer ;position: absolute;font-size: 23px; top: 7px;right: 29px;"
                                         class="input-group-text border-0 p-0 bg-transparent fw-bolder fs-2"
@@ -104,7 +104,7 @@
 
                             </div>
                             <div class="table-responsive">
-                                <table id="mydata" class="table table-hover">
+                                <table id="myTable" class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th class="text-justify">ID</th>
@@ -252,32 +252,23 @@
     </div>
 
     <script>
-        $(document).ready(function() {
-                $("#mydata").DataTable({
-
-                    language: {
-                        search: "Tìm kiếm:",
-                        processing: "Đang tải dữ liệu...",
-                        paginate: {
-                            first: "First",
-                            previous: "<<",
-                            next: ">>",
-                            last: "Last"
-                        },
-                        sZeroRecords: "Không tìm thấy dữ liệu",
-                        lengthMenu: "Hiển thị _MENU_ sinh viên",
-                        info: "Hiển thị _START_ - _END_ / _TOTAL_ sinh viên",
-                    },
-
-                    aLengthMenu: [
-                        [5, 10, 25, -1],
-                        [5, 10, 25, "All"],
-                    ],
-
-                    iDisplayLength: 8,
-                });
+        function search() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").trim();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
             }
-
-        );
+        }
     </script>
 @endsection
