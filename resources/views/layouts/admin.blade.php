@@ -21,7 +21,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/">
+                <a class="nav-link" href="/view-grade">
                     <i class="ti-bookmark-alt menu-icon"></i>
                     <span class="menu-title">Kết quả học tập</span>
                 </a>

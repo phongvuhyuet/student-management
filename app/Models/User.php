@@ -73,7 +73,7 @@ class User extends Authenticatable
     // }
     public function courses()
     {
-        return $this->belongsToMany(Course::class, 'attends', 'user_id', 'course_id')->withPivot('mark');
+        return $this->belongsToMany(Course::class, 'attends', 'user_id', 'course_id')->withPivot(['gk', 'ck']);
     }
 
     public function tasksCreated()
