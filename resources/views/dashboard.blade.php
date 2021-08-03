@@ -140,7 +140,9 @@
                                   <div class="carousel-inner">
 
                                       @foreach ($classes as $class)
-                                          <div class="carousel-item active">
+
+
+                                          <div class="carousel-item @if ($loop->index == '1') {{ 'active' }} @endif">
                                               <div class="row">
                                                   <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
                                                       <div class="ml-xl-4 mt-3">
@@ -159,6 +161,39 @@
                                                                   <table class="table table-borderless report-table">
                                                                       <tr>
                                                                           @php
+                                                                              // check hoc phi
+                                                                              $students = $class->member->where('role_id', 2);
+                                                                              $totalMoney = 0;
+                                                                              $paidMoney = 0;
+                                                                              $so_sinh_vien_no_hp = 0;
+                                                                              foreach ($students as $student) {
+                                                                                  $checkNoHocPhi = false;
+                                                                                  foreach ($student->courses as $course) {
+                                                                                      $totalMoney += $course->so_TC * 300000;
+                                                                                      if ($course->pivot->is_dong_hoc) {
+                                                                                          $paidMoney += $course->so_TC * 300000;
+                                                                                      } else {
+                                                                                          $checkNoHocPhi = true;
+                                                                                      }
+                                                                                  }
+                                                                                  if ($checkNoHocPhi) {
+                                                                                      $so_sinh_vien_no_hp++;
+                                                                                  }
+                                                                              }
+                                                                              //get variables
+                                                                              $all_students = $class->member->where('role_id', 2)->count();
+                                                                              $great_attitude = $class->member
+                                                                                  ->where('role_id', 2)
+                                                                                  ->where('diem_chuyen_can', '>=', 80)
+                                                                                  ->count();
+                                                                              $remind_count = $class->member
+                                                                                  ->where('role_id', 2)
+                                                                                  ->where('so_lan_nhac_nho', '>', 0)
+                                                                                  ->count();
+                                                                              $warn_count = $class->member
+                                                                                  ->where('role_id', 2)
+                                                                                  ->where('so_lan_nhac_nho', '>=', 2)
+                                                                                  ->count();
                                                                               $countXs = 0;
                                                                               $countG = 0;
                                                                               $countK = 0;
@@ -178,7 +213,8 @@
                                                                           <td class="w-100 px-0">
                                                                               <div class="progress progress-md mx-4">
                                                                                   <div class="progress-bar bg-primary"
-                                                                                      role="progressbar" style="width: 30%"
+                                                                                      role="progressbar"
+                                                                                      style="width: {{ ($countXs / $all_students) * 100 . '%' }}"
                                                                                       aria-valuenow="70" aria-valuemin="0"
                                                                                       aria-valuemax="100"></div>
                                                                               </div>
@@ -186,7 +222,7 @@
                                                                           <td>
                                                                               <h5 class="font-weight-bold mb-0">
 
-                                                                                  {{ $countXs }}
+                                                                                  {{ $countXs }}/{{ $all_students }}
                                                                               </h5>
                                                                           </td>
                                                                       </tr>
@@ -196,14 +232,15 @@
                                                                           <td class="w-100 px-0">
                                                                               <div class="progress progress-md mx-4">
                                                                                   <div class="progress-bar bg-primary"
-                                                                                      role="progressbar" style="width: 60%"
+                                                                                      role="progressbar"
+                                                                                      style="width: {{ ($countXs / $all_students) * 100 . '%' }}"
                                                                                       aria-valuenow="30" aria-valuemin="0"
                                                                                       aria-valuemax="100"></div>
                                                                               </div>
                                                                           </td>
                                                                           <td>
                                                                               <h5 class="font-weight-bold mb-0">
-                                                                                  {{ $countG }}
+                                                                                  {{ $countG }}/{{ $all_students }}
                                                                               </h5>
                                                                           </td>
                                                                       </tr>
@@ -212,14 +249,15 @@
                                                                           <td class="w-100 px-0">
                                                                               <div class="progress progress-md mx-4">
                                                                                   <div class="progress-bar bg-primary"
-                                                                                      role="progressbar" style="width: 10%"
+                                                                                      role="progressbar"
+                                                                                      style="width:{{ ($countK / $all_students) * 100 . '%' }}"
                                                                                       aria-valuenow="30" aria-valuemin="0"
                                                                                       aria-valuemax="100"></div>
                                                                               </div>
                                                                           </td>
                                                                           <td>
                                                                               <h5 class="font-weight-bold mb-0">
-                                                                                  {{ $countK }}
+                                                                                  {{ $countK }}/{{ $all_students }}
                                                                               </h5>
                                                                           </td>
                                                                       </tr>
@@ -230,14 +268,16 @@
                                                                           <td class="w-100 px-0">
                                                                               <div class="progress progress-md mx-4">
                                                                                   <div class="progress-bar bg-info"
-                                                                                      role="progressbar" style="width: 99%"
+                                                                                      role="progressbar"
+                                                                                      style="width: {{ ($great_attitude / $all_students) * 100 . '%' }}"
                                                                                       aria-valuenow="60" aria-valuemin="0"
                                                                                       aria-valuemax="100"></div>
                                                                               </div>
                                                                           </td>
                                                                           <td>
                                                                               <h5 class="font-weight-bold mb-0">
-                                                                                  {{ $class->member->where('role_id', 2)->where('diem_chuyen_can', '>=', 80)->count() }}
+
+                                                                                  {{ $great_attitude }}/{{ $all_students }}
                                                                               </h5>
                                                                           </td>
                                                                       </tr>
@@ -247,14 +287,15 @@
                                                                           <td class="w-100 px-0">
                                                                               <div class="progress progress-md mx-4">
                                                                                   <div class="progress-bar bg-primary"
-                                                                                      role="progressbar" style="width: 0%"
+                                                                                      role="progressbar"
+                                                                                      style="width:  {{ ($remind_count / $all_students) * 100 . '%' }}"
                                                                                       aria-valuenow="40" aria-valuemin="0"
                                                                                       aria-valuemax="100"></div>
                                                                               </div>
                                                                           </td>
                                                                           <td>
                                                                               <h5 class="font-weight-bold mb-0">
-                                                                                  {{ $class->member->where('role_id', 2)->where('so_lan_nhac_nho', '>', 0)->count() }}
+                                                                                  {{ $remind_count }}/{{ $all_students }}
                                                                               </h5>
                                                                           </td>
                                                                       </tr>
@@ -263,14 +304,15 @@
                                                                           <td class="w-100 px-0">
                                                                               <div class="progress progress-md mx-4">
                                                                                   <div class="progress-bar bg-danger"
-                                                                                      role="progressbar" style="width: 0%"
+                                                                                      role="progressbar"
+                                                                                      style="width: {{ ($warn_count / $all_students) * 100 . '%' }}"
                                                                                       aria-valuenow="75" aria-valuemin="0"
                                                                                       aria-valuemax="100"></div>
                                                                               </div>
                                                                           </td>
                                                                           <td>
                                                                               <h5 class="font-weight-bold mb-0">
-                                                                                  {{ $class->member->where('role_id', 2)->where('so_lan_nhac_nho', '>=', 2)->count() }}
+                                                                                  {{ $warn_count }}/{{ $all_students }}
                                                                               </h5>
                                                                           </td>
                                                                       </tr>
@@ -279,14 +321,15 @@
                                                                           <td class="w-100 px-0">
                                                                               <div class="progress progress-md mx-4">
                                                                                   <div class="progress-bar bg-danger"
-                                                                                      role="progressbar" style="width: 0%"
+                                                                                      role="progressbar"
+                                                                                      style="width: {{ ($so_sinh_vien_no_hp / $all_students) * 100 . '%' }}"
                                                                                       aria-valuenow="75" aria-valuemin="0"
                                                                                       aria-valuemax="100"></div>
                                                                               </div>
                                                                           </td>
                                                                           <td>
                                                                               <h5 class="font-weight-bold mb-0">
-                                                                                  @php
+                                                                                  {{-- @php
                                                                                       $students = $class->member->where('role_id', 2);
                                                                                       $totalMoney = 0;
                                                                                       $paidMoney = 0;
@@ -305,8 +348,9 @@
                                                                                               $count++;
                                                                                           }
                                                                                       }
-                                                                                      echo $count;
-                                                                                  @endphp
+                                                                                      echo $count . '/' . $all_students;
+                                                                                  @endphp --}}
+                                                                                  {{ $so_sinh_vien_no_hp }}/{{ $all_students }}
                                                                               </h5>
                                                                           </td>
                                                                       </tr>
@@ -719,8 +763,9 @@
                                               animation='tada' rotate='180'>
                                           </box-icon>
                                           <div class="form-check form-check-flat">
-                                              <label class="form-check-label text-danger text" style="font-size: larger">
-                                                  Nhiệm vụ của Level up for Antony
+                                              <label class=" btn form-check-label text-danger text"
+                                                  style="font-size: larger">
+                                                  Nhiệm vụ của: Level up for Antony
                                               </label>
                                           </div>
 
