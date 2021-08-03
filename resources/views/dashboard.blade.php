@@ -4,12 +4,6 @@
           .class_management {
               cursor: pointer;
           }
-
-          .carousel-item {
-              height: 600px;
-              object-fit: cover
-          }
-
       </style>
       <!-- partial -->
       <div class="main-panel">
@@ -21,23 +15,6 @@
                               <h3 class="font-weight-bold">Hệ thống quản lý sinh viên</h3>
 
                           </div>
-                          {{-- <div class="col-12 col-xl-4">
-                              <div class="justify-content-end d-flex">
-                                  <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
-                                      <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button"
-                                          id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true"
-                                          aria-expanded="true">
-                                          <i class="mdi mdi-calendar"></i> Today (10 Jan 2021)
-                                      </button>
-                                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
-                                          <a class="dropdown-item" href="#">January - March</a>
-                                          <a class="dropdown-item" href="#">March - June</a>
-                                          <a class="dropdown-item" href="#">June - August</a>
-                                          <a class="dropdown-item" href="#">August - November</a>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div> --}}
                       </div>
                   </div>
               </div>
@@ -55,28 +32,28 @@
                                   </ol>
                                   <!-- Wrapper for slides -->
                                   <div class="carousel-inner">
-                                      <div class="carousel-item active">
-                                          <img class="d-block w-100 "
+                                      <div class="carousel-item  active" style="height: 600px; object-fit: cover">
+                                          <img class="d-block w-100 h-100 "
                                               src="https://scontent.fhan3-1.fna.fbcdn.net/v/t39.30808-6/217827665_2268955103246897_4197327919822402208_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=0debeb&_nc_ohc=j9mzHHdCeFoAX9DnsmE&_nc_ht=scontent.fhan3-1.fna&oh=2e3c171c3f1f52a5d687d364c205442f&oe=610B8ED0"
                                               data-color="lightblue" alt="First Image">
                                           <div class="carousel-caption d-md-block">
-                                              <h5>First Image</h5>
+                                              {{-- <h5>First Image</h5> --}}
                                           </div>
                                       </div>
-                                      <div class="carousel-item">
-                                          <img class="d-block w-100"
+                                      <div class="carousel-item " style="height: 600px; object-fit: cover">
+                                          <img class="d-block w-100 h-100"
                                               src="https://scontent.fhan3-3.fna.fbcdn.net/v/t39.30808-6/228096912_2273250222817385_2977296643895585271_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=0debeb&_nc_ohc=-RseN9n_L9YAX-gtO0t&_nc_ht=scontent.fhan3-3.fna&oh=79910d9e18692093f02f5d279db2ebf6&oe=610AB466"
                                               data-color="firebrick" alt="Second Image">
                                           <div class="carousel-caption d-md-block">
-                                              <h5>Second Image</h5>
+                                              {{-- <h5>Second Image</h5> --}}
                                           </div>
                                       </div>
-                                      <div class="carousel-item">
-                                          <img class="d-block w-100"
+                                      <div class="carousel-item" style="height: 600px; object-fit: cover">
+                                          <img class="d-block w-100 h-100 "
                                               src="https://scontent.fhan3-2.fna.fbcdn.net/v/t1.6435-9/221941083_814117452635939_8239861762149026769_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=8bfeb9&_nc_ohc=ich9H9kBeqoAX-zvUWN&tn=VbHeUG1J2EAzs6Ob&_nc_ht=scontent.fhan3-2.fna&oh=356d2dc2022ea80c5cb867756b194d64&oe=612A7E45"
                                               data-color="violet" alt="Third Image">
                                           <div class="carousel-caption d-md-block">
-                                              <h5>Third Image</h5>
+                                              {{-- <h5>Third Image</h5> --}}
                                           </div>
                                       </div>
                                   </div>
@@ -99,7 +76,7 @@
 
                   {{-- class --}}
                   <div class="col-md-12">
-                      <h3 class="font-weight-bold">Các lớp học đang quản lý</h3>
+                      <h3 class="font-weight-bold mb-4">Các lớp học đang quản lý</h3>
                   </div>
                   <div class="col-md-12 grid-margin transparent">
 
@@ -941,7 +918,7 @@
                       </div>
                   </div>
               </div>
-              <div class="row">
+              {{-- <div class="row">
                   <div class="col-md-12 grid-margin stretch-card">
                       <div class="card">
                           <div class="card-body">
@@ -969,7 +946,7 @@
                           </div>
                       </div>
                   </div>
-              </div>
+              </div> --}}
           </div>
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
@@ -998,5 +975,28 @@
               });
           </script>
       </div>
+
+      <script>
+          $('.carousel').carousel({
+              interval: 6000,
+              pause: "false",
+
+              responsive: {
+                  0: {
+                      items: 1,
+                      nav: true
+                  },
+                  600: {
+                      items: 1,
+                      nav: false
+                  },
+                  1000: {
+                      items: 1,
+                      nav: true,
+                      loop: false
+                  }
+              }
+          });
+      </script>
       <!-- main-panel ends -->
   @endsection
