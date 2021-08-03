@@ -1,9 +1,31 @@
   @extends(Auth::user()->role_id == 2 ? 'layouts.student' : 'layouts.admin')
   @section('main')
+      <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
       <style>
           .class_management {
               cursor: pointer;
           }
+
+          .fade-loading:before {
+              content: "";
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              border-radius: inherit;
+              background-color: inherit;
+              animation: fade 1s forwards infinite linear;
+          }
+
+          @keyframes fade {
+              to {
+                  transform: scale(2);
+                  opacity: 0;
+              }
+          }
+
       </style>
       <!-- partial -->
       <div class="main-panel">
@@ -11,9 +33,8 @@
               <div class="row">
                   <div class="col-md-12 grid-margin">
                       <div class="row">
-                          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                              <h3 class="font-weight-bold">Hệ thống quản lý sinh viên</h3>
-
+                          <div class="col-12 col-xl-8 ">
+                              <h3 class="font-weight-bold text-xl">Hệ thống quản lý sinh viên</h3>
                           </div>
                       </div>
                   </div>
@@ -23,6 +44,7 @@
                   <div class="col-md-12 grid-margin stretch-card">
                       <div class="card">
                           <div class="card-body">
+                              <h3 class="card-title">Các sự kiện của trường đang diễn ra</h3>
                               <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                                   <!-- Indicators -->
                                   <ol class="carousel-indicators">
@@ -32,7 +54,7 @@
                                   </ol>
                                   <!-- Wrapper for slides -->
                                   <div class="carousel-inner">
-                                      <div class="carousel-item  active" style="height: 600px; object-fit: cover">
+                                      <div class="carousel-item  active" style="height: 780px; object-fit: cover">
                                           <img class="d-block w-100 h-100 "
                                               src="https://scontent.fhan3-1.fna.fbcdn.net/v/t39.30808-6/217827665_2268955103246897_4197327919822402208_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=0debeb&_nc_ohc=j9mzHHdCeFoAX9DnsmE&_nc_ht=scontent.fhan3-1.fna&oh=2e3c171c3f1f52a5d687d364c205442f&oe=610B8ED0"
                                               data-color="lightblue" alt="First Image">
@@ -40,7 +62,7 @@
                                               {{-- <h5>First Image</h5> --}}
                                           </div>
                                       </div>
-                                      <div class="carousel-item " style="height: 600px; object-fit: cover">
+                                      <div class="carousel-item " style="height: 780px; object-fit: cover">
                                           <img class="d-block w-100 h-100"
                                               src="https://scontent.fhan3-3.fna.fbcdn.net/v/t39.30808-6/228096912_2273250222817385_2977296643895585271_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=0debeb&_nc_ohc=-RseN9n_L9YAX-gtO0t&_nc_ht=scontent.fhan3-3.fna&oh=79910d9e18692093f02f5d279db2ebf6&oe=610AB466"
                                               data-color="firebrick" alt="Second Image">
@@ -48,7 +70,7 @@
                                               {{-- <h5>Second Image</h5> --}}
                                           </div>
                                       </div>
-                                      <div class="carousel-item" style="height: 600px; object-fit: cover">
+                                      <div class="carousel-item" style="height: 780px; object-fit: cover">
                                           <img class="d-block w-100 h-100 "
                                               src="https://scontent.fhan3-2.fna.fbcdn.net/v/t1.6435-9/221941083_814117452635939_8239861762149026769_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=8bfeb9&_nc_ohc=ich9H9kBeqoAX-zvUWN&tn=VbHeUG1J2EAzs6Ob&_nc_ht=scontent.fhan3-2.fna&oh=356d2dc2022ea80c5cb867756b194d64&oe=612A7E45"
                                               data-color="violet" alt="Third Image">
@@ -113,52 +135,7 @@
                       </div>
                   </div>
               </div>
-              {{-- <div class="row">
-                  <div class="col-md-6 grid-margin stretch-card">
-                      <div class="card">
-                          <div class="card-body">
-                              <p class="card-title">Order Details</p>
-                              <p class="font-weight-500">The total number of sessions within the date range. It is
-                                  the period time a user is actively engaged with your website, page or app, etc
-                              </p>
-                              <div class="d-flex flex-wrap mb-5">
-                                  <div class="mr-5 mt-3">
-                                      <p class="text-muted">Order value</p>
-                                      <h3 class="text-primary fs-30 font-weight-medium">12.3k</h3>
-                                  </div>
-                                  <div class="mr-5 mt-3">
-                                      <p class="text-muted">Orders</p>
-                                      <h3 class="text-primary fs-30 font-weight-medium">14k</h3>
-                                  </div>
-                                  <div class="mr-5 mt-3">
-                                      <p class="text-muted">Users</p>
-                                      <h3 class="text-primary fs-30 font-weight-medium">71.56%</h3>
-                                  </div>
-                                  <div class="mt-3">
-                                      <p class="text-muted">Downloads</p>
-                                      <h3 class="text-primary fs-30 font-weight-medium">34040</h3>
-                                  </div>
-                              </div>
-                              <canvas id="order-chart"></canvas>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-md-6 grid-margin stretch-card">
-                      <div class="card">
-                          <div class="card-body">
-                              <div class="d-flex justify-content-between">
-                                  <p class="card-title">Sales Report</p>
-                                  <a href="#" class="text-info">View all</a>
-                              </div>
-                              <p class="font-weight-500">The total number of sessions within the date range. It is
-                                  the period time a user is actively engaged with your website, page or app, etc
-                              </p>
-                              <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
-                              <canvas id="sales-chart"></canvas>
-                          </div>
-                      </div>
-                  </div>
-              </div> --}}
+              {{-- bao cao tong quan --}}
               <div class="row">
                   <div class="col-md-12 grid-margin stretch-card">
                       <div class="card position-relative">
@@ -266,6 +243,21 @@
                                                                   </tr>
                                                                   <tr>
                                                                       <td class="text-muted">Sinh viên bị cảnh báo </td>
+                                                                      <td class="w-100 px-0">
+                                                                          <div class="progress progress-md mx-4">
+                                                                              <div class="progress-bar bg-danger"
+                                                                                  role="progressbar" style="width: 0%"
+                                                                                  aria-valuenow="75" aria-valuemin="0"
+                                                                                  aria-valuemax="100"></div>
+                                                                          </div>
+                                                                      </td>
+                                                                      <td>
+                                                                          <h5 class="font-weight-bold mb-0">0
+                                                                          </h5>
+                                                                      </td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                      <td class="text-muted">Sinh viên muộn học phí </td>
                                                                       <td class="w-100 px-0">
                                                                           <div class="progress progress-md mx-4">
                                                                               <div class="progress-bar bg-danger"
@@ -552,6 +544,8 @@
                       </div>
                   </div>
               </div>
+              {{-- bang classes thieu hoc phi --}}
+
               <div class="row">
                   <div class="col-md-7 grid-margin stretch-card">
                       <div class="card">
@@ -646,7 +640,51 @@
                   </div>
 
               </div>
+              {{-- bang sinh vien thieu hoc phi --}}
               <div class="row">
+                  <div class="col-md-12">
+                      <div class="card">
+                          <div class="card-body">
+                              <h4 class="card-title">Các sinh viên muộn học phí</h4>
+                              <div class="table-responsive">
+                                  <table class="table" id="mydata">
+                                      <thead>
+                                          <tr>
+                                              <th>Họ và tên</th>
+                                              <th>Mã số sinh viên</th>
+                                              <th>Lớp</th>
+                                              <th>Tổng học phí</th>
+                                              <th>Đã nộp</th>
+                                              <th>Còn thiếu</th>
+                                              <th>Nhắc nhở</th>
+
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr>
+
+                                              <td class="font-weight-bold">Grace Burke</td>
+                                              <td>1902000</td>
+                                              <td>QH-2019-I/CQ-J</td>
+                                              <td class="font-weight-bold">10.000.000</td>
+                                              <td class="font-weight-bold">4.000.000</td>
+                                              <td class="font-weight-bold">6.000.000</td>
+
+                                              <td class="font-weight-medium">
+                                                  <div class=" btn badge badge-danger font-weight-bold"> Nhắc nhở</div>
+                                              </td>
+                                          </tr>
+
+                                      </tbody>
+                                  </table>
+                              </div>
+
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              {{-- <div class="row">
                   <div class="col-md-4 stretch-card grid-margin">
                       <div class="card">
                           <div class="card-body">
@@ -856,68 +894,8 @@
                           </div>
                       </div>
                   </div>
-                  <div class="col-md-5 grid-margin stretch-card">
-                      <div class="card">
-                          <div class="card-body">
-                              <h4 class="card-title">To Do Lists</h4>
-                              <div class="list-wrapper pt-2">
-                                  <ul class="d-flex flex-column-reverse todo-list todo-list-custom">
-                                      <li>
-                                          <div class="form-check form-check-flat">
-                                              <label class="form-check-label">
-                                                  <input class="checkbox" type="checkbox">
-                                                  Meeting with Urban Team
-                                              </label>
-                                          </div>
-                                          <i class="remove ti-close"></i>
-                                      </li>
-                                      <li class="completed">
-                                          <div class="form-check form-check-flat">
-                                              <label class="form-check-label">
-                                                  <input class="checkbox" type="checkbox" checked>
-                                                  Duplicate a project for new customer
-                                              </label>
-                                          </div>
-                                          <i class="remove ti-close"></i>
-                                      </li>
-                                      <li>
-                                          <div class="form-check form-check-flat">
-                                              <label class="form-check-label">
-                                                  <input class="checkbox" type="checkbox">
-                                                  Project meeting with CEO
-                                              </label>
-                                          </div>
-                                          <i class="remove ti-close"></i>
-                                      </li>
-                                      <li class="completed">
-                                          <div class="form-check form-check-flat">
-                                              <label class="form-check-label">
-                                                  <input class="checkbox" type="checkbox" checked>
-                                                  Follow up of team zilla
-                                              </label>
-                                          </div>
-                                          <i class="remove ti-close"></i>
-                                      </li>
-                                      <li>
-                                          <div class="form-check form-check-flat">
-                                              <label class="form-check-label">
-                                                  <input class="checkbox" type="checkbox">
-                                                  Level up for Antony
-                                              </label>
-                                          </div>
-                                          <i class="remove ti-close"></i>
-                                      </li>
-                                  </ul>
-                              </div>
-                              <div class="add-items d-flex mb-0 mt-2">
-                                  <input type="text" class="form-control todo-list-input" placeholder="Add new task">
-                                  <button class="add btn btn-icon text-primary todo-list-add-btn bg-transparent"><i
-                                          class="icon-circle-plus"></i></button>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
+               
+              </div> --}}
               {{-- <div class="row">
                   <div class="col-md-12 grid-margin stretch-card">
                       <div class="card">
@@ -947,6 +925,39 @@
                       </div>
                   </div>
               </div> --}}
+              {{-- todo list --}}
+              <div class="row mt-4 mb-8">
+                  <div class="col-md-5 ">
+                      <div class="card">
+                          <div class="card-body">
+                              <h4 class="card-title">Các nhiệm vụ gần hết hạn</h4>
+                              <div class="list-wrapper pt-2 overflow-hidden">
+                                  <ul class="d-flex flex-column-reverse todo-list todo-list-custom">
+                                      <li class="btn" onclick="location.href='/task'">
+                                          <box-icon name='error-alt' style="fill:rgb(194, 5, 5)" type='solid'
+                                              animation='tada' rotate='180'>
+                                          </box-icon>
+                                          <div class="form-check form-check-flat">
+                                              <label class="form-check-label text-danger text" style="font-size: larger">
+                                                  Nhiệm vụ của Level up for Antony
+                                              </label>
+                                          </div>
+
+                                      </li>
+
+                                  </ul>
+
+                              </div>
+                              {{-- <div class="add-items d-flex mb-0 mt-2">
+                                  <input type="text" class="form-control todo-list-input" placeholder="Add new task">
+                                  <button class="add btn btn-icon text-primary todo-list-add-btn bg-transparent"><i
+                                          class="icon-circle-plus"></i></button>
+                              </div> --}}
+
+                          </div>
+                      </div>
+                  </div>
+              </div>
           </div>
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
@@ -997,6 +1008,34 @@
                   }
               }
           });
+          $(document).ready(function() {
+                  $("#mydata").DataTable({
+                      // bServerSide: true,
+                      // sPaginationType": "full_numbers"
+                      language: {
+                          search: "Tìm kiếm:",
+                          processing: "Đang tải dữ liệu...",
+                          paginate: {
+                              first: "First",
+                              previous: "<<",
+                              next: ">>",
+                              last: "Last"
+                          },
+                          sZeroRecords: "Không tìm thấy dữ liệu",
+                          lengthMenu: "Hiển thị _MENU_ sinh viên",
+                          info: "Hiển thị _START_ - _END_ / _TOTAL_ sinh viên",
+                      },
+
+                      aLengthMenu: [
+                          [5, 10, 25, -1],
+                          [5, 10, 25, "All"],
+                      ],
+
+                      iDisplayLength: 5,
+                  });
+              }
+
+          );
       </script>
       <!-- main-panel ends -->
   @endsection

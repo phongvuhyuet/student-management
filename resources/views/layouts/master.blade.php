@@ -27,8 +27,8 @@
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
                 <a class="navbar-brand brand-logo mr-5" href="/dashboard"><img src="{{ asset('images/logo.png') }}"
                         class="mr-2" alt="logo" style="width: 140px; height: 35px;" /></a>
-                <a class="navbar-brand brand-logo-mini" href="/dashboard"><img src="{{ asset('images/favicon.svg') }}"
-                        alt="logo" /></a>
+                <a class="navbar-brand brand-logo-mini" href="/dashboard"><img
+                        src="{{ asset('images/favicon.svg') }}" alt="logo" /></a>
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
                 <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -179,6 +179,7 @@
     <script src="{{ asset('vendors/typeahead.js/typeahead.bundle.min.js') }}"></script>
     <script src="{{ asset('vendors/select2/select2.min.js') }}"></script>
     <script src="{{ asset('js/select2.js') }}"></script>
+    <script src="https://unpkg.com/boxicons@2.0.9/dist/boxicons.js"></script>
     <script src="https://cdn.lordicon.com/libs/frhvbuzj/lord-icon-2.0.2.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
