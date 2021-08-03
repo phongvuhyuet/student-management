@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Consultant\StudentController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,5 +43,5 @@ Route::group(['middleware' => 'role:consultant', 'as' => 'consultant.'], functio
     Route::get('classes', [StudentController::class, 'classes']);
     Route::get('class/{id}/students', [StudentController::class, 'index']);
     Route::get('classes/test', [StudentController::class, 'test']);
-
+    Route::get('dashboard', [DashboardController::class, 'index']);
 });

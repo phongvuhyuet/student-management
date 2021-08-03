@@ -50,11 +50,25 @@ function toFourMark($mark)
 
 }
 
-function averageMark($course) {
+function averageMark($course)
+{
     return $course->pivot->gk * 0.4 + $course->pivot->ck * 0.6;
 }
 
-function roundNDigits($number, $n) {
+function roundNDigits($number, $n)
+{
     return $number;
 }
+function calculateGPA($student)
+{
+    $courses = $student->courses;
+    $sumMark = 0;
+    $sumCredit = 0;
+    foreach ($courses as $course) {
 
+        $mark = toFourMark(averageMark($course));
+        $sumMark += $mark * $course->so_TC;
+        $sumCredit += $course->so_TC;
+    }
+    return round($sumMark / $sumCredit, 2);
+}

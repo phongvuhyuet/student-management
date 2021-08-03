@@ -19,6 +19,7 @@ class CreateAttendsTable extends Migration
             $table->unsignedBigInteger('course_id')->nullable();
             $table->unsignedInteger('gk');
             $table->unsignedInteger('ck');
+            $table->boolean('is_dong_hoc')->default(true);
             $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
             $table->foreign('course_id')->references('id')->on('courses')->nullOnDelete();
         });

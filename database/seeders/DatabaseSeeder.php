@@ -35,7 +35,6 @@ class DatabaseSeeder extends Seeder
                 'role_id'           => 1,
                 'class_id'          => $class->id,
                 'so_lan_nhac_nho'   => null,
-                'thieu_hoc_phi'     => null,
                 'msv'               => 19020392,
             ]
         );
