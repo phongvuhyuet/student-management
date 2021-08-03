@@ -25,8 +25,8 @@
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                <a class="navbar-brand brand-logo mr-5" href="/dashboard"><img src="{{ asset('images/logo.png') }}"
-                        class="mr-2" alt="logo" style="width: 140px; height: 35px;" /></a>
+                <a class="navbar-brand brand-logo mr-5 " href="/dashboard"><img src="{{ asset('images/logo.png') }}"
+                        class="mr-2 w-100 h-100" alt="logo" /></a>
                 <a class="navbar-brand brand-logo-mini" href="/dashboard"><img
                         src="{{ asset('images/favicon.svg') }}" alt="logo" /></a>
             </div>

@@ -46,22 +46,13 @@
                     <div class="card-body">
                         <p class="card-title">Môn học</p>
 
-                        <a href="/course/create" class=" text-reset flex align-self-center text-decoration-none">
-                            <div
-                                class="
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            d-flex
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            flex-row
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            align-items-center align-self-center
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ">
+                        <a href="/course/create"
+                            class=" text-reset flex flex-row-reverse align-self-center text-decoration-none">
+                            <div class="d-flex flex-row align-items-center align-self-center ">
                                 <p class="p-0 m-0 pr-1">
                                     Thêm môn học
                                 </p>
-                                <ion-icon
-                                    style="
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                font-size: 30px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                cursor: pointer;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
-                                    name="add-circle-outline">
+                                <ion-icon style="font-size: 30px;cursor: pointer;" name="add-circle-outline">
                                 </ion-icon>
                             </div>
                         </a>

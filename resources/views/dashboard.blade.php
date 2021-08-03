@@ -2,6 +2,9 @@
   @section('main')
       <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
           integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+      @php
+          include 'utils.php';
+      @endphp
       <style>
           .class_management {
               cursor: pointer;
@@ -39,6 +42,7 @@
                       </div>
                   </div>
               </div>
+              {{-- banner + class --}}
               <div class="row">
                   {{-- banner --}}
                   <div class="col-md-12 grid-margin stretch-card">
@@ -103,35 +107,26 @@
                   <div class="col-md-12 grid-margin transparent">
 
                       <div class="row">
-                          <div class="col-md-6 mb-4 stretch-card transparent">
-                              <div class="card card-tale">
-                                  <div class="class_management card-body">
-                                      <p class=" fs-30 mb-4">QH-2019-I/CQ-J</p>
-                                      <p class=" mb-2">Số lượng sinh viên: 51</p>
-                                      <p>Số lượng công việc:12</p>
+                          @foreach ($classes as $class)
+
+
+                              <div class="col-md-6 mb-4 stretch-card transparent"
+                                  onclick="location.href='class/{{ $class->id }}/students'">
+                                  <div class="card card-tale">
+                                      <div class="class_management card-body">
+                                          <p class=" fs-30 mb-4">{{ $class->name }}</p>
+                                          <p class=" mb-2">Số lượng sinh viên:
+                                              {{ $class->member->where('role_id', 2)->count() }}</p>
+                                          <p>Số lượng công việc:
+                                              {{ $tasks->whereIn('receiver_id', $class->member->where('role_id', 2)->pluck('id'))->count() }}
+                                          </p>
+                                      </div>
                                   </div>
                               </div>
-                          </div>
-                          <div class="col-md-6 mb-4 stretch-card transparent">
-                              <div class="card card-dark-blue">
-                                  <div class=" class_management card-body">
-                                      <p class="fs-30 mb-4">QH-2018-I/CQ-C-A-CLC3</p>
-                                      <p class=" mb-2">Số lượng sinh viên: 51</p>
-                                      <p>Số lượng công việc:12</p>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="row">
-                          <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
-                              <div class="card card-light-blue">
-                                  <div class="class_management card-body">
-                                      <p class=" fs-30 mb-4">QH-2017-I/CQ-C-E</p>
-                                      <p class=" mb-2">Số lượng sinh viên: 51</p>
-                                      <p>Số lượng công việc:12</p>
-                                  </div>
-                              </div>
-                          </div>
+
+                          @endforeach
+
+
                       </div>
                   </div>
               </div>
@@ -144,390 +139,193 @@
                                   data-ride="carousel">
                                   <div class="carousel-inner">
 
-                                      <div class="carousel-item active">
-                                          <div class="row">
-                                              <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
-                                                  <div class="ml-xl-4 mt-3">
-                                                      <p class="card-title">Báo cáo tổng quan</p>
-                                                      <h3 class="text-primary">QH-2019-I/CQ-J</h1>
+                                      @foreach ($classes as $class)
+                                          <div class="carousel-item active">
+                                              <div class="row">
+                                                  <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
+                                                      <div class="ml-xl-4 mt-3">
+                                                          <p class="card-title">Báo cáo tổng quan</p>
+                                                          <h3 class="text-primary">{{ $class->name }}</h1>
 
-                                                          <p class="mb-2 mb-xl-0">
-                                                              Tổng kết thành tích học tập ,hoạt động của chi đoàn
-                                                              QH-2019-I/CQ-J trong thời gian vừa qua</p>
-                                                  </div>
-                                              </div>
-                                              <div class="col-md-12 col-xl-9">
-                                                  <div class="row">
-                                                      <div class="col-md-10 ">
-                                                          <div class="table-responsive mb-3 mb-md-0 mt-3">
-                                                              <table class="table table-borderless report-table">
-                                                                  <tr>
-                                                                      <td class="text-muted">Số lượng sinh viên suất sắc
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-primary"
-                                                                                  role="progressbar" style="width: 30%"
-                                                                                  aria-valuenow="70" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">7
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted"> Số lượng sinh viên giỏi
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-primary"
-                                                                                  role="progressbar" style="width: 60%"
-                                                                                  aria-valuenow="30" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">40
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Số lượng sinh viên khá</td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-primary"
-                                                                                  role="progressbar" style="width: 10%"
-                                                                                  aria-valuenow="30" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">4
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Sinh viên chuyên cần loại
-                                                                          tốt
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-info"
-                                                                                  role="progressbar" style="width: 99%"
-                                                                                  aria-valuenow="60" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">51
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Sinh viên bị nhắc nhở
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-primary"
-                                                                                  role="progressbar" style="width: 0%"
-                                                                                  aria-valuenow="40" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">0
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Sinh viên bị cảnh báo </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-danger"
-                                                                                  role="progressbar" style="width: 0%"
-                                                                                  aria-valuenow="75" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">0
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Sinh viên muộn học phí </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-danger"
-                                                                                  role="progressbar" style="width: 0%"
-                                                                                  aria-valuenow="75" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">0
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                              </table>
-                                                          </div>
+                                                              <p class="mb-2 mb-xl-0">
+                                                                  Tổng kết thành tích học tập ,hoạt động của chi đoàn
+                                                                  {{ $class->name }} trong thời gian vừa qua</p>
                                                       </div>
-                                                      <div class="col-md-2 ">
+                                                  </div>
+                                                  <div class="col-md-12 col-xl-9">
+                                                      <div class="row">
+                                                          <div class="col-md-10 ">
+                                                              <div class="table-responsive mb-3 mb-md-0 mt-3">
+                                                                  <table class="table table-borderless report-table">
+                                                                      <tr>
+                                                                          @php
+                                                                              $countXs = 0;
+                                                                              $countG = 0;
+                                                                              $countK = 0;
+                                                                              foreach ($class->member->where('role_id', 2) as $student) {
+                                                                                  $gpa = calculateGPA($student);
+                                                                                  if ($gpa >= 3.6) {
+                                                                                      $countXs++;
+                                                                                  } elseif ($gpa >= 3.2) {
+                                                                                      $countG++;
+                                                                                  } elseif ($gpa >= 2.5) {
+                                                                                      $countK++;
+                                                                                  }
+                                                                              }
+                                                                          @endphp
+                                                                          <td class="text-muted">Số lượng sinh viên suất sắc
+                                                                          </td>
+                                                                          <td class="w-100 px-0">
+                                                                              <div class="progress progress-md mx-4">
+                                                                                  <div class="progress-bar bg-primary"
+                                                                                      role="progressbar" style="width: 30%"
+                                                                                      aria-valuenow="70" aria-valuemin="0"
+                                                                                      aria-valuemax="100"></div>
+                                                                              </div>
+                                                                          </td>
+                                                                          <td>
+                                                                              <h5 class="font-weight-bold mb-0">
 
+                                                                                  {{ $countXs }}
+                                                                              </h5>
+                                                                          </td>
+                                                                      </tr>
+                                                                      <tr>
+                                                                          <td class="text-muted"> Số lượng sinh viên giỏi
+                                                                          </td>
+                                                                          <td class="w-100 px-0">
+                                                                              <div class="progress progress-md mx-4">
+                                                                                  <div class="progress-bar bg-primary"
+                                                                                      role="progressbar" style="width: 60%"
+                                                                                      aria-valuenow="30" aria-valuemin="0"
+                                                                                      aria-valuemax="100"></div>
+                                                                              </div>
+                                                                          </td>
+                                                                          <td>
+                                                                              <h5 class="font-weight-bold mb-0">
+                                                                                  {{ $countG }}
+                                                                              </h5>
+                                                                          </td>
+                                                                      </tr>
+                                                                      <tr>
+                                                                          <td class="text-muted">Số lượng sinh viên khá</td>
+                                                                          <td class="w-100 px-0">
+                                                                              <div class="progress progress-md mx-4">
+                                                                                  <div class="progress-bar bg-primary"
+                                                                                      role="progressbar" style="width: 10%"
+                                                                                      aria-valuenow="30" aria-valuemin="0"
+                                                                                      aria-valuemax="100"></div>
+                                                                              </div>
+                                                                          </td>
+                                                                          <td>
+                                                                              <h5 class="font-weight-bold mb-0">
+                                                                                  {{ $countK }}
+                                                                              </h5>
+                                                                          </td>
+                                                                      </tr>
+                                                                      <tr>
+                                                                          <td class="text-muted">Sinh viên chuyên cần loại
+                                                                              tốt
+                                                                          </td>
+                                                                          <td class="w-100 px-0">
+                                                                              <div class="progress progress-md mx-4">
+                                                                                  <div class="progress-bar bg-info"
+                                                                                      role="progressbar" style="width: 99%"
+                                                                                      aria-valuenow="60" aria-valuemin="0"
+                                                                                      aria-valuemax="100"></div>
+                                                                              </div>
+                                                                          </td>
+                                                                          <td>
+                                                                              <h5 class="font-weight-bold mb-0">
+                                                                                  {{ $class->member->where('role_id', 2)->where('diem_chuyen_can', '>=', 80)->count() }}
+                                                                              </h5>
+                                                                          </td>
+                                                                      </tr>
+                                                                      <tr>
+                                                                          <td class="text-muted">Sinh viên bị nhắc nhở
+                                                                          </td>
+                                                                          <td class="w-100 px-0">
+                                                                              <div class="progress progress-md mx-4">
+                                                                                  <div class="progress-bar bg-primary"
+                                                                                      role="progressbar" style="width: 0%"
+                                                                                      aria-valuenow="40" aria-valuemin="0"
+                                                                                      aria-valuemax="100"></div>
+                                                                              </div>
+                                                                          </td>
+                                                                          <td>
+                                                                              <h5 class="font-weight-bold mb-0">
+                                                                                  {{ $class->member->where('role_id', 2)->where('so_lan_nhac_nho', '>', 0)->count() }}
+                                                                              </h5>
+                                                                          </td>
+                                                                      </tr>
+                                                                      <tr>
+                                                                          <td class="text-muted">Sinh viên bị cảnh báo </td>
+                                                                          <td class="w-100 px-0">
+                                                                              <div class="progress progress-md mx-4">
+                                                                                  <div class="progress-bar bg-danger"
+                                                                                      role="progressbar" style="width: 0%"
+                                                                                      aria-valuenow="75" aria-valuemin="0"
+                                                                                      aria-valuemax="100"></div>
+                                                                              </div>
+                                                                          </td>
+                                                                          <td>
+                                                                              <h5 class="font-weight-bold mb-0">
+                                                                                  {{ $class->member->where('role_id', 2)->where('so_lan_nhac_nho', '>=', 2)->count() }}
+                                                                              </h5>
+                                                                          </td>
+                                                                      </tr>
+                                                                      <tr>
+                                                                          <td class="text-muted">Sinh viên nợ học phí</td>
+                                                                          <td class="w-100 px-0">
+                                                                              <div class="progress progress-md mx-4">
+                                                                                  <div class="progress-bar bg-danger"
+                                                                                      role="progressbar" style="width: 0%"
+                                                                                      aria-valuenow="75" aria-valuemin="0"
+                                                                                      aria-valuemax="100"></div>
+                                                                              </div>
+                                                                          </td>
+                                                                          <td>
+                                                                              <h5 class="font-weight-bold mb-0">
+                                                                                  @php
+                                                                                      $students = $class->member->where('role_id', 2);
+                                                                                      $totalMoney = 0;
+                                                                                      $paidMoney = 0;
+                                                                                      $count = 0;
+                                                                                      foreach ($students as $student) {
+                                                                                          $checkNoHocPhi = false;
+                                                                                          foreach ($student->courses as $course) {
+                                                                                              $totalMoney += $course->so_TC * 300000;
+                                                                                              if ($course->pivot->is_dong_hoc) {
+                                                                                                  $paidMoney += $course->so_TC * 300000;
+                                                                                              } else {
+                                                                                                  $checkNoHocPhi = true;
+                                                                                              }
+                                                                                          }
+                                                                                          if ($checkNoHocPhi) {
+                                                                                              $count++;
+                                                                                          }
+                                                                                      }
+                                                                                      echo $count;
+                                                                                  @endphp
+                                                                              </h5>
+                                                                          </td>
+                                                                      </tr>
+                                                                  </table>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-md-2 ">
+
+                                                          </div>
                                                       </div>
                                                   </div>
                                               </div>
                                           </div>
-                                      </div>
+                                      @endforeach
 
 
-                                      <div class="carousel-item ">
-                                          <div class="row">
-                                              <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
-                                                  <div class="ml-xl-4 mt-3">
-                                                      <p class="card-title">Báo cáo tổng quan</p>
-                                                      <h3 class="text-primary">QH-2017-I/CQ-C-E</h1>
 
-                                                          <p class="mb-2 mb-xl-0">
-                                                              Tổng kết thành tích học tập ,hoạt động của chi đoàn
-                                                              QH-2017-I/CQ-C-E trong thời gian vừa qua</p>
-                                                  </div>
-                                              </div>
-                                              <div class="col-md-12 col-xl-9">
-                                                  <div class="row">
-                                                      <div class="col-md-10 ">
-                                                          <div class="table-responsive mb-3 mb-md-0 mt-3">
-                                                              <table class="table table-borderless report-table">
-                                                                  <tr>
-                                                                      <td class="text-muted">Số lượng sinh viên suất sắc
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-primary"
-                                                                                  role="progressbar" style="width: 30%"
-                                                                                  aria-valuenow="70" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">7
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted"> Số lượng sinh viên giỏi
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-primary"
-                                                                                  role="progressbar" style="width: 60%"
-                                                                                  aria-valuenow="30" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">40
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Số lượng sinh viên khá</td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-warning"
-                                                                                  role="progressbar" style="width: 10%"
-                                                                                  aria-valuenow="30" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">4
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Sinh viên chuyên cần loại
-                                                                          tốt
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-info"
-                                                                                  role="progressbar" style="width: 99%"
-                                                                                  aria-valuenow="60" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">51
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Sinh viên bị nhắc nhở
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-danger"
-                                                                                  role="progressbar" style="width: 1%"
-                                                                                  aria-valuenow="40" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">1
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Sinh viên bị cảnh báo </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-danger"
-                                                                                  role="progressbar" style="width: 1%"
-                                                                                  aria-valuenow="75" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">2
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                              </table>
-                                                          </div>
-                                                      </div>
-                                                      <div class="col-md-2 ">
 
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
 
-                                      <div class="carousel-item ">
-                                          <div class="row">
-                                              <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
-                                                  <div class="ml-xl-4 mt-3">
-                                                      <p class="card-title">Báo cáo tổng quan</p>
-                                                      <h3 class="text-primary">QH-2018-I/CQ-C-A-CLC3</h1>
-
-                                                          <p class="mb-2 mb-xl-0">
-                                                              Tổng kết thành tích học tập ,hoạt động của chi đoàn
-                                                              QH-2018-I/CQ-C-A-CLC3 trong thời gian vừa qua</p>
-                                                  </div>
-                                              </div>
-                                              <div class="col-md-12 col-xl-9">
-                                                  <div class="row">
-                                                      <div class="col-md-10 ">
-                                                          <div class="table-responsive mb-3 mb-md-0 mt-3">
-                                                              <table class="table table-borderless report-table">
-                                                                  <tr>
-                                                                      <td class="text-muted">Số lượng sinh viên suất sắc
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-primary"
-                                                                                  role="progressbar" style="width: 30%"
-                                                                                  aria-valuenow="70" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">7
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted"> Số lượng sinh viên giỏi
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-primary"
-                                                                                  role="progressbar" style="width: 60%"
-                                                                                  aria-valuenow="30" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">40
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Số lượng sinh viên khá</td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-warning"
-                                                                                  role="progressbar" style="width: 10%"
-                                                                                  aria-valuenow="30" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">4
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Sinh viên chuyên cần loại
-                                                                          tốt
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-info"
-                                                                                  role="progressbar" style="width: 99%"
-                                                                                  aria-valuenow="60" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">51
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Sinh viên bị nhắc nhở
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-danger"
-                                                                                  role="progressbar" style="width: 1%"
-                                                                                  aria-valuenow="40" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">1
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Sinh viên bị cảnh báo </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-danger"
-                                                                                  role="progressbar" style="width: 1%"
-                                                                                  aria-valuenow="75" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">2
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                              </table>
-                                                          </div>
-                                                      </div>
-                                                      <div class="col-md-2 ">
-
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
                                   </div>
 
 
@@ -547,7 +345,7 @@
               {{-- bang classes thieu hoc phi --}}
 
               <div class="row">
-                  <div class="col-md-7 grid-margin stretch-card">
+                  <div class="col-md-12 grid-margin stretch-card">
                       <div class="card">
                           <div class="card-body">
                               <p class="card-title ">Tình trạng nộp học phí</p>
@@ -562,88 +360,35 @@
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          <tr>
-                                              <td>QH-2019-I/CQ-J</td>
-                                              <td class="font-weight-bold">$362</td>
-                                              <td>12/08/2021</td>
-                                              <td class="font-weight-medium">
-                                                  <div class="badge badge-success">Hoàn thành</div>
-                                              </td>
-                                          </tr>
-                                          <tr>
-                                              <td>QH-2018-I/CQ-C-A-CLC3</td>
-                                              <td class="font-weight-bold">$1116</td>
-                                              <td>12/08/2021</td>
-                                              <td class="font-weight-medium">
-                                                  <div class="badge badge-success">Hoàn thành</div>
-                                              </td>
-                                          </tr>
-                                          <tr>
-                                              <td>QH-2017-I/CQ-C-E</td>
-                                              <td class="font-weight-bold">$1116</td>
-                                              <td>12/08/2021</td>
-                                              <td class="font-weight-medium">
-                                                  <div class="badge badge-warning">Chưa hoàn thành</div>
-                                              </td>
-                                          </tr>
+
+                                          @foreach ($classes as $class)
+                                              <tr>
+
+                                                  <td>{{ $class->name }}</td>
+                                                  <td class="font-weight-bold">{{ $totalMoney }}VND</td>
+                                                  <td>12/08/2021</td>
+                                                  <td class="font-weight-medium">
+                                                      @if ($totalMoney - $paidMoney == 0)
+                                                          <div class="badge badge-success">Hoàn thành</div>
+                                                      @else
+                                                          <div class="badge badge-warning">Chưa hoàn thành</div>
+                                                      @endif
+                                                  </td>
+                                              </tr>
+                                          @endforeach
                                       </tbody>
                                   </table>
                               </div>
                           </div>
                       </div>
                   </div>
-                  <div class="col-md-4 stretch-card grid-margin">
-                      <div class="card">
-                          <div class="card-body">
-                              <p class="card-title">Một số sinh viên thuộc diện khó khăn</p>
-                              <ul class="icon-data-list">
 
-
-
-
-
-
-                                  <li>
-                                      <div class="d-flex">
-                                          <img src="images/faces/face1.jpg" alt="user">
-                                          <div>
-                                              <p class="text-info mb-1"> Nguyễn Gia Khang</p>
-                                              <p class="mb-0"> Hộ nghèo</p>
-
-                                          </div>
-                                      </div>
-                                  </li>
-                                  <li>
-                                      <div class="d-flex">
-                                          <img src="images/faces/face2.jpg" alt="user">
-                                          <div>
-                                              <p class="text-info mb-1">Trần Đình Thi</p>
-                                              <p class="mb-0">Con thương binh</p>
-
-                                          </div>
-                                      </div>
-                                  </li>
-                                  <li>
-                                      <div class="d-flex">
-                                          <img src="images/faces/face3.jpg" alt="user">
-                                          <div>
-                                              <p class="text-info mb-1">Nguyễn Hoàng Điền</p>
-                                              <p class="mb-0">Sinh viên nghèo vượt khó</p>
-
-                                          </div>
-                                      </div>
-                                  </li>
-
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
 
               </div>
               {{-- bang sinh vien thieu hoc phi --}}
               <div class="row">
-                  <div class="col-md-12">
-                      <div class="card">
+                  <div class="col-md-7">
+                      <div class="card overflow-auto " style="max-height: 479px">
                           <div class="card-body">
                               <h4 class="card-title">Các sinh viên muộn học phí</h4>
                               <div class="table-responsive">
@@ -679,6 +424,42 @@
                                   </table>
                               </div>
 
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-4 rounded-3 stretch-card grid-margin ">
+                      <div class="card overflow-auto " style="max-height: 479px">
+                          <div class="card-body">
+                              <p class="card-title">Một số sinh viên thuộc diện khó khăn</p>
+                              <ul class="icon-data-list">
+                                  @php
+                                      $studentss = [];
+                                      foreach ($classes as $class) {
+                                          array_push($studentss, $class->member->where('role_id', 2)->where('hoan_canh', '<>', null));
+                                      }
+                                      $studentss = collect($studentss);
+                                  @endphp
+
+                                  @foreach ($studentss as $students)
+                                      @foreach ($students as $student)
+                                          <li>
+                                              <div class="d-flex">
+                                                  <img src="images/faces/face1.jpg" alt="user">
+                                                  <div>
+                                                      <p class="text-info mb-1"> {{ $student->name }}</p>
+                                                      <p class="mb-0"> {{ $student->hoan_canh }}</p>
+
+                                                  </div>
+                                              </div>
+                                          </li>
+                                      @endforeach
+                                  @endforeach
+
+
+
+
+
+                              </ul>
                           </div>
                       </div>
                   </div>
