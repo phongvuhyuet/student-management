@@ -431,10 +431,15 @@
               </div>
               {{-- bang sinh vien thieu hoc phi --}}
               <div class="row">
-                  <div class="col-md-7">
+                  <div class="col-md-8">
                       <div class="card overflow-auto " style="max-height: 479px">
                           <div class="card-body">
-                              <h4 class="card-title">Các sinh viên muộn học phí</h4>
+                              <div class="d-flex justify-content-between align-middle ">
+                                  <h4 class="card-title">Các sinh viên muộn học phí</h4>
+                                  <div class="btn badge badge-danger font-weight-bold d-flex align-items-center p-1 ">Nhắc
+                                      nhở
+                                      tất cả</div>
+                              </div>
                               <div class="table-responsive">
                                   <table class="table" id="mydata">
                                       <thead>
@@ -752,12 +757,12 @@
               </div> --}}
               {{-- todo list --}}
               <div class="row mt-4 mb-8">
-                  <div class="col-md-5 ">
+                  <div class="col-md-12 ">
                       <div class="card">
                           <div class="card-body">
                               <h4 class="card-title">Các nhiệm vụ gần hết hạn</h4>
                               <div class="list-wrapper pt-2 overflow-hidden">
-                                  <ul class="d-flex flex-column-reverse todo-list todo-list-custom">
+                                  {{-- <ul class="d-flex flex-column-reverse todo-list todo-list-custom">
                                       <li class="btn" onclick="location.href='/task'">
                                           <box-icon name='error-alt' style="fill:rgb(194, 5, 5)" type='solid'
                                               animation='tada' rotate='180'>
@@ -771,8 +776,142 @@
 
                                       </li>
 
-                                  </ul>
+                                  </ul> --}}
+                                  <div class="table-responsive">
+                                      <table id="myTable" class="table table-hover">
+                                          <thead>
+                                              <tr>
+                                                  <th class="text-justify">ID</th>
+                                                  <th class="text-justify">Tên</th>
+                                                  <th class="text-justify">Kì hạn</th>
+                                                  <th class="text-justify">Tiến độ</th>
+                                                  @can('manage-tasks')
+                                                      <th class="text-justify">Giao cho</th>
+                                                  @endcan
+                                                  @cannot('manage-tasks')
+                                                      <th class="text-justify">Được giao bởi</th>
+                                                  @endcannot
+                                                  <th class="text-justify">Trạng thái</th>
+                                                  <th class="text-justify">Hành động</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              @foreach ($tasks as $task)
 
+                                                  <tr data-toggle="collapse" data-target="#demo{{ $task->id }}"
+                                                      class="accordion-toggle">
+                                                      <td>
+                                                          {{ $task->id }}
+                                                      </td>
+                                                      <td class="align-middle">
+                                                          {{ $task->name }}
+                                                      </td>
+                                                      <td class="align-middle">
+                                                          {{ $task->deadline }}
+                                                      </td>
+                                                      <td class="align-middle">
+                                                          @php
+                                                              $progress_type;
+                                                              if ($task->progress < 33) {
+                                                                  $progress_type = 'bg-danger';
+                                                              } elseif ($task->progress < 66) {
+                                                                  $progress_type = 'bg-warning';
+                                                              } else {
+                                                                  $progress_type = 'bg-success';
+                                                              }
+                                                              
+                                                          @endphp
+                                                          <div class="progress">
+                                                              <div class="progress-bar align-middle {{ $progress_type }}"
+                                                                  role="progressbar"
+                                                                  style="width: {{ $task->progress }}%"
+                                                                  aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                                                              </div>
+                                                          </div>
+                                                      </td>
+                                                      @can('manage-tasks')
+                                                          <td class="align-middle">
+                                                              {{ $task->receiver->name . ' MSV: ' . $task->receiver->msv }}
+                                                          </td>
+                                                      @endcan
+                                                      @cannot('manage-tasks')
+                                                          <td class="align-middle">
+                                                              {{ $task->creator->name . ' MCV: ' . $task->creator->msv }}
+                                                          </td>
+                                                      @endcannot
+                                                      @php
+                                                          $status_type;
+                                                          $status;
+                                                          if ($task->status == 'new') {
+                                                              $status_type = 'badge-danger';
+                                                              $status = 'Mới';
+                                                          } elseif ($task->status == 'doing') {
+                                                              $status_type = 'badge-warning';
+                                                              $status = 'Đang hoàn thành';
+                                                          } else {
+                                                              $status_type = 'badge-success';
+                                                              $status = 'Đã xong';
+                                                          }
+                                                      @endphp
+                                                      <td class="align-middle"><label
+                                                              class="badge p-2 mt-0 align-middle {{ $status_type }}"
+                                                              style="min-width: 70px">{{ $status }}</label>
+                                                      </td>
+
+                                                      <td class="icon_style"
+                                                          style="  font-size: 19px;
+                                                                                                                                        margin: 0;
+                                                                                                                                        padding: 16px;
+                                                                                                                                        display: flex;
+                                                                                                                                        justify-content: start;
+                                                                                                                                        align-content: center;
+                                                                                                                                        align-items: center;
+                                                                                                                                        cursor: pointer">
+
+
+                                                          <a href="/task/{{ $task->id }}/edit"
+                                                              class="mr-3 text-reset flex align-self-center align-middle text-decoration-none">
+                                                              <ion-icon name="create-outline"></ion-icon>
+                                                          </a>
+                                                          @can('manage-tasks')
+                                                              <form action='/task/{{ $task->id }}' method='POST'>
+                                                                  @csrf
+                                                                  @method('delete')
+                                                                  <button type="submit"
+                                                                      class="bg-transparent border-0 align-middle">
+                                                                      <ion-icon name="trash-outline"></ion-icon>
+                                                                  </button>
+                                                              </form>
+                                                          @endcan
+                                                          {{-- <a href="">
+                                                        <ion-icon name="create-outline"></ion-icon>
+                                                    </a> --}}
+
+                                                      </td>
+
+                                                  </tr>
+                                                  <tr class="expanded-row">
+                                                      <td colspan="12" class="row-bg" style="padding: 0 !important">
+                                                          <div class="accordian-body p-2 collapse bg-light.bg-gradient"
+                                                              style="background-color: beige" id="demo{{ $task->id }}">
+
+                                                              <div class="card card-body w-100">
+                                                                  <strong class="pb-2 fw-bold">Ghi chú:</strong>
+                                                                  <p class="fs-2 fst-italic fw-bold">
+                                                                      {{ $task->detail }}
+                                                                  </p>
+                                                              </div>
+
+                                                          </div>
+                                                      </td>
+                                                  </tr>
+
+                                              @endforeach
+
+                                          </tbody>
+                                      </table>
+
+                                  </div>
                               </div>
                               {{-- <div class="add-items d-flex mb-0 mt-2">
                                   <input type="text" class="form-control todo-list-input" placeholder="Add new task">
