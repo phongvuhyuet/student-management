@@ -455,7 +455,7 @@
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          <tr>
+                                          {{-- <tr>
 
                                               <td class="font-weight-bold">Grace Burke</td>
                                               <td>1902000</td>
@@ -467,8 +467,41 @@
                                               <td class="font-weight-medium">
                                                   <div class=" btn badge badge-danger font-weight-bold"> Nhắc nhở</div>
                                               </td>
-                                          </tr>
+                                          </tr> --}}
+                                          @php
+                                              foreach ($classes as $class) {
+                                                  foreach ($class->member->where('role_id', 2) as $student) {
+                                                      $tongHocPhi = 0;
+                                                      $daNop = 0;
+                                                      foreach ($student->courses as $course) {
+                                                          $tongHocPhi += $course->so_TC * 300000;
+                                                          if ($course->pivot->is_dong_hoc) {
+                                                              $daNop += $course->so_TC * 300000;
+                                                          }
+                                                      }
+                                                      if ($tongHocPhi - $daNop != 0) {
+                                                          @endphp
+                                                          <tr>
 
+                                                            <td class="font-weight-bold">{{ $student->name }}</td>
+                                                            <td>{{ $student->msv }}</td>
+                                                            <td>{{ $class->name }}</td>
+                                                            <td class="font-weight-bold">{{ $tongHocPhi }}</td>
+                                                            <td class="font-weight-bold">{{ $daNop }}</td>
+                                                            <td class="font-weight-bold">{{ $tongHocPhi - $daNop }}</td>
+
+                                                            <td class="font-weight-medium">
+                                                                <div class=" btn badge badge-danger font-weight-bold"> Nhắc nhở</div>
+                                                            </td>
+                                                            </tr>
+                                                          @php
+
+
+                                                      }
+                                                  }
+                                              }
+
+                                          @endphp
                                       </tbody>
                                   </table>
                               </div>
@@ -724,7 +757,7 @@
                           </div>
                       </div>
                   </div>
-               
+
               </div> --}}
               {{-- <div class="row">
                   <div class="col-md-12 grid-margin stretch-card">
@@ -798,114 +831,122 @@
                                           <tbody>
                                               @foreach ($tasks as $task)
 
-                                                  <tr data-toggle="collapse" data-target="#demo{{ $task->id }}"
-                                                      class="accordion-toggle">
-                                                      <td>
-                                                          {{ $task->id }}
-                                                      </td>
-                                                      <td class="align-middle">
-                                                          {{ $task->name }}
-                                                      </td>
-                                                      <td class="align-middle">
-                                                          {{ $task->deadline }}
-                                                      </td>
-                                                      <td class="align-middle">
-                                                          @php
-                                                              $progress_type;
-                                                              if ($task->progress < 33) {
-                                                                  $progress_type = 'bg-danger';
-                                                              } elseif ($task->progress < 66) {
-                                                                  $progress_type = 'bg-warning';
-                                                              } else {
-                                                                  $progress_type = 'bg-success';
-                                                              }
-                                                              
-                                                          @endphp
-                                                          <div class="progress">
-                                                              <div class="progress-bar align-middle {{ $progress_type }}"
-                                                                  role="progressbar"
-                                                                  style="width: {{ $task->progress }}%"
-                                                                  aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                                                  @php
+                                                      $date2 = date_create($task->deadline);
+                                                      $date1 = date_create(date('Y-m-d'));
+                                                      $diff = date_diff($date1, $date2);
+                                                  @endphp
+                                                  @if ($diff->format('%R') == '+' && (int) $diff->format('%a') <= 7)
+                                                      <tr data-toggle="collapse" data-target="#demo{{ $task->id }}"
+                                                          class="accordion-toggle">
+                                                          <td>
+                                                              {{ $task->id }}
+                                                          </td>
+                                                          <td class="align-middle">
+                                                              {{ $task->name }}
+                                                          </td>
+                                                          <td class="align-middle">
+                                                              {{ $task->deadline }}
+                                                          </td>
+                                                          <td class="align-middle">
+                                                              @php
+                                                                  $progress_type;
+                                                                  if ($task->progress < 33) {
+                                                                      $progress_type = 'bg-danger';
+                                                                  } elseif ($task->progress < 66) {
+                                                                      $progress_type = 'bg-warning';
+                                                                  } else {
+                                                                      $progress_type = 'bg-success';
+                                                                  }
+
+                                                              @endphp
+                                                              <div class="progress">
+                                                                  <div class="progress-bar align-middle {{ $progress_type }}"
+                                                                      role="progressbar"
+                                                                      style="width: {{ $task->progress }}%"
+                                                                      aria-valuenow="75" aria-valuemin="0"
+                                                                      aria-valuemax="100">
+                                                                  </div>
                                                               </div>
-                                                          </div>
-                                                      </td>
-                                                      @can('manage-tasks')
-                                                          <td class="align-middle">
-                                                              {{ $task->receiver->name . ' MSV: ' . $task->receiver->msv }}
                                                           </td>
-                                                      @endcan
-                                                      @cannot('manage-tasks')
-                                                          <td class="align-middle">
-                                                              {{ $task->creator->name . ' MCV: ' . $task->creator->msv }}
-                                                          </td>
-                                                      @endcannot
-                                                      @php
-                                                          $status_type;
-                                                          $status;
-                                                          if ($task->status == 'new') {
-                                                              $status_type = 'badge-danger';
-                                                              $status = 'Mới';
-                                                          } elseif ($task->status == 'doing') {
-                                                              $status_type = 'badge-warning';
-                                                              $status = 'Đang hoàn thành';
-                                                          } else {
-                                                              $status_type = 'badge-success';
-                                                              $status = 'Đã xong';
-                                                          }
-                                                      @endphp
-                                                      <td class="align-middle"><label
-                                                              class="badge p-2 mt-0 align-middle {{ $status_type }}"
-                                                              style="min-width: 70px">{{ $status }}</label>
-                                                      </td>
-
-                                                      <td class="icon_style"
-                                                          style="  font-size: 19px;
-                                                                                                                                        margin: 0;
-                                                                                                                                        padding: 16px;
-                                                                                                                                        display: flex;
-                                                                                                                                        justify-content: start;
-                                                                                                                                        align-content: center;
-                                                                                                                                        align-items: center;
-                                                                                                                                        cursor: pointer">
-
-
-                                                          <a href="/task/{{ $task->id }}/edit"
-                                                              class="mr-3 text-reset flex align-self-center align-middle text-decoration-none">
-                                                              <ion-icon name="create-outline"></ion-icon>
-                                                          </a>
                                                           @can('manage-tasks')
-                                                              <form action='/task/{{ $task->id }}' method='POST'>
-                                                                  @csrf
-                                                                  @method('delete')
-                                                                  <button type="submit"
-                                                                      class="bg-transparent border-0 align-middle">
-                                                                      <ion-icon name="trash-outline"></ion-icon>
-                                                                  </button>
-                                                              </form>
+                                                              <td class="align-middle">
+                                                                  {{ $task->receiver->name . ' MSV: ' . $task->receiver->msv }}
+                                                              </td>
                                                           @endcan
-                                                          {{-- <a href="">
-                                                        <ion-icon name="create-outline"></ion-icon>
-                                                    </a> --}}
+                                                          @cannot('manage-tasks')
+                                                              <td class="align-middle">
+                                                                  {{ $task->creator->name . ' MCV: ' . $task->creator->msv }}
+                                                              </td>
+                                                          @endcannot
+                                                          @php
+                                                              $status_type;
+                                                              $status;
+                                                              if ($task->status == 'new') {
+                                                                  $status_type = 'badge-danger';
+                                                                  $status = 'Mới';
+                                                              } elseif ($task->status == 'doing') {
+                                                                  $status_type = 'badge-warning';
+                                                                  $status = 'Đang hoàn thành';
+                                                              } else {
+                                                                  $status_type = 'badge-success';
+                                                                  $status = 'Đã xong';
+                                                              }
+                                                          @endphp
+                                                          <td class="align-middle"><label
+                                                                  class="badge p-2 mt-0 align-middle {{ $status_type }}"
+                                                                  style="min-width: 70px">{{ $status }}</label>
+                                                          </td>
 
-                                                      </td>
+                                                          <td class="icon_style"
+                                                              style="  font-size: 19px;
+                                                                                                                                                                  margin: 0;
+                                                                                                                                                                  padding: 16px;
+                                                                                                                                                                  display: flex;
+                                                                                                                                                                  justify-content: start;
+                                                                                                                                                                  align-content: center;
+                                                                                                                                                                  align-items: center;
+                                                                                                                                                                  cursor: pointer">
 
-                                                  </tr>
-                                                  <tr class="expanded-row">
-                                                      <td colspan="12" class="row-bg" style="padding: 0 !important">
-                                                          <div class="accordian-body p-2 collapse bg-light.bg-gradient"
-                                                              style="background-color: beige" id="demo{{ $task->id }}">
 
-                                                              <div class="card card-body w-100">
-                                                                  <strong class="pb-2 fw-bold">Ghi chú:</strong>
-                                                                  <p class="fs-2 fst-italic fw-bold">
-                                                                      {{ $task->detail }}
-                                                                  </p>
+                                                              <a href="/task/{{ $task->id }}/edit"
+                                                                  class="mr-3 text-reset flex align-self-center align-middle text-decoration-none">
+                                                                  <ion-icon name="create-outline"></ion-icon>
+                                                              </a>
+                                                              @can('manage-tasks')
+                                                                  <form action='/task/{{ $task->id }}' method='POST'>
+                                                                      @csrf
+                                                                      @method('delete')
+                                                                      <button type="submit"
+                                                                          class="bg-transparent border-0 align-middle">
+                                                                          <ion-icon name="trash-outline"></ion-icon>
+                                                                      </button>
+                                                                  </form>
+                                                              @endcan
+                                                              {{-- <a href="">
+                                                          <ion-icon name="create-outline"></ion-icon>
+                                                      </a> --}}
+
+                                                          </td>
+
+                                                      </tr>
+                                                      <tr class="expanded-row">
+                                                          <td colspan="12" class="row-bg" style="padding: 0 !important">
+                                                              <div class="accordian-body p-2 collapse bg-light.bg-gradient"
+                                                                  style="background-color: beige"
+                                                                  id="demo{{ $task->id }}">
+
+                                                                  <div class="card card-body w-100">
+                                                                      <strong class="pb-2 fw-bold">Ghi chú:</strong>
+                                                                      <p class="fs-2 fst-italic fw-bold">
+                                                                          {{ $task->detail }}
+                                                                      </p>
+                                                                  </div>
+
                                                               </div>
-
-                                                          </div>
-                                                      </td>
-                                                  </tr>
-
+                                                          </td>
+                                                      </tr>
+                                                  @endif
                                               @endforeach
 
                                           </tbody>

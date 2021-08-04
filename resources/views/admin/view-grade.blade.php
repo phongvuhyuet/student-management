@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('main')
+    @php
+    include 'utils.php';
+    @endphp
     <div class="main-panel">
         <div class="content-wrapper">
             <div class="row">
@@ -62,33 +65,18 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td>19020001</td>
-                                                                <td>Nguyen Van An</td>
-                                                                <td>K64J</td>
-                                                                <td>70</td>
-                                                                <td>3.54</td>
-                                                                <td>0</td>
-                                                                <td>0</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>19020002</td>
-                                                                <td>Nguyen Van Bien</td>
-                                                                <td>K64J</td>
-                                                                <td>55</td>
-                                                                <td>2.54</td>
-                                                                <td>20</td>
-                                                                <td>2</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>19020003</td>
-                                                                <td>Tran Huy Tuy</td>
-                                                                <td>K64J</td>
-                                                                <td>70</td>
-                                                                <td>2.44</td>
-                                                                <td>11</td>
-                                                                <td>0</td>
-                                                            </tr>
+                                                            @foreach ($students as $student)
+
+                                                                <tr>
+                                                                    <td>{{ $student->msv }}</td>
+                                                                    <td>{{ $student->name }}</td>
+                                                                    <td>{{ $student->class->name }}</td>
+                                                                    <td>{{ getAccumulatedCredits($student) }}</td>
+                                                                    <td>{{ calculateGPA($student) }}</td>
+                                                                    <td>11</td>
+                                                                    <td>{{ $student->so_lan_nhac_nho }}</td>
+                                                                </tr>
+                                                            @endforeach
                                                         </tbody>
                                                     </table>
                                                 </div>

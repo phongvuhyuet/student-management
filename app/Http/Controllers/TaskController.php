@@ -6,6 +6,7 @@ use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller
 {
@@ -22,8 +23,13 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
-        return view('task.index', ['tasks' => $tasks]);
+        $tasks;
+        if (Gate::denies('manage-tasks')) {
+            $tasks = Task::where('receiver_id', Auth::user()->id);
+        } else {
+            $tasks = Task::where('creator_id', Auth::user()->id);
+        }
+        return view('task.index', ['tasks' => $tasks->get()]);
     }
 
     /**
@@ -55,18 +61,18 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'     => 'required',
+            'name' => 'required',
             'deadline' => 'required|date',
         ]);
         foreach ($request->assignees as $assignee) {
             Task::create([
-                'name'        => $request->name,
-                'deadline'    => $request->deadline,
-                'detail'      => $request->detail ?? null,
+                'name' => $request->name,
+                'deadline' => $request->deadline,
+                'detail' => $request->detail ?? null,
                 'receiver_id' => $assignee,
-                'creator_id'  => Auth::user()->id,
-                'progress'    => 0,
-                'status'      => 'new',
+                'creator_id' => Auth::user()->id,
+                'progress' => 0,
+                'status' => 'new',
             ]);
         }
         return redirect('task');
@@ -93,7 +99,7 @@ class TaskController extends Controller
     {
         $task = Task::find($id);
         return view('task.edit', [
-            'task' => $task
+            'task' => $task,
         ]);
     }
 

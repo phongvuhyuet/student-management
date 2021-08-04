@@ -4,6 +4,8 @@ use App\Http\Controllers\Consultant\StudentController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TaskController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,9 +20,7 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::redirect('/', 'login', 301);
-Route::get('/view-grade', function () {
-    return view('admin.view-grade');
-});
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
@@ -44,4 +44,18 @@ Route::group(['middleware' => 'role:consultant', 'as' => 'consultant.'], functio
     Route::get('class/{id}/students', [StudentController::class, 'index']);
     Route::get('classes/test', [StudentController::class, 'test']);
     Route::get('dashboard', [DashboardController::class, 'index']);
+    Route::get('/view-grade', function () {
+        $students = User::where('role_id', 2)->whereIn('id', Auth::user()->consult->first()->member->where('role_id', 2)->pluck('id'));
+        $first = true;
+        foreach (Auth::user()->consult as $class) {
+            if ($first) {
+                $first = false;
+                continue;
+            }
+            $students->orWhereIn('id', $class->member->where('role_id', 2)->pluck('id'));
+        }
+        return view('admin.view-grade', [
+            'students' => $students->with('courses')->with('class')->get(),
+        ]);
+    });
 });
