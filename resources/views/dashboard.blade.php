@@ -1,9 +1,34 @@
   @extends(Auth::user()->role_id == 2 ? 'layouts.student' : 'layouts.admin')
   @section('main')
+      <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+      @php
+          include 'utils.php';
+      @endphp
       <style>
           .class_management {
               cursor: pointer;
           }
+
+          .fade-loading:before {
+              content: "";
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              border-radius: inherit;
+              background-color: inherit;
+              animation: fade 1s forwards infinite linear;
+          }
+
+          @keyframes fade {
+              to {
+                  transform: scale(2);
+                  opacity: 0;
+              }
+          }
+
       </style>
       <!-- partial -->
       <div class="main-panel">
@@ -11,18 +36,19 @@
               <div class="row">
                   <div class="col-md-12 grid-margin">
                       <div class="row">
-                          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                              <h3 class="font-weight-bold">Hệ thống quản lý sinh viên</h3>
-
+                          <div class="col-12 col-xl-8 ">
+                              <h3 class="font-weight-bold text-xl">Hệ thống quản lý sinh viên</h3>
                           </div>
                       </div>
                   </div>
               </div>
+              {{-- banner + class --}}
               <div class="row">
                   {{-- banner --}}
                   <div class="col-md-12 grid-margin stretch-card">
                       <div class="card">
                           <div class="card-body">
+                              <h3 class="card-title">Các sự kiện của trường đang diễn ra</h3>
                               <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                                   <!-- Indicators -->
                                   <ol class="carousel-indicators">
@@ -32,7 +58,7 @@
                                   </ol>
                                   <!-- Wrapper for slides -->
                                   <div class="carousel-inner">
-                                      <div class="carousel-item  active" style="height: 600px; object-fit: cover">
+                                      <div class="carousel-item  active" style="height: 780px; object-fit: cover">
                                           <img class="d-block w-100 h-100 "
                                               src="https://scontent.fhan3-1.fna.fbcdn.net/v/t39.30808-6/217827665_2268955103246897_4197327919822402208_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=0debeb&_nc_ohc=j9mzHHdCeFoAX9DnsmE&_nc_ht=scontent.fhan3-1.fna&oh=2e3c171c3f1f52a5d687d364c205442f&oe=610B8ED0"
                                               data-color="lightblue" alt="First Image">
@@ -40,7 +66,7 @@
                                               {{-- <h5>First Image</h5> --}}
                                           </div>
                                       </div>
-                                      <div class="carousel-item " style="height: 600px; object-fit: cover">
+                                      <div class="carousel-item " style="height: 780px; object-fit: cover">
                                           <img class="d-block w-100 h-100"
                                               src="https://scontent.fhan3-3.fna.fbcdn.net/v/t39.30808-6/228096912_2273250222817385_2977296643895585271_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=0debeb&_nc_ohc=-RseN9n_L9YAX-gtO0t&_nc_ht=scontent.fhan3-3.fna&oh=79910d9e18692093f02f5d279db2ebf6&oe=610AB466"
                                               data-color="firebrick" alt="Second Image">
@@ -48,7 +74,7 @@
                                               {{-- <h5>Second Image</h5> --}}
                                           </div>
                                       </div>
-                                      <div class="carousel-item" style="height: 600px; object-fit: cover">
+                                      <div class="carousel-item" style="height: 780px; object-fit: cover">
                                           <img class="d-block w-100 h-100 "
                                               src="https://scontent.fhan3-2.fna.fbcdn.net/v/t1.6435-9/221941083_814117452635939_8239861762149026769_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=8bfeb9&_nc_ohc=ich9H9kBeqoAX-zvUWN&tn=VbHeUG1J2EAzs6Ob&_nc_ht=scontent.fhan3-2.fna&oh=356d2dc2022ea80c5cb867756b194d64&oe=612A7E45"
                                               data-color="violet" alt="Third Image">
@@ -81,84 +107,30 @@
                   <div class="col-md-12 grid-margin transparent">
 
                       <div class="row">
-                          <div class="col-md-6 mb-4 stretch-card transparent">
-                              <div class="card card-tale">
-                                  <div class="class_management card-body">
-                                      <p class=" fs-30 mb-4">QH-2019-I/CQ-J</p>
-                                      <p class=" mb-2">Số lượng sinh viên: 51</p>
-                                      <p>Số lượng công việc:12</p>
+                          @foreach ($classes as $class)
+
+
+                              <div class="col-md-6 mb-4 stretch-card transparent"
+                                  onclick="location.href='class/{{ $class->id }}/students'">
+                                  <div class="card card-tale">
+                                      <div class="class_management card-body">
+                                          <p class=" fs-30 mb-4">{{ $class->name }}</p>
+                                          <p class=" mb-2">Số lượng sinh viên:
+                                              {{ $class->member->where('role_id', 2)->count() }}</p>
+                                          <p>Số lượng công việc:
+                                              {{ $tasks->whereIn('receiver_id', $class->member->where('role_id', 2)->pluck('id'))->count() }}
+                                          </p>
+                                      </div>
                                   </div>
                               </div>
-                          </div>
-                          <div class="col-md-6 mb-4 stretch-card transparent">
-                              <div class="card card-dark-blue">
-                                  <div class=" class_management card-body">
-                                      <p class="fs-30 mb-4">QH-2018-I/CQ-C-A-CLC3</p>
-                                      <p class=" mb-2">Số lượng sinh viên: 51</p>
-                                      <p>Số lượng công việc:12</p>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="row">
-                          <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
-                              <div class="card card-light-blue">
-                                  <div class="class_management card-body">
-                                      <p class=" fs-30 mb-4">QH-2017-I/CQ-C-E</p>
-                                      <p class=" mb-2">Số lượng sinh viên: 51</p>
-                                      <p>Số lượng công việc:12</p>
-                                  </div>
-                              </div>
-                          </div>
+
+                          @endforeach
+
+
                       </div>
                   </div>
               </div>
-              {{-- <div class="row">
-                  <div class="col-md-6 grid-margin stretch-card">
-                      <div class="card">
-                          <div class="card-body">
-                              <p class="card-title">Order Details</p>
-                              <p class="font-weight-500">The total number of sessions within the date range. It is
-                                  the period time a user is actively engaged with your website, page or app, etc
-                              </p>
-                              <div class="d-flex flex-wrap mb-5">
-                                  <div class="mr-5 mt-3">
-                                      <p class="text-muted">Order value</p>
-                                      <h3 class="text-primary fs-30 font-weight-medium">12.3k</h3>
-                                  </div>
-                                  <div class="mr-5 mt-3">
-                                      <p class="text-muted">Orders</p>
-                                      <h3 class="text-primary fs-30 font-weight-medium">14k</h3>
-                                  </div>
-                                  <div class="mr-5 mt-3">
-                                      <p class="text-muted">Users</p>
-                                      <h3 class="text-primary fs-30 font-weight-medium">71.56%</h3>
-                                  </div>
-                                  <div class="mt-3">
-                                      <p class="text-muted">Downloads</p>
-                                      <h3 class="text-primary fs-30 font-weight-medium">34040</h3>
-                                  </div>
-                              </div>
-                              <canvas id="order-chart"></canvas>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-md-6 grid-margin stretch-card">
-                      <div class="card">
-                          <div class="card-body">
-                              <div class="d-flex justify-content-between">
-                                  <p class="card-title">Sales Report</p>
-                                  <a href="#" class="text-info">View all</a>
-                              </div>
-                              <p class="font-weight-500">The total number of sessions within the date range. It is
-                                  the period time a user is actively engaged with your website, page or app, etc
-                              </p>
-                              <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
-                              <canvas id="sales-chart"></canvas>
-                          </div>
-                      </div>
-                  </div>
-              </div> --}}
+              {{-- bao cao tong quan --}}
               <div class="row">
                   <div class="col-md-12 grid-margin stretch-card">
                       <div class="card position-relative">
@@ -167,375 +139,237 @@
                                   data-ride="carousel">
                                   <div class="carousel-inner">
 
-                                      <div class="carousel-item active">
-                                          <div class="row">
-                                              <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
-                                                  <div class="ml-xl-4 mt-3">
-                                                      <p class="card-title">Báo cáo tổng quan</p>
-                                                      <h3 class="text-primary">QH-2019-I/CQ-J</h1>
+                                      @foreach ($classes as $class)
 
-                                                          <p class="mb-2 mb-xl-0">
-                                                              Tổng kết thành tích học tập ,hoạt động của chi đoàn
-                                                              QH-2019-I/CQ-J trong thời gian vừa qua</p>
-                                                  </div>
-                                              </div>
-                                              <div class="col-md-12 col-xl-9">
-                                                  <div class="row">
-                                                      <div class="col-md-10 ">
-                                                          <div class="table-responsive mb-3 mb-md-0 mt-3">
-                                                              <table class="table table-borderless report-table">
-                                                                  <tr>
-                                                                      <td class="text-muted">Số lượng sinh viên suất sắc
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-primary"
-                                                                                  role="progressbar" style="width: 30%"
-                                                                                  aria-valuenow="70" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">7
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted"> Số lượng sinh viên giỏi
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-primary"
-                                                                                  role="progressbar" style="width: 60%"
-                                                                                  aria-valuenow="30" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">40
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Số lượng sinh viên khá</td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-primary"
-                                                                                  role="progressbar" style="width: 10%"
-                                                                                  aria-valuenow="30" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">4
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Sinh viên chuyên cần loại
-                                                                          tốt
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-info"
-                                                                                  role="progressbar" style="width: 99%"
-                                                                                  aria-valuenow="60" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">51
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Sinh viên bị nhắc nhở
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-primary"
-                                                                                  role="progressbar" style="width: 0%"
-                                                                                  aria-valuenow="40" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">0
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Sinh viên bị cảnh báo </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-danger"
-                                                                                  role="progressbar" style="width: 0%"
-                                                                                  aria-valuenow="75" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">0
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                              </table>
-                                                          </div>
+
+                                          <div class="carousel-item @if ($loop->index == '1') {{ 'active' }} @endif">
+                                              <div class="row">
+                                                  <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
+                                                      <div class="ml-xl-4 mt-3">
+                                                          <p class="card-title">Báo cáo tổng quan</p>
+                                                          <h3 class="text-primary">{{ $class->name }}</h1>
+
+                                                              <p class="mb-2 mb-xl-0">
+                                                                  Tổng kết thành tích học tập ,hoạt động của chi đoàn
+                                                                  {{ $class->name }} trong thời gian vừa qua</p>
                                                       </div>
-                                                      <div class="col-md-2 ">
+                                                  </div>
+                                                  <div class="col-md-12 col-xl-9">
+                                                      <div class="row">
+                                                          <div class="col-md-10 ">
+                                                              <div class="table-responsive mb-3 mb-md-0 mt-3">
+                                                                  <table class="table table-borderless report-table">
+                                                                      <tr>
+                                                                          @php
+                                                                              // check hoc phi
+                                                                              $students = $class->member->where('role_id', 2);
+                                                                              $totalMoney = 0;
+                                                                              $paidMoney = 0;
+                                                                              $so_sinh_vien_no_hp = 0;
+                                                                              foreach ($students as $student) {
+                                                                                  $checkNoHocPhi = false;
+                                                                                  foreach ($student->courses as $course) {
+                                                                                      $totalMoney += $course->so_TC * 300000;
+                                                                                      if ($course->pivot->is_dong_hoc) {
+                                                                                          $paidMoney += $course->so_TC * 300000;
+                                                                                      } else {
+                                                                                          $checkNoHocPhi = true;
+                                                                                      }
+                                                                                  }
+                                                                                  if ($checkNoHocPhi) {
+                                                                                      $so_sinh_vien_no_hp++;
+                                                                                  }
+                                                                              }
+                                                                              //get variables
+                                                                              $all_students = $class->member->where('role_id', 2)->count();
+                                                                              $great_attitude = $class->member
+                                                                                  ->where('role_id', 2)
+                                                                                  ->where('diem_chuyen_can', '>=', 80)
+                                                                                  ->count();
+                                                                              $remind_count = $class->member
+                                                                                  ->where('role_id', 2)
+                                                                                  ->where('so_lan_nhac_nho', '>', 0)
+                                                                                  ->count();
+                                                                              $warn_count = $class->member
+                                                                                  ->where('role_id', 2)
+                                                                                  ->where('so_lan_nhac_nho', '>=', 2)
+                                                                                  ->count();
+                                                                              $countXs = 0;
+                                                                              $countG = 0;
+                                                                              $countK = 0;
+                                                                              foreach ($class->member->where('role_id', 2) as $student) {
+                                                                                  $gpa = calculateGPA($student);
+                                                                                  if ($gpa >= 3.6) {
+                                                                                      $countXs++;
+                                                                                  } elseif ($gpa >= 3.2) {
+                                                                                      $countG++;
+                                                                                  } elseif ($gpa >= 2.5) {
+                                                                                      $countK++;
+                                                                                  }
+                                                                              }
+                                                                          @endphp
+                                                                          <td class="text-muted">Số lượng sinh viên suất sắc
+                                                                          </td>
+                                                                          <td class="w-100 px-0">
+                                                                              <div class="progress progress-md mx-4">
+                                                                                  <div class="progress-bar bg-primary"
+                                                                                      role="progressbar"
+                                                                                      style="width: {{ ($countXs / $all_students) * 100 . '%' }}"
+                                                                                      aria-valuenow="70" aria-valuemin="0"
+                                                                                      aria-valuemax="100"></div>
+                                                                              </div>
+                                                                          </td>
+                                                                          <td>
+                                                                              <h5 class="font-weight-bold mb-0">
 
+                                                                                  {{ $countXs }}/{{ $all_students }}
+                                                                              </h5>
+                                                                          </td>
+                                                                      </tr>
+                                                                      <tr>
+                                                                          <td class="text-muted"> Số lượng sinh viên giỏi
+                                                                          </td>
+                                                                          <td class="w-100 px-0">
+                                                                              <div class="progress progress-md mx-4">
+                                                                                  <div class="progress-bar bg-primary"
+                                                                                      role="progressbar"
+                                                                                      style="width: {{ ($countXs / $all_students) * 100 . '%' }}"
+                                                                                      aria-valuenow="30" aria-valuemin="0"
+                                                                                      aria-valuemax="100"></div>
+                                                                              </div>
+                                                                          </td>
+                                                                          <td>
+                                                                              <h5 class="font-weight-bold mb-0">
+                                                                                  {{ $countG }}/{{ $all_students }}
+                                                                              </h5>
+                                                                          </td>
+                                                                      </tr>
+                                                                      <tr>
+                                                                          <td class="text-muted">Số lượng sinh viên khá</td>
+                                                                          <td class="w-100 px-0">
+                                                                              <div class="progress progress-md mx-4">
+                                                                                  <div class="progress-bar bg-primary"
+                                                                                      role="progressbar"
+                                                                                      style="width:{{ ($countK / $all_students) * 100 . '%' }}"
+                                                                                      aria-valuenow="30" aria-valuemin="0"
+                                                                                      aria-valuemax="100"></div>
+                                                                              </div>
+                                                                          </td>
+                                                                          <td>
+                                                                              <h5 class="font-weight-bold mb-0">
+                                                                                  {{ $countK }}/{{ $all_students }}
+                                                                              </h5>
+                                                                          </td>
+                                                                      </tr>
+                                                                      <tr>
+                                                                          <td class="text-muted">Sinh viên chuyên cần loại
+                                                                              tốt
+                                                                          </td>
+                                                                          <td class="w-100 px-0">
+                                                                              <div class="progress progress-md mx-4">
+                                                                                  <div class="progress-bar bg-info"
+                                                                                      role="progressbar"
+                                                                                      style="width: {{ ($great_attitude / $all_students) * 100 . '%' }}"
+                                                                                      aria-valuenow="60" aria-valuemin="0"
+                                                                                      aria-valuemax="100"></div>
+                                                                              </div>
+                                                                          </td>
+                                                                          <td>
+                                                                              <h5 class="font-weight-bold mb-0">
+
+                                                                                  {{ $great_attitude }}/{{ $all_students }}
+                                                                              </h5>
+                                                                          </td>
+                                                                      </tr>
+                                                                      <tr>
+                                                                          <td class="text-muted">Sinh viên bị nhắc nhở
+                                                                          </td>
+                                                                          <td class="w-100 px-0">
+                                                                              <div class="progress progress-md mx-4">
+                                                                                  <div class="progress-bar bg-primary"
+                                                                                      role="progressbar"
+                                                                                      style="width:  {{ ($remind_count / $all_students) * 100 . '%' }}"
+                                                                                      aria-valuenow="40" aria-valuemin="0"
+                                                                                      aria-valuemax="100"></div>
+                                                                              </div>
+                                                                          </td>
+                                                                          <td>
+                                                                              <h5 class="font-weight-bold mb-0">
+                                                                                  {{ $remind_count }}/{{ $all_students }}
+                                                                              </h5>
+                                                                          </td>
+                                                                      </tr>
+                                                                      <tr>
+                                                                          <td class="text-muted">Sinh viên bị cảnh báo </td>
+                                                                          <td class="w-100 px-0">
+                                                                              <div class="progress progress-md mx-4">
+                                                                                  <div class="progress-bar bg-danger"
+                                                                                      role="progressbar"
+                                                                                      style="width: {{ ($warn_count / $all_students) * 100 . '%' }}"
+                                                                                      aria-valuenow="75" aria-valuemin="0"
+                                                                                      aria-valuemax="100"></div>
+                                                                              </div>
+                                                                          </td>
+                                                                          <td>
+                                                                              <h5 class="font-weight-bold mb-0">
+                                                                                  {{ $warn_count }}/{{ $all_students }}
+                                                                              </h5>
+                                                                          </td>
+                                                                      </tr>
+                                                                      <tr>
+                                                                          <td class="text-muted">Sinh viên nợ học phí</td>
+                                                                          <td class="w-100 px-0">
+                                                                              <div class="progress progress-md mx-4">
+                                                                                  <div class="progress-bar bg-danger"
+                                                                                      role="progressbar"
+                                                                                      style="width: {{ ($so_sinh_vien_no_hp / $all_students) * 100 . '%' }}"
+                                                                                      aria-valuenow="75" aria-valuemin="0"
+                                                                                      aria-valuemax="100"></div>
+                                                                              </div>
+                                                                          </td>
+                                                                          <td>
+                                                                              <h5 class="font-weight-bold mb-0">
+                                                                                  {{-- @php
+                                                                                      $students = $class->member->where('role_id', 2);
+                                                                                      $totalMoney = 0;
+                                                                                      $paidMoney = 0;
+                                                                                      $count = 0;
+                                                                                      foreach ($students as $student) {
+                                                                                          $checkNoHocPhi = false;
+                                                                                          foreach ($student->courses as $course) {
+                                                                                              $totalMoney += $course->so_TC * 300000;
+                                                                                              if ($course->pivot->is_dong_hoc) {
+                                                                                                  $paidMoney += $course->so_TC * 300000;
+                                                                                              } else {
+                                                                                                  $checkNoHocPhi = true;
+                                                                                              }
+                                                                                          }
+                                                                                          if ($checkNoHocPhi) {
+                                                                                              $count++;
+                                                                                          }
+                                                                                      }
+                                                                                      echo $count . '/' . $all_students;
+                                                                                  @endphp --}}
+                                                                                  {{ $so_sinh_vien_no_hp }}/{{ $all_students }}
+                                                                              </h5>
+                                                                          </td>
+                                                                      </tr>
+                                                                  </table>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-md-2 ">
+
+                                                          </div>
                                                       </div>
                                                   </div>
                                               </div>
                                           </div>
-                                      </div>
+                                      @endforeach
 
 
-                                      <div class="carousel-item ">
-                                          <div class="row">
-                                              <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
-                                                  <div class="ml-xl-4 mt-3">
-                                                      <p class="card-title">Báo cáo tổng quan</p>
-                                                      <h3 class="text-primary">QH-2017-I/CQ-C-E</h1>
 
-                                                          <p class="mb-2 mb-xl-0">
-                                                              Tổng kết thành tích học tập ,hoạt động của chi đoàn
-                                                              QH-2017-I/CQ-C-E trong thời gian vừa qua</p>
-                                                  </div>
-                                              </div>
-                                              <div class="col-md-12 col-xl-9">
-                                                  <div class="row">
-                                                      <div class="col-md-10 ">
-                                                          <div class="table-responsive mb-3 mb-md-0 mt-3">
-                                                              <table class="table table-borderless report-table">
-                                                                  <tr>
-                                                                      <td class="text-muted">Số lượng sinh viên suất sắc
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-primary"
-                                                                                  role="progressbar" style="width: 30%"
-                                                                                  aria-valuenow="70" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">7
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted"> Số lượng sinh viên giỏi
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-primary"
-                                                                                  role="progressbar" style="width: 60%"
-                                                                                  aria-valuenow="30" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">40
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Số lượng sinh viên khá</td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-warning"
-                                                                                  role="progressbar" style="width: 10%"
-                                                                                  aria-valuenow="30" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">4
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Sinh viên chuyên cần loại
-                                                                          tốt
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-info"
-                                                                                  role="progressbar" style="width: 99%"
-                                                                                  aria-valuenow="60" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">51
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Sinh viên bị nhắc nhở
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-danger"
-                                                                                  role="progressbar" style="width: 1%"
-                                                                                  aria-valuenow="40" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">1
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Sinh viên bị cảnh báo </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-danger"
-                                                                                  role="progressbar" style="width: 1%"
-                                                                                  aria-valuenow="75" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">2
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                              </table>
-                                                          </div>
-                                                      </div>
-                                                      <div class="col-md-2 ">
 
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
 
-                                      <div class="carousel-item ">
-                                          <div class="row">
-                                              <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
-                                                  <div class="ml-xl-4 mt-3">
-                                                      <p class="card-title">Báo cáo tổng quan</p>
-                                                      <h3 class="text-primary">QH-2018-I/CQ-C-A-CLC3</h1>
-
-                                                          <p class="mb-2 mb-xl-0">
-                                                              Tổng kết thành tích học tập ,hoạt động của chi đoàn
-                                                              QH-2018-I/CQ-C-A-CLC3 trong thời gian vừa qua</p>
-                                                  </div>
-                                              </div>
-                                              <div class="col-md-12 col-xl-9">
-                                                  <div class="row">
-                                                      <div class="col-md-10 ">
-                                                          <div class="table-responsive mb-3 mb-md-0 mt-3">
-                                                              <table class="table table-borderless report-table">
-                                                                  <tr>
-                                                                      <td class="text-muted">Số lượng sinh viên suất sắc
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-primary"
-                                                                                  role="progressbar" style="width: 30%"
-                                                                                  aria-valuenow="70" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">7
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted"> Số lượng sinh viên giỏi
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-primary"
-                                                                                  role="progressbar" style="width: 60%"
-                                                                                  aria-valuenow="30" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">40
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Số lượng sinh viên khá</td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-warning"
-                                                                                  role="progressbar" style="width: 10%"
-                                                                                  aria-valuenow="30" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">4
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Sinh viên chuyên cần loại
-                                                                          tốt
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-info"
-                                                                                  role="progressbar" style="width: 99%"
-                                                                                  aria-valuenow="60" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">51
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Sinh viên bị nhắc nhở
-                                                                      </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-danger"
-                                                                                  role="progressbar" style="width: 1%"
-                                                                                  aria-valuenow="40" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">1
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                      <td class="text-muted">Sinh viên bị cảnh báo </td>
-                                                                      <td class="w-100 px-0">
-                                                                          <div class="progress progress-md mx-4">
-                                                                              <div class="progress-bar bg-danger"
-                                                                                  role="progressbar" style="width: 1%"
-                                                                                  aria-valuenow="75" aria-valuemin="0"
-                                                                                  aria-valuemax="100"></div>
-                                                                          </div>
-                                                                      </td>
-                                                                      <td>
-                                                                          <h5 class="font-weight-bold mb-0">2
-                                                                          </h5>
-                                                                      </td>
-                                                                  </tr>
-                                                              </table>
-                                                          </div>
-                                                      </div>
-                                                      <div class="col-md-2 ">
-
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
                                   </div>
 
 
@@ -552,8 +386,10 @@
                       </div>
                   </div>
               </div>
+              {{-- bang classes thieu hoc phi --}}
+
               <div class="row">
-                  <div class="col-md-7 grid-margin stretch-card">
+                  <div class="col-md-12 grid-margin stretch-card">
                       <div class="card">
                           <div class="card-body">
                               <p class="card-title ">Tình trạng nộp học phí</p>
@@ -568,85 +404,150 @@
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          <tr>
-                                              <td>QH-2019-I/CQ-J</td>
-                                              <td class="font-weight-bold">$362</td>
-                                              <td>12/08/2021</td>
-                                              <td class="font-weight-medium">
-                                                  <div class="badge badge-success">Hoàn thành</div>
-                                              </td>
-                                          </tr>
-                                          <tr>
-                                              <td>QH-2018-I/CQ-C-A-CLC3</td>
-                                              <td class="font-weight-bold">$1116</td>
-                                              <td>12/08/2021</td>
-                                              <td class="font-weight-medium">
-                                                  <div class="badge badge-success">Hoàn thành</div>
-                                              </td>
-                                          </tr>
-                                          <tr>
-                                              <td>QH-2017-I/CQ-C-E</td>
-                                              <td class="font-weight-bold">$1116</td>
-                                              <td>12/08/2021</td>
-                                              <td class="font-weight-medium">
-                                                  <div class="badge badge-warning">Chưa hoàn thành</div>
-                                              </td>
-                                          </tr>
+
+                                          @foreach ($classes as $class)
+                                              <tr>
+
+                                                  <td>{{ $class->name }}</td>
+                                                  <td class="font-weight-bold">{{ $totalMoney }}VND</td>
+                                                  <td>12/08/2021</td>
+                                                  <td class="font-weight-medium">
+                                                      @if ($totalMoney - $paidMoney == 0)
+                                                          <div class="badge badge-success">Hoàn thành</div>
+                                                      @else
+                                                          <div class="badge badge-warning">Chưa hoàn thành</div>
+                                                      @endif
+                                                  </td>
+                                              </tr>
+                                          @endforeach
                                       </tbody>
                                   </table>
                               </div>
                           </div>
                       </div>
                   </div>
-                  <div class="col-md-4 stretch-card grid-margin">
-                      <div class="card">
+
+
+              </div>
+              {{-- bang sinh vien thieu hoc phi --}}
+              <div class="row">
+                  <div class="col-md-8">
+                      <div class="card overflow-auto " style="max-height: 479px">
+                          <div class="card-body">
+                              <div class="d-flex justify-content-between align-middle ">
+                                  <h4 class="card-title">Các sinh viên muộn học phí</h4>
+                                  <div class="btn badge badge-danger font-weight-bold d-flex align-items-center p-1 ">Nhắc
+                                      nhở
+                                      tất cả</div>
+                              </div>
+                              <div class="table-responsive">
+                                  <table class="table" id="mydata">
+                                      <thead>
+                                          <tr>
+                                              <th>Họ và tên</th>
+                                              <th>Mã số sinh viên</th>
+                                              <th>Lớp</th>
+                                              <th>Tổng học phí</th>
+                                              <th>Đã nộp</th>
+                                              <th>Còn thiếu</th>
+                                              <th>Nhắc nhở</th>
+
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          {{-- <tr>
+
+                                              <td class="font-weight-bold">Grace Burke</td>
+                                              <td>1902000</td>
+                                              <td>QH-2019-I/CQ-J</td>
+                                              <td class="font-weight-bold">10.000.000</td>
+                                              <td class="font-weight-bold">4.000.000</td>
+                                              <td class="font-weight-bold">6.000.000</td>
+
+                                              <td class="font-weight-medium">
+                                                  <div class=" btn badge badge-danger font-weight-bold"> Nhắc nhở</div>
+                                              </td>
+                                          </tr> --}}
+                                          @php
+                                              foreach ($classes as $class) {
+                                                  foreach ($class->member->where('role_id', 2) as $student) {
+                                                      $tongHocPhi = 0;
+                                                      $daNop = 0;
+                                                      foreach ($student->courses as $course) {
+                                                          $tongHocPhi += $course->so_TC * 300000;
+                                                          if ($course->pivot->is_dong_hoc) {
+                                                              $daNop += $course->so_TC * 300000;
+                                                          }
+                                                      }
+                                                      if ($tongHocPhi - $daNop != 0) {
+                                                          @endphp
+                                                          <tr>
+
+                                                            <td class="font-weight-bold">{{ $student->name }}</td>
+                                                            <td>{{ $student->msv }}</td>
+                                                            <td>{{ $class->name }}</td>
+                                                            <td class="font-weight-bold">{{ $tongHocPhi }}</td>
+                                                            <td class="font-weight-bold">{{ $daNop }}</td>
+                                                            <td class="font-weight-bold">{{ $tongHocPhi - $daNop }}</td>
+
+                                                            <td class="font-weight-medium">
+                                                                <div class=" btn badge badge-danger font-weight-bold"> Nhắc nhở</div>
+                                                            </td>
+                                                            </tr>
+                                                          @php
+
+
+                                                      }
+                                                  }
+                                              }
+
+                                          @endphp
+                                      </tbody>
+                                  </table>
+                              </div>
+
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-4 rounded-3 stretch-card grid-margin ">
+                      <div class="card overflow-auto " style="max-height: 479px">
                           <div class="card-body">
                               <p class="card-title">Một số sinh viên thuộc diện khó khăn</p>
                               <ul class="icon-data-list">
+                                  @php
+                                      $studentss = [];
+                                      foreach ($classes as $class) {
+                                          array_push($studentss, $class->member->where('role_id', 2)->where('hoan_canh', '<>', null));
+                                      }
+                                      $studentss = collect($studentss);
+                                  @endphp
+
+                                  @foreach ($studentss as $students)
+                                      @foreach ($students as $student)
+                                          <li>
+                                              <div class="d-flex">
+                                                  <img src="images/faces/face1.jpg" alt="user">
+                                                  <div>
+                                                      <p class="text-info mb-1"> {{ $student->name }}</p>
+                                                      <p class="mb-0"> {{ $student->hoan_canh }}</p>
+
+                                                  </div>
+                                              </div>
+                                          </li>
+                                      @endforeach
+                                  @endforeach
 
 
 
 
-
-
-                                  <li>
-                                      <div class="d-flex">
-                                          <img src="images/faces/face1.jpg" alt="user">
-                                          <div>
-                                              <p class="text-info mb-1"> Nguyễn Gia Khang</p>
-                                              <p class="mb-0"> Hộ nghèo</p>
-
-                                          </div>
-                                      </div>
-                                  </li>
-                                  <li>
-                                      <div class="d-flex">
-                                          <img src="images/faces/face2.jpg" alt="user">
-                                          <div>
-                                              <p class="text-info mb-1">Trần Đình Thi</p>
-                                              <p class="mb-0">Con thương binh</p>
-
-                                          </div>
-                                      </div>
-                                  </li>
-                                  <li>
-                                      <div class="d-flex">
-                                          <img src="images/faces/face3.jpg" alt="user">
-                                          <div>
-                                              <p class="text-info mb-1">Nguyễn Hoàng Điền</p>
-                                              <p class="mb-0">Sinh viên nghèo vượt khó</p>
-
-                                          </div>
-                                      </div>
-                                  </li>
 
                               </ul>
                           </div>
                       </div>
                   </div>
-
               </div>
-              <div class="row">
+
+              {{-- <div class="row">
                   <div class="col-md-4 stretch-card grid-margin">
                       <div class="card">
                           <div class="card-body">
@@ -856,68 +757,8 @@
                           </div>
                       </div>
                   </div>
-                  <div class="col-md-5 grid-margin stretch-card">
-                      <div class="card">
-                          <div class="card-body">
-                              <h4 class="card-title">To Do Lists</h4>
-                              <div class="list-wrapper pt-2">
-                                  <ul class="d-flex flex-column-reverse todo-list todo-list-custom">
-                                      <li>
-                                          <div class="form-check form-check-flat">
-                                              <label class="form-check-label">
-                                                  <input class="checkbox" type="checkbox">
-                                                  Meeting with Urban Team
-                                              </label>
-                                          </div>
-                                          <i class="remove ti-close"></i>
-                                      </li>
-                                      <li class="completed">
-                                          <div class="form-check form-check-flat">
-                                              <label class="form-check-label">
-                                                  <input class="checkbox" type="checkbox" checked>
-                                                  Duplicate a project for new customer
-                                              </label>
-                                          </div>
-                                          <i class="remove ti-close"></i>
-                                      </li>
-                                      <li>
-                                          <div class="form-check form-check-flat">
-                                              <label class="form-check-label">
-                                                  <input class="checkbox" type="checkbox">
-                                                  Project meeting with CEO
-                                              </label>
-                                          </div>
-                                          <i class="remove ti-close"></i>
-                                      </li>
-                                      <li class="completed">
-                                          <div class="form-check form-check-flat">
-                                              <label class="form-check-label">
-                                                  <input class="checkbox" type="checkbox" checked>
-                                                  Follow up of team zilla
-                                              </label>
-                                          </div>
-                                          <i class="remove ti-close"></i>
-                                      </li>
-                                      <li>
-                                          <div class="form-check form-check-flat">
-                                              <label class="form-check-label">
-                                                  <input class="checkbox" type="checkbox">
-                                                  Level up for Antony
-                                              </label>
-                                          </div>
-                                          <i class="remove ti-close"></i>
-                                      </li>
-                                  </ul>
-                              </div>
-                              <div class="add-items d-flex mb-0 mt-2">
-                                  <input type="text" class="form-control todo-list-input" placeholder="Add new task">
-                                  <button class="add btn btn-icon text-primary todo-list-add-btn bg-transparent"><i
-                                          class="icon-circle-plus"></i></button>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
+
+              </div> --}}
               {{-- <div class="row">
                   <div class="col-md-12 grid-margin stretch-card">
                       <div class="card">
@@ -947,6 +788,182 @@
                       </div>
                   </div>
               </div> --}}
+              {{-- todo list --}}
+              <div class="row mt-4 mb-8">
+                  <div class="col-md-12 ">
+                      <div class="card">
+                          <div class="card-body">
+                              <h4 class="card-title">Các nhiệm vụ gần hết hạn</h4>
+                              <div class="list-wrapper pt-2 overflow-hidden">
+                                  {{-- <ul class="d-flex flex-column-reverse todo-list todo-list-custom">
+                                      <li class="btn" onclick="location.href='/task'">
+                                          <box-icon name='error-alt' style="fill:rgb(194, 5, 5)" type='solid'
+                                              animation='tada' rotate='180'>
+                                          </box-icon>
+                                          <div class="form-check form-check-flat">
+                                              <label class=" btn form-check-label text-danger text"
+                                                  style="font-size: larger">
+                                                  Nhiệm vụ của: Level up for Antony
+                                              </label>
+                                          </div>
+
+                                      </li>
+
+                                  </ul> --}}
+                                  <div class="table-responsive">
+                                      <table id="myTable" class="table table-hover">
+                                          <thead>
+                                              <tr>
+                                                  <th class="text-justify">ID</th>
+                                                  <th class="text-justify">Tên</th>
+                                                  <th class="text-justify">Kì hạn</th>
+                                                  <th class="text-justify">Tiến độ</th>
+                                                  @can('manage-tasks')
+                                                      <th class="text-justify">Giao cho</th>
+                                                  @endcan
+                                                  @cannot('manage-tasks')
+                                                      <th class="text-justify">Được giao bởi</th>
+                                                  @endcannot
+                                                  <th class="text-justify">Trạng thái</th>
+                                                  <th class="text-justify">Hành động</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              @foreach ($tasks as $task)
+
+                                                  @php
+                                                      $date2 = date_create($task->deadline);
+                                                      $date1 = date_create(date('Y-m-d'));
+                                                      $diff = date_diff($date1, $date2);
+                                                  @endphp
+                                                  @if ($diff->format('%R') == '+' && (int) $diff->format('%a') <= 7)
+                                                      <tr data-toggle="collapse" data-target="#demo{{ $task->id }}"
+                                                          class="accordion-toggle">
+                                                          <td>
+                                                              {{ $task->id }}
+                                                          </td>
+                                                          <td class="align-middle">
+                                                              {{ $task->name }}
+                                                          </td>
+                                                          <td class="align-middle">
+                                                              {{ $task->deadline }}
+                                                          </td>
+                                                          <td class="align-middle">
+                                                              @php
+                                                                  $progress_type;
+                                                                  if ($task->progress < 33) {
+                                                                      $progress_type = 'bg-danger';
+                                                                  } elseif ($task->progress < 66) {
+                                                                      $progress_type = 'bg-warning';
+                                                                  } else {
+                                                                      $progress_type = 'bg-success';
+                                                                  }
+
+                                                              @endphp
+                                                              <div class="progress">
+                                                                  <div class="progress-bar align-middle {{ $progress_type }}"
+                                                                      role="progressbar"
+                                                                      style="width: {{ $task->progress }}%"
+                                                                      aria-valuenow="75" aria-valuemin="0"
+                                                                      aria-valuemax="100">
+                                                                  </div>
+                                                              </div>
+                                                          </td>
+                                                          @can('manage-tasks')
+                                                              <td class="align-middle">
+                                                                  {{ $task->receiver->name . ' MSV: ' . $task->receiver->msv }}
+                                                              </td>
+                                                          @endcan
+                                                          @cannot('manage-tasks')
+                                                              <td class="align-middle">
+                                                                  {{ $task->creator->name . ' MCV: ' . $task->creator->msv }}
+                                                              </td>
+                                                          @endcannot
+                                                          @php
+                                                              $status_type;
+                                                              $status;
+                                                              if ($task->status == 'new') {
+                                                                  $status_type = 'badge-danger';
+                                                                  $status = 'Mới';
+                                                              } elseif ($task->status == 'doing') {
+                                                                  $status_type = 'badge-warning';
+                                                                  $status = 'Đang hoàn thành';
+                                                              } else {
+                                                                  $status_type = 'badge-success';
+                                                                  $status = 'Đã xong';
+                                                              }
+                                                          @endphp
+                                                          <td class="align-middle"><label
+                                                                  class="badge p-2 mt-0 align-middle {{ $status_type }}"
+                                                                  style="min-width: 70px">{{ $status }}</label>
+                                                          </td>
+
+                                                          <td class="icon_style"
+                                                              style="  font-size: 19px;
+                                                                                                                                                                  margin: 0;
+                                                                                                                                                                  padding: 16px;
+                                                                                                                                                                  display: flex;
+                                                                                                                                                                  justify-content: start;
+                                                                                                                                                                  align-content: center;
+                                                                                                                                                                  align-items: center;
+                                                                                                                                                                  cursor: pointer">
+
+
+                                                              <a href="/task/{{ $task->id }}/edit"
+                                                                  class="mr-3 text-reset flex align-self-center align-middle text-decoration-none">
+                                                                  <ion-icon name="create-outline"></ion-icon>
+                                                              </a>
+                                                              @can('manage-tasks')
+                                                                  <form action='/task/{{ $task->id }}' method='POST'>
+                                                                      @csrf
+                                                                      @method('delete')
+                                                                      <button type="submit"
+                                                                          class="bg-transparent border-0 align-middle">
+                                                                          <ion-icon name="trash-outline"></ion-icon>
+                                                                      </button>
+                                                                  </form>
+                                                              @endcan
+                                                              {{-- <a href="">
+                                                          <ion-icon name="create-outline"></ion-icon>
+                                                      </a> --}}
+
+                                                          </td>
+
+                                                      </tr>
+                                                      <tr class="expanded-row">
+                                                          <td colspan="12" class="row-bg" style="padding: 0 !important">
+                                                              <div class="accordian-body p-2 collapse bg-light.bg-gradient"
+                                                                  style="background-color: beige"
+                                                                  id="demo{{ $task->id }}">
+
+                                                                  <div class="card card-body w-100">
+                                                                      <strong class="pb-2 fw-bold">Ghi chú:</strong>
+                                                                      <p class="fs-2 fst-italic fw-bold">
+                                                                          {{ $task->detail }}
+                                                                      </p>
+                                                                  </div>
+
+                                                              </div>
+                                                          </td>
+                                                      </tr>
+                                                  @endif
+                                              @endforeach
+
+                                          </tbody>
+                                      </table>
+
+                                  </div>
+                              </div>
+                              {{-- <div class="add-items d-flex mb-0 mt-2">
+                                  <input type="text" class="form-control todo-list-input" placeholder="Add new task">
+                                  <button class="add btn btn-icon text-primary todo-list-add-btn bg-transparent"><i
+                                          class="icon-circle-plus"></i></button>
+                              </div> --}}
+
+                          </div>
+                      </div>
+                  </div>
+              </div>
           </div>
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
@@ -997,6 +1014,34 @@
                   }
               }
           });
+          $(document).ready(function() {
+                  $("#mydata").DataTable({
+                      // bServerSide: true,
+                      // sPaginationType": "full_numbers"
+                      language: {
+                          search: "Tìm kiếm:",
+                          processing: "Đang tải dữ liệu...",
+                          paginate: {
+                              first: "First",
+                              previous: "<<",
+                              next: ">>",
+                              last: "Last"
+                          },
+                          sZeroRecords: "Không tìm thấy dữ liệu",
+                          lengthMenu: "Hiển thị _MENU_ sinh viên",
+                          info: "Hiển thị _START_ - _END_ / _TOTAL_ sinh viên",
+                      },
+
+                      aLengthMenu: [
+                          [5, 10, 25, -1],
+                          [5, 10, 25, "All"],
+                      ],
+
+                      iDisplayLength: 5,
+                  });
+              }
+
+          );
       </script>
       <!-- main-panel ends -->
   @endsection

@@ -26,7 +26,8 @@ class CreateUsersTable extends Migration
             $table->date('date_of_birth')->default(now());
             $table->unsignedTinyInteger('role_id')->default(3);
             $table->integer('so_lan_nhac_nho')->default(0)->nullable();
-            $table->boolean('thieu_hoc_phi')->default(false)->nullable();
+            $table->unsignedInteger('diem_chuyen_can')->nullable();
+            $table->string('hoan_canh')->nullable();
             $table->unsignedBigInteger('class_id');
             $table->unsignedBigInteger('msv')->unique();
         });

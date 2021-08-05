@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Models\Classes;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
-use App\Models\Classes;
 
 class UserFactory extends Factory
 {
@@ -27,17 +27,18 @@ class UserFactory extends Factory
     {
         $role_id = $this->faker->numberBetween(1, 2);
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'name'              => $this->faker->name(),
+            'email'             => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password'          => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
-            'date_of_birth' => $this->faker->date(),
-            'role_id' => $role_id,
-            'so_lan_nhac_nho' => ($role_id == 1) ? null : 0,
-            'thieu_hoc_phi' => ($role_id == 1) ? null : false,
-            'class_id' => Classes::factory(),
-            'msv' => $this->faker->unique()->numberBetween(100000, 199999)
+            'date_of_birth'     => $this->faker->date(),
+            'role_id'           => $role_id,
+            'so_lan_nhac_nho'   => ($role_id == 1) ? null : $this->faker->numberBetween(0, 4),
+            'diem_chuyen_can'   => ($role_id == 1) ? null : $this->faker->numberBetween(50, 100),
+            'hoan_canh'         => ($role_id == 1) ? null : $this->faker->randomElement([null, 'Hộ nghèo', 'Con thương binh', 'Sinh viên nghèo vượt khó']),
+            'class_id'          => Classes::factory(),
+            'msv'               => $this->faker->unique()->numberBetween(100000, 199999),
         ];
     }
 

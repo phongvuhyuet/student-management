@@ -2,15 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Support\Facades\Hash;
-
 
 class User extends Authenticatable
 {
@@ -73,7 +70,7 @@ class User extends Authenticatable
     // }
     public function courses()
     {
-        return $this->belongsToMany(Course::class, 'attends', 'user_id', 'course_id')->withPivot(['gk', 'ck']);
+        return $this->belongsToMany(Course::class, 'attends', 'user_id', 'course_id')->withPivot(['gk', 'ck', 'is_dong_hoc']);
     }
 
     public function tasksCreated()
@@ -91,13 +88,12 @@ class User extends Authenticatable
         return $this->hasMany(Message::class, 'creator_id');
     }
 
-
     public function messagesReceived()
     {
         return $this->hasMany(Message::class, 'receiver_id');
     }
 
-    public function class()
+    function class ()
     {
         return $this->belongsTo(Classes::class, 'class_id', 'id');
     }
