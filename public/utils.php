@@ -75,10 +75,23 @@ function calculateGPA($student)
 
 function getAccumulatedCredits($student)
 {
+
     $courses = $student->courses;
     $accumulatedCredits = 0;
     foreach ($courses as $course) {
         $accumulatedCredits += $course->so_TC;
     }
     return $accumulatedCredits;
+}
+
+function getSoTinNo($student)
+{
+    $so_tin_no = 0;
+    foreach ($student->courses as $course) {
+        $mark = toFourMark(averageMark($course));
+        if ($mark == 0) {
+            $so_tin_no += $course->so_TC;
+        }
+    }
+    return $so_tin_no;
 }

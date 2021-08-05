@@ -73,7 +73,7 @@
                                                                     <td>{{ $student->class->name }}</td>
                                                                     <td>{{ getAccumulatedCredits($student) }}</td>
                                                                     <td>{{ calculateGPA($student) }}</td>
-                                                                    <td>11</td>
+                                                                    <td>{{ getSoTinNo($student) }}</td>
                                                                     <td>{{ $student->so_lan_nhac_nho }}</td>
                                                                 </tr>
                                                             @endforeach
