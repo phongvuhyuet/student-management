@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\Consultant\StudentController;
 use App\Http\Controllers\CourseController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TaskController;
+use App\Models\Classes;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +22,12 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', 'login', 301);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
+    $classes = Classes::with('member')->with('member.courses')->where('consultant_id', Auth::user()->id)->get();
+    $tasks = Auth::user()->tasksCreated;
+    return view('dashboard', [
+        'classes' => $classes,
+        'tasks' => $tasks,
+    ]);
 })->name('dashboard');
 Route::group(['middleware' => 'auth:sanctum'], function () {
     // Route::group(['middleware' => 'role:student', 'prefix' => 'student', 'as' => 'student.'], function () {
@@ -36,6 +41,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
     Route::resource('task', TaskController::class);
     Route::resource('course', CourseController::class);
+
 });
 
 Route::get('/marks/{id}', [StudentController::class, 'getCourses']);
@@ -43,7 +49,7 @@ Route::group(['middleware' => 'role:consultant', 'as' => 'consultant.'], functio
     Route::get('classes', [StudentController::class, 'classes']);
     Route::get('class/{id}/students', [StudentController::class, 'index']);
     Route::get('classes/test', [StudentController::class, 'test']);
-    Route::get('dashboard', [DashboardController::class, 'index']);
+    // Route::get('dashboard', [DashboardController::class, 'index']);
     Route::get('/view-grade', function () {
         $students = User::where('role_id', 2)->whereIn('id', Auth::user()->consult->first()->member->where('role_id', 2)->pluck('id'));
         $first = true;
@@ -57,5 +63,8 @@ Route::group(['middleware' => 'role:consultant', 'as' => 'consultant.'], functio
         return view('admin.view-grade', [
             'students' => $students->with('courses')->with('class')->get(),
         ]);
+    });
+    Route::get('charts', function () {
+        return view('consultant.charts.index');
     });
 });
