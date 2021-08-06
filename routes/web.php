@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClassController;
 use App\Http\Controllers\Consultant\StudentController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
@@ -61,3 +62,4 @@ Route::group(['middleware' => 'role:consultant', 'as' => 'consultant.'], functio
     });
 });
 Route::get('/statistical', [StatisticalController::class, 'index']);
+Route::get('classChart', [ClassController::class, 'index']);

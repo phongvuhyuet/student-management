@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classes;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StatisticalController extends Controller
 {
@@ -13,8 +16,12 @@ class StatisticalController extends Controller
      */
     public function index()
     {
-        return view('statistical.index');
-
+        $classes = Classes::with('member')->with('member.courses')->where('consultant_id', Auth::user()->id)->get();
+        $tasks = Auth::user()->tasksCreated;
+        return view('statistical.index', [
+            'classes' => $classes,
+            'tasks'   => $tasks,
+        ]);
     }
 
     /**
