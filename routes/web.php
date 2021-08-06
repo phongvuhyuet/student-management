@@ -3,6 +3,7 @@
 use App\Http\Controllers\Consultant\StudentController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\StatisticalController;
 use App\Http\Controllers\TaskController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -59,3 +60,4 @@ Route::group(['middleware' => 'role:consultant', 'as' => 'consultant.'], functio
         ]);
     });
 });
+Route::get('/statistical', [StatisticalController::class, 'index']);
