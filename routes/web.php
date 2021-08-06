@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClassController;
 use App\Http\Controllers\Consultant\StudentController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\TaskController;
@@ -67,4 +68,5 @@ Route::group(['middleware' => 'role:consultant', 'as' => 'consultant.'], functio
     Route::get('charts', function () {
         return view('consultant.charts.index');
     });
+    Route::get('classChart', [ClassController::class, 'index']);
 });
