@@ -45,93 +45,14 @@
                 <div class="card">
                     <div class="card-body">
                         <p class="card-title">Danh sách sinh viên</p>
+                        @livewireStyles
+                        <livewire:student-table :classId="$id">
+                            @livewireScripts
 
-                        <table id="mydata" class="table table-striped table-bordered" style="width: 100%">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        STT
-                                    </th>
-                                    <th>Họ và Tên</th>
-                                    <th>Email</th>
-                                    <th>Mã số sinh viên</th>
-                                    <th>Ngày sinh</th>
-                                    <th>Lớp</th>
-                                    <th>Khoa</th>
-                                </tr>
-                            </thead>
-
-                            {{-- insert data here --}}
-                            <tbody class="data_entry">
-                                @foreach ($students as $student)
-                                    <tr>
-                                        <td>{{ $loop->index + 1 }}</td>
-                                        <td>{{ $student->name }}</td>
-                                        <td>{{ $student->email }}</td>
-                                        <td>{{ $student->msv }}</td>
-                                        <td>{{ $student->date_of_birth }}</td>
-                                        <td>{{ $student->class->name }}</td>
-                                        <td>{{ $student->class->faculty }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        $(document).ready(function() {
-                $("#mydata").DataTable({
-                    // bServerSide: true,
-                    // sPaginationType": "full_numbers"
-                    language: {
-                        search: "Tìm kiếm:",
-                        processing: "Đang tải dữ liệu...",
-                        paginate: {
-                            first: "First",
-                            previous: "<<",
-                            next: ">>",
-                            last: "Last"
-                        },
-                        sZeroRecords: "Không tìm thấy dữ liệu",
-                        lengthMenu: "Hiển thị _MENU_ sinh viên",
-                        info: "Hiển thị _START_ - _END_ / _TOTAL_ sinh viên",
-                    },
-
-                    aLengthMenu: [
-                        [5, 10, 25, -1],
-                        [5, 10, 25, "All"],
-                    ],
-
-                    iDisplayLength: 5,
-                });
-            }
-
-        );
-
-
-
-        function fnClickAddRow() {
-            $('#example').dataTable().fnAddData([
-                giCount + ".1",
-                giCount + ".2",
-                giCount + ".3",
-                giCount + ".4"
-            ]);
-
-            giCount++;
-        }
-
-        function checkAll(bx) {
-            var cbs = document.getElementsByTagName("input");
-            for (var i = 0; i < cbs.length; i++) {
-                if (cbs[i].type == "checkbox") {
-                    cbs[i].checked = bx.checked;
-                }
-            }
-        }
-    </script>
 @endsection

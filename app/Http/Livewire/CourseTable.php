@@ -11,7 +11,7 @@ class CourseTable extends Component
     use WithPagination;
     public $perPage = 10;
     public $search = '';
-    public $orderBy = 'id';
+    public $orderBy = 'maMH';
     public $orderAsc = true;
     public function render()
     {

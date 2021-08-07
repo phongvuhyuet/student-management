@@ -8,6 +8,7 @@ use App\Http\Controllers\TaskController;
 use App\Models\Classes;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +29,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     $tasks = Auth::user()->tasksCreated;
     return view('dashboard', [
         'classes' => $classes,
-        'tasks'   => $tasks,
+        'tasks' => $tasks,
     ]);
 })->name('dashboard');
 Route::group(['middleware' => 'auth:sanctum'], function () {
@@ -57,6 +58,15 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
             return view('consultant.charts.index');
         });
         Route::get('classChart', [ClassController::class, 'index']);
+        Route::get('class/{id}/create', function ($id) {
+            if (Gate::denies('manage-students', Classes::find($id))) {
+                abort(403);
+            }
+            return view('statistical.student-form', [
+                'id' => $id,
+            ]);
+        });
+        Route::post('class/{id}/create', [StudentController::class, 'createStudent']);
     });
 });
 Route::get('/statistical', [StatisticalController::class, 'index']);
