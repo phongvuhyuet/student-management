@@ -60,7 +60,7 @@
                                   <div class="carousel-inner">
                                       <div class="carousel-item  active" style="height: 780px; object-fit: cover">
                                           <img class="d-block w-100 h-100 "
-                                              src="https://scontent.xx.fbcdn.net/v/t39.30808-6/225630979_1410488209319636_6679905556770882115_n.jpg?_nc_cat=107&ccb=1-4&_nc_sid=340051&_nc_ohc=SI-syih0aKMAX_PzOjh&_nc_ht=scontent.fhan3-2.fna&oh=b6a2d17e8931aa0022a536b7345bcaa8&oe=6112FB8C&_nc_fr=fhan3c02"
+                                              src="{{ asset('images/dashboard/404-not-found.jpg') }}"
                                               data-color="lightblue" alt="First Image">
                                           <div class="carousel-caption d-md-block">
                                               {{-- <h5>First Image</h5> --}}
@@ -68,7 +68,7 @@
                                       </div>
                                       <div class="carousel-item " style="height: 780px; object-fit: cover">
                                           <img class="d-block w-100 h-100"
-                                              src="https://scontent.xx.fbcdn.net/v/t1.6435-9/217392445_4349567068429413_2177439834542793195_n.jpg?_nc_cat=109&ccb=1-4&_nc_sid=340051&_nc_ohc=dQX3lqZgn0kAX8wLnIN&_nc_ht=scontent.fhan3-5.fna&oh=85afd7ed3c0955d7d99ba6e6d66ade8c&oe=6134DE8B&_nc_fr=fhan3c05"
+                                              src="{{ asset('images/dashboard/doan-thanh-nien.jpg') }}"
                                               data-color="firebrick" alt="Second Image">
                                           <div class="carousel-caption d-md-block">
                                               {{-- <h5>Second Image</h5> --}}
@@ -76,7 +76,7 @@
                                       </div>
                                       <div class="carousel-item" style="height: 780px; object-fit: cover">
                                           <img class="d-block w-100 h-100 "
-                                              src="https://scontent.fhan3-2.fna.fbcdn.net/v/t1.6435-9/221941083_814117452635939_8239861762149026769_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=8bfeb9&_nc_ohc=ich9H9kBeqoAX-zvUWN&tn=VbHeUG1J2EAzs6Ob&_nc_ht=scontent.fhan3-2.fna&oh=356d2dc2022ea80c5cb867756b194d64&oe=612A7E45"
+                                              src="{{ asset('images/dashboard/213078697_2275741949234879_8088690668086271971_n.jpg') }}"
                                               data-color="violet" alt="Third Image">
                                           <div class="carousel-caption d-md-block">
                                               {{-- <h5>Third Image</h5> --}}
@@ -452,7 +452,7 @@
                                                                       } else {
                                                                           $progress_type = 'bg-success';
                                                                       }
-
+                                                                      
                                                                   @endphp
                                                                   <div class="progress">
                                                                       <div class="progress-bar align-middle {{ $progress_type }}"
@@ -494,13 +494,13 @@
 
                                                               <td class="icon_style"
                                                                   style="  font-size: 19px;
-                                                                                                                                                                                margin: 0;
-                                                                                                                                                                                padding: 16px;
-                                                                                                                                                                                display: flex;
-                                                                                                                                                                                justify-content: start;
-                                                                                                                                                                                align-content: center;
-                                                                                                                                                                                align-items: center;
-                                                                                                                                                                                cursor: pointer">
+                                                                                                                                                                                                        margin: 0;
+                                                                                                                                                                                                        padding: 16px;
+                                                                                                                                                                                                        display: flex;
+                                                                                                                                                                                                        justify-content: start;
+                                                                                                                                                                                                        align-content: center;
+                                                                                                                                                                                                        align-items: center;
+                                                                                                                                                                                                        cursor: pointer">
 
 
                                                                   <a href="/task/{{ $task->id }}/edit"
