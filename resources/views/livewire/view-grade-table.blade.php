@@ -1,5 +1,37 @@
 <div>
     <div class="w-full flex pb-10">
+
+
+        {{-- selector --}}
+        <select class="js-example-basic-single" wire:model="term" aria-label="Default select example"
+            style="padding: 0 10px">
+            <option class="dropdown-item" value="all" selected>Tất cả kì học
+            </option>
+            <option class="dropdown-item" value="12021">211 - Học kỳ 1 năm 2021-2022
+            </option>
+            <option class="dropdown-item" value="22020">202 - Học kỳ 2 năm 2020-2021
+            </option>
+            <option class="dropdown-item" value="12020">201 - Học kỳ 1 năm 2020-2021
+            </option>
+            <option class="dropdown-item" value="22019">192 - Học kỳ 2 năm 2019-2020
+            </option>
+            <option class="dropdown-item" value="12019">191 - Học kỳ 1 năm 2019-2020
+            </option>
+            <option class="dropdown-item" value="22018">182 - Học kỳ 1 năm 2018-2019
+            </option>
+            <option class="dropdown-item" value="12018">181 - Học kỳ 1 năm 2018-2019
+            </option>
+            <option class="dropdown-item" value="22017">172 - Học kỳ 2 năm 2017-2018
+            </option>
+            <option class="dropdown-item" value="12017">171 - Học kỳ 1 năm 2017-2018
+            </option>
+            <option class="dropdown-item" value="22016">162 - Học kỳ 2 năm 2016-2017
+            </option>
+            <option class="dropdown-item" value="12016">161 - Học kỳ 1 năm 2016-2017
+            </option>
+        </select>
+
+
         <div class="w-3/6 mx-1">
             <input wire:model.debounce.300ms="search" type="text"
                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
