@@ -1,0 +1,215 @@
+<div>
+    <div class="w-full flex pb-10">
+        <div class="w-3/6 mx-1">
+            <input wire:model.debounce.300ms="search" type="text"
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                placeholder="Tìm kiếm tên công việc, ID công việc, tên người liên quan,...">
+        </div>
+
+        <div class="d-flex justify-content-between mb-4">
+
+
+            @can('manage-tasks')
+                <a href="/task/create" class=" text-reset flex align-self-center text-decoration-none">
+                    <div
+                        class="
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    d-flex
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    flex-row
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    align-items-center align-self-center
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ">
+                        <p class="p-0 m-0 pr-1">
+                            Thêm công việc
+                        </p>
+                        <ion-icon
+                            style="
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        font-size: 30px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        cursor: pointer;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "
+                            name="add-circle-outline">
+                        </ion-icon>
+                    </div>
+                </a>
+            @endcan
+
+        </div>
+        <div class="w-1/6 relative mx-1">
+            <select wire:model="orderBy"
+                class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="grid-state">
+                <option value="id">ID</option>
+                <option value="name">Tên</option>
+                <option value="status">Trạng thái</option>
+                <option value="progress">Tiến độ</option>
+                @can('manage-tasks')
+                    <option value="receiver_id">Giao cho</option>
+                @endcan
+                @cannot('manage-tasks')
+                    <option value="creator_id">Được giao bởi</option>
+                @endcan
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+            </div>
+        </div>
+        <div class="w-1/6 relative mx-1">
+            <select wire:model="orderAsc"
+                class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="grid-state">
+                <option value="1">Tăng dần</option>
+                <option value="0">Giảm dần</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+            </div>
+        </div>
+        <div class="w-1/6 relative mx-1">
+            <select wire:model="perPage"
+                class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="grid-state">
+                <option>10</option>
+                <option>25</option>
+                <option>50</option>
+                <option>100</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table id="myTable" class="table table-hover">
+            <thead>
+                <tr>
+                    <th class="text-justify">ID</th>
+                    <th class="text-justify">Tên</th>
+                    <th class="text-justify">Kì hạn</th>
+                    <th class="text-justify">Tiến độ</th>
+                    @can('manage-tasks')
+                        <th class="text-justify">Giao cho</th>
+                    @endcan
+                    @cannot('manage-tasks')
+                        <th class="text-justify">Được giao bởi</th>
+                    @endcannot
+                    <th class="text-justify">Trạng thái</th>
+                    <th class="text-justify">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($tasks as $task)
+
+                    <tr data-toggle="collapse" data-target="#demo{{ $task->id }}" class="accordion-toggle">
+                        <td>
+                            {{ $task->id }}
+                        </td>
+                        <td class="align-middle">
+                            {{ $task->name }}
+                        </td>
+                        <td class="align-middle">
+                            {{ $task->deadline }}
+                        </td>
+                        <td class="align-middle">
+                            @php
+                                $progress_type;
+                                if ($task->progress < 33) {
+                                    $progress_type = 'bg-danger';
+                                } elseif ($task->progress < 66) {
+                                    $progress_type = 'bg-warning';
+                                } else {
+                                    $progress_type = 'bg-success';
+                                }
+
+                            @endphp
+                            <div class="progress">
+                                <div class="progress-bar align-middle {{ $progress_type }}" role="progressbar"
+                                    style="width: {{ $task->progress }}%" aria-valuenow="75" aria-valuemin="0"
+                                    aria-valuemax="100"></div>
+                            </div>
+                        </td>
+                        @can('manage-tasks')
+                            <td class="align-middle">
+                                {{ $task->receiver->name . ' MSV: ' . $task->receiver->msv }}
+                            </td>
+                        @endcan
+                        @cannot('manage-tasks')
+                            <td class="align-middle">
+                                {{ $task->creator->name . ' MCV: ' . $task->creator->msv }}
+                            </td>
+                        @endcannot
+                        @php
+                            $status_type;
+                            $status;
+                            if ($task->status == 'new') {
+                                $status_type = 'badge-danger';
+                                $status = 'Mới';
+                            } elseif ($task->status == 'doing') {
+                                $status_type = 'badge-warning';
+                                $status = 'Đang hoàn thành';
+                            } else {
+                                $status_type = 'badge-success';
+                                $status = 'Đã xong';
+                            }
+                        @endphp
+                        <td class="align-middle"><label class="badge p-2 mt-0 align-middle {{ $status_type }}"
+                                style="min-width: 70px">{{ $status }}</label>
+                        </td>
+
+                        <td class="icon_style" style="  font-size: 19px;
+                                                                                                    margin: 0;
+                                                                                                    padding: 16px;
+                                                                                                    display: flex;
+                                                                                                    justify-content: start;
+                                                                                                    align-content: center;
+                                                                                                    align-items: center;
+                                                                                                    cursor: pointer">
+
+
+                            <a href="/task/{{ $task->id }}/edit"
+                                class="mr-3 text-reset flex align-self-center align-middle text-decoration-none">
+                                <ion-icon name="create-outline"></ion-icon>
+                            </a>
+                            @can('manage-tasks')
+                                <form action='/task/{{ $task->id }}' method='POST'>
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="bg-transparent border-0 align-middle">
+                                        <ion-icon name="trash-outline"></ion-icon>
+                                    </button>
+                                </form>
+                            @endcan
+                            {{-- <a href="">
+                                <ion-icon name="create-outline"></ion-icon>
+                            </a> --}}
+
+                        </td>
+
+                    </tr>
+                    <tr class="expanded-row">
+                        <td colspan="12" class="row-bg" style="padding: 0 !important">
+                            <div class="accordian-body p-2 collapse bg-light.bg-gradient"
+                                style="background-color: beige" id="demo{{ $task->id }}">
+
+                                <div class="card card-body w-100">
+                                    <strong class="pb-2 fw-bold">Ghi chú:</strong>
+                                    <p class="fs-2 fst-italic fw-bold">
+                                        {{ $task->detail }}
+                                    </p>
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+
+                @endforeach
+
+            </tbody>
+        </table>
+
+    </div>
+    <span class="d-flex justify-content-end">{!! $tasks->links('livewire::bootstrap') !!}</span>
+</div>
