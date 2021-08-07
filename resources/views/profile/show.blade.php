@@ -1,5 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
+        <button class="btn" onclick="location.href='/'" style="position: absolute">Trang chủ</button>
         <h1 class="font-semibold text-xl text-gray-800 text-center" style="font-size: 40px">
             {{ __('Trang cá nhân') }}
         </h1>
