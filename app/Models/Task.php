@@ -16,17 +16,24 @@ class Task extends Model
 
     public static function search($search)
     {
-        $result = empty($search) ? static::query()
-        : static::query()->where('id', 'like', '%' . $search . '%')
-            ->orWhere('name', 'like', '%' . $search . '%');
+        $result = static::query();
         if (Gate::allows('manage-tasks')) {
-            $result->orWhereHas('receiver', function (Builder $query) use ($search) {
-                $query->where('name', 'like', '%' . $search . '%');
-            })->where('creator_id', Auth::user()->id);
+            $result->where('creator_id', Auth::user()->id);
         } else {
-            $result->orWhereHas('creator', function (Builder $query) use ($search) {
-                $query->where('name', 'like', '%' . $search . '%');
-            })->where('receiver_id', Auth::user()->id);
+            $result->where('receiver_id', Auth::user()->id);
+        }
+        if (!empty($search)) {
+            $result->where('id', 'like', '%' . $search . '%')
+                ->orWhere('name', 'like', '%' . $search . '%');
+            if (Gate::allows('manage-tasks')) {
+                $result->orWhereHas('receiver', function (Builder $query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%');
+                });
+            } else {
+                $result->orWhereHas('creator', function (Builder $query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%');
+                });
+            }
         }
         return $result;
     }

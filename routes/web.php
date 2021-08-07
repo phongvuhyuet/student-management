@@ -52,18 +52,8 @@ Route::group(['middleware' => 'role:consultant', 'as' => 'consultant.'], functio
     Route::get('classes/test', [StudentController::class, 'test']);
     // Route::get('dashboard', [DashboardController::class, 'index']);
     Route::get('/view-grade', function () {
-        $students = User::where('role_id', 2)->whereIn('id', Auth::user()->consult->first()->member->where('role_id', 2)->pluck('id'));
-        $first = true;
-        foreach (Auth::user()->consult as $class) {
-            if ($first) {
-                $first = false;
-                continue;
-            }
-            $students->orWhereIn('id', $class->member->where('role_id', 2)->pluck('id'));
-        }
-        return view('admin.view-grade', [
-            'students' => $students->with('courses')->with('class')->get(),
-        ]);
+
+        return view('admin.view-grade');
     });
     Route::get('charts', function () {
         return view('consultant.charts.index');
