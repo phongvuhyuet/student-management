@@ -34,5 +34,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('manage-tasks', function (User $user) {
             return $user->role_id == 1;
         });
+        Gate::define('view-mark', function (User $user, $id) {
+            return ($user->role_id == 1 || $user->id == $id);
+        });
     }
 }

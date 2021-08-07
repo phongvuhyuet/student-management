@@ -139,6 +139,7 @@
             function showMarkDetail(mark) {
                 // $('#markDetails').show()
                 // alert(mark)
+                let gpa = mark.gk * 0.4 + mark.ck * 0.6
                 let html = `
                     <table class="table table-striped table-bordered">
                         <thead>
@@ -165,7 +166,7 @@
                             <tr>
                                 <td colspan="3" align="center"><b>Tổng điểm</b>
                                 </td>
-                                <td><b>${mark.gk * 0.4 + mark.ck * 0.6}</b></td>
+                                <td><b>${gpa.toPrecision(3)}</b></td>
                             </tr>
                         </tbody>
                     </table>

@@ -1,6 +1,7 @@
 {{-- <?php
 ?> --}}
-@extends('layouts.student')
+@extends(Auth::user()->role_id == 2 ? 'layouts.student' : 'layouts.admin')
+
 @section('main')
 
     <div class="main-panel">

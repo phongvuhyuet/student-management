@@ -33,7 +33,9 @@ class StudentController extends Controller
 
     public function getCourses($id)
     {
-
+        if (Gate::denies('view-mark', $id)) {
+            abort(403);
+        };
         return view('student.marks.index', ['id' => $id]);
     }
 }
