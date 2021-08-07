@@ -33,7 +33,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/charts">
+                <a class="nav-link" href="/statistical">
                     <i class="ti-bar-chart menu-icon"></i>
                     <span class="menu-title">Thống kê</span>
                 </a>
