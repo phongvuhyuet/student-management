@@ -9,7 +9,7 @@
                 <div class="col-md-12 ">
                     <div class="card">
                         <div class="card-body">
-                            <p class="card-title">Thong ke</p>
+                            <p class="card-title responsive-table text-center">Bảng thống kê học lực của sinh viên  </p>
                             <div class="col-md-12 ">
                                 <div class="chart-header d-flex justify-content-between">
 
@@ -33,8 +33,8 @@
                                             class="js-example-basic-single btn-outline  dropdown-toggle "
                                             style="width: 200px">
 
-                                            @foreach ($classes as $task)
-                                                <option value="{{ $task->name }}">{{ $task->name }}</option>
+                                            @foreach ($classes as $class)
+                                                <option value="{{ $class->name }}">{{ $class->name }}</option>
 
                                             @endforeach
                                         </select>
@@ -49,49 +49,73 @@
             </div>
 
             {{-- bang classes thieu hoc phi --}}
-            {{-- <div class="row">
-                  <div class="col-md-12 grid-margin stretch-card">
-                      <div class="card">
-                          <div class="card-body">
-                              <p class="card-title ">Tình trạng nộp học phí</p>
-                              <div class="table-responsive">
-                                  <table class="table table-striped table-borderless">
-                                      <thead>
-                                          <tr>
-                                              <th>Tên lớp học</th>
-                                              <th>Tổng học phí</th>
-                                              <th>Hạn chót nộp học phí</th>
-                                              <th>Trạng thái</th>
-                                          </tr>
-                                      </thead>
-                                      <tbody>
+            <div class="row" style="margin-top: 40px">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-title ">Tình trạng nộp học phí</p>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th>Tên lớp học</th>
+                                            <th>Tổng học phí</th>
+                                            <th>Hạn chót nộp học phí</th>
+                                            <th>Trạng thái</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($classes as $class)
+                                            @php
+                                                $students = $class->member->where('role_id', 2);
+                                                $totalMoney = 0;
+                                                $paidMoney = 0;
+                                                $so_sinh_vien_no_hp = 0;
+                                                foreach ($students as $student) {
+                                                    $checkNoHocPhi = false;
+                                                    foreach ($student->courses as $course) {
+                                                        $totalMoney += $course->so_TC * 300000;
+                                                        if ($course->pivot->is_dong_hoc) {
+                                                            $paidMoney += $course->so_TC * 300000;
+                                                        } else {
+                                                            $checkNoHocPhi = true;
+                                                        }
+                                                    }
+                                                    if ($checkNoHocPhi) {
+                                                        $so_sinh_vien_no_hp++;
+                                                    }
+                                                }
+                                            @endphp
 
-                                          @foreach ($classes as $class)
-                                              <tr>
+                                        @endforeach
+                                        @foreach ($classes as $class)
+                                            <tr>
+                                                <td>{{ $class->name }}</td>
+                                                <td class="font-weight-bold">{{ $totalMoney }}VND</td>
+                                                <td>12/08/2021</td>
+                                                <td class="font-weight-medium">
+                                                    @if ($totalMoney - $paidMoney == 0)
+                                                        <div class="badge badge-success">Hoàn thành</div>
+                                                    @else
+                                                        <div class="badge badge-warning">Chưa hoàn thành</div>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                                                  <td>{{ $class->name }}</td>
-                                                  <td class="font-weight-bold">{{ $totalMoney }}VND</td>
-                                                  <td>12/08/2021</td>
-                                                  <td class="font-weight-medium">
-                                                      @if ($totalMoney - $paidMoney == 0)
-                                                          <div class="badge badge-success">Hoàn thành</div>
-                                                      @else
-                                                          <div class="badge badge-warning">Chưa hoàn thành</div>
-                                                      @endif
-                                                  </td>
-                                              </tr>
-                                          @endforeach
-                                      </tbody>
-                                  </table>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+
+            </div>
 
 
-              </div> --}}
+
             {{-- bang sinh vien thieu hoc phi --}}
-            {{-- <div class="row">
+            <div class="row">
                   <div class="col-md-8">
                       <div class="card overflow-auto " style="max-height: 479px">
                           <div class="card-body">
@@ -194,7 +218,7 @@
                           </div>
                       </div>
                   </div>
-              </div> --}}
+              </div>
 
         </div>
     </div>
@@ -214,8 +238,9 @@
                 success: function(data) {
 
                     classInfo = Object.assign({}, data);
-
                 },
+            }).then((x) => {
+
             })
         })
         let defaultChartConfig = {
@@ -250,7 +275,7 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: `Bảng thống kê học lực sinh viên của lớp `,
+                        // text: ,
                         font: {
                             size: 23
                         }
@@ -272,7 +297,7 @@
 
         let myChart = new Chart(ctx, defaultChartConfig);
         let className = document.getElementById('select-class').value;
-        // console.log(className)
+
         const setChartByClassName = (className) => {
             // console.log(className)
             if (className) {
@@ -293,7 +318,7 @@
         }
         setTimeout(() => {
             setChartByClassName(className)
-        }, 500)
+        }, 1000)
 
         const changeChartType = () => {
             // clear data and destroy chart
@@ -301,6 +326,7 @@
             myChart.destroy();
             // creat new chart config 
             const newConfig = Object.assign({}, defaultChartConfig)
+            console.log(newConfig)
             //handle on change chart type
             let chartType = document.getElementById('select-chart-type').value;
             //set chart type to new chart type
