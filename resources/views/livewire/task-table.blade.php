@@ -2,6 +2,9 @@
     <div>
         <p class="card-title">Công việc</p>
         <div class='row'>
+            <div class='col-md-1 d-flex justify-content-center align-item-center' style='padding-right: 0px;' name='label'>
+                <label style='margin: 13px 0px 5px 0px;'>Xếp theo</label>
+            </div>
             <div class="col-md-2" name='select1'>
                 <select wire:model="orderBy"
                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -65,7 +68,8 @@
                 @endcan
             </div>
 
-            <div class="col-md-4" name='search'>
+
+            <div class="col-md-3" name='search'>
                 <input wire:model.debounce.300ms="search" type="text"
                     class="appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     placeholder="Tìm kiếm id, tên, trạng thái,...">

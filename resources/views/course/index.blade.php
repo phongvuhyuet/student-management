@@ -39,18 +39,20 @@
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 
     {{-- table_database --}}
-    <div class="content-wrapper">
-        <div class="row">
-            <div class="col-md-12 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-title">Môn học</p>
+    <div class='main-panel'>
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            
 
-                        @livewireStyles
-                        <livewire:course-table>
-                            @livewireScripts
+                            @livewireStyles
+                            <livewire:course-table>
+                                @livewireScripts
 
 
+                        </div>
                     </div>
                 </div>
             </div>
