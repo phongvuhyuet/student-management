@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\Consultant\StudentController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\StatisticalController;
 use App\Http\Controllers\TaskController;
 use App\Models\Classes;
 use App\Models\User;
@@ -27,7 +28,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     $tasks = Auth::user()->tasksCreated;
     return view('dashboard', [
         'classes' => $classes,
-        'tasks' => $tasks,
+        'tasks'   => $tasks,
     ]);
 })->name('dashboard');
 Route::group(['middleware' => 'auth:sanctum'], function () {
@@ -42,21 +43,21 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
     Route::resource('task', TaskController::class);
     Route::resource('course', CourseController::class);
+    Route::get('/marks/{id}', [StudentController::class, 'getCourses']);
+    Route::group(['middleware' => 'role:consultant', 'as' => 'consultant.'], function () {
+        Route::get('classes', [StudentController::class, 'classes']);
+        Route::get('class/{id}/students', [StudentController::class, 'index']);
+        Route::get('classes/test', [StudentController::class, 'test']);
+        // Route::get('dashboard', [DashboardController::class, 'index']);
+        Route::get('/view-grade', function () {
 
-});
-
-Route::get('/marks/{id}', [StudentController::class, 'getCourses']);
-Route::group(['middleware' => 'role:consultant', 'as' => 'consultant.'], function () {
-    Route::get('classes', [StudentController::class, 'classes']);
-    Route::get('class/{id}/students', [StudentController::class, 'index']);
-    Route::get('classes/test', [StudentController::class, 'test']);
-    // Route::get('dashboard', [DashboardController::class, 'index']);
-    Route::get('/view-grade', function () {
-
-        return view('admin.view-grade');
+            return view('admin.view-grade');
+        });
+        Route::get('charts', function () {
+            return view('consultant.charts.index');
+        });
+        Route::get('classChart', [ClassController::class, 'index']);
     });
-    Route::get('charts', function () {
-        return view('consultant.charts.index');
-    });
-    Route::get('classChart', [ClassController::class, 'index']);
 });
+Route::get('/statistical', [StatisticalController::class, 'index']);
+Route::get('classChart', [ClassController::class, 'index']);

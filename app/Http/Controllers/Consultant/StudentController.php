@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Consultant;
 
 use App\Http\Controllers\Controller;
 use App\Models\Classes;
-use Illuminate\Support\Facades\Gate;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class StudentController extends Controller
 {
@@ -33,7 +33,9 @@ class StudentController extends Controller
 
     public function getCourses($id)
     {
-        $courses = User::find($id)->courses;
-        return view('student.marks.index', ['courses' => $courses]);
+        if (Gate::denies('view-mark', $id)) {
+            abort(403);
+        };
+        return view('student.marks.index', ['id' => $id]);
     }
 }
