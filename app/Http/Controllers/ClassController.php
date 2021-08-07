@@ -106,11 +106,12 @@ class ClassController extends Controller
 
             }
             $data[$class->name] = [
-                'countXs' => $countXs,
-                'countG' => $countG,
-                'countK' => $countK,
-                'countTb' => $countTb,
                 'countY' => $countY,
+                'countTb' => $countTb,
+                'countK' => $countK,
+                'countG' => $countG,
+                'countXs' => $countXs,
+
             ];
         }
 

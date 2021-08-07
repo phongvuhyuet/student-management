@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\Consultant\StudentController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\StatisticalController;
 use App\Http\Controllers\TaskController;
 use App\Models\Classes;
 use App\Models\User;
@@ -27,7 +28,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     $tasks = Auth::user()->tasksCreated;
     return view('dashboard', [
         'classes' => $classes,
-        'tasks' => $tasks,
+        'tasks'   => $tasks,
     ]);
 })->name('dashboard');
 Route::group(['middleware' => 'auth:sanctum'], function () {
@@ -58,3 +59,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('classChart', [ClassController::class, 'index']);
     });
 });
+Route::get('/statistical', [StatisticalController::class, 'index']);
+Route::get('classChart', [ClassController::class, 'index']);
