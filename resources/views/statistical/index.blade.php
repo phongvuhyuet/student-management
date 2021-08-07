@@ -235,7 +235,6 @@
                 url: 'classChart',
                 data: {},
                 success: function(data) {
-
                     classInfo = Object.assign({}, data);
                 },
             }).then((x) => {
@@ -287,13 +286,13 @@
                 stacked: false,
                 plugins: {
                     title: {
-                        display: false,
+                        display: true,
                         text: (ctx) => {
                             const {
                                 intersect,
                                 mode
                             } = ctx.chart.options.interaction;
-                            return 'Mode: ' + mode + ', intersect: ' + intersect;
+                            return '';
                         },
                         font: {
                             size: 23
@@ -314,8 +313,6 @@
             }
         }
         const ctx = document.getElementById('myChart');
-
-
         let myChart = new Chart(ctx, defaultChartConfig);
         let className = document.getElementById('select-class').value;
 
