@@ -43,7 +43,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         // Route::resource('users', UserController::class);
     });
     Route::resource('task', TaskController::class);
-    Route::resource('course', CourseController::class);
+
     Route::get('/marks/{id}', [StudentController::class, 'getCourses']);
     Route::group(['middleware' => 'role:consultant', 'as' => 'consultant.'], function () {
         Route::get('classes', [StudentController::class, 'classes']);
@@ -67,7 +67,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
             ]);
         });
         Route::post('class/{id}/create', [StudentController::class, 'createStudent']);
+        Route::resource('course', CourseController::class);
+        Route::get('/statistical', [StatisticalController::class, 'index']);
+        Route::get('classChart', [ClassController::class, 'index']);
     });
 });
-Route::get('/statistical', [StatisticalController::class, 'index']);
-Route::get('classChart', [ClassController::class, 'index']);

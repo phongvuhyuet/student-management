@@ -247,26 +247,34 @@
                                     <tbody>
 
                                         @php
+                                            $nguyCoStudents;
                                             foreach ($classes as $class) {
                                                 foreach ($class->member->where('role_id', 2) as $student) {
-                                                
-                                                }
-                                            }
-                                           
-                                        @endphp
-                                         <tr>
-                                                
-                                                            <td class="font-weight-bold">Nguyen Van An</td>
-                                                            <td>LMAO</td>
-                                                            <td>K64J</td>
-                                                            <td class="font-weight-bold">LOL</td>
-                                                            <td class="font-weight-bold">29</td>
-                                                            <td class="font-weight-bold">6</td>
-                                                            <td class="font-weight-bold">6</td>
+                                                    $soNam = (int)date('Y') - (int)substr($class->name, 3, 4);
+                                                    if ($soNam >= 7 || $student->so_lan_nhac_nho >=9 || $student->SoTinNo>= 28){
+                                                        @endphp
+
+                                                            <td>{{ $student->name }}</td>
+                                                            <td>{{ $student->msv }}</td>
+                                                            <td class="font-weight-bold">{{ $class->name }}</td>
+                                                            <td class="font-weight-bold">{{ $student->GPA }}</td>
+                                                            <td class="font-weight-bold">{{ $student->SoTinNo }}</td>
+                                                            <td class="font-weight-bold">{{ round($student->so_lan_nhac_nho/3) }}</td>
+                                                            <td class="font-weight-bold">{{ $soNam }}</td>
                                                             <td class="font-weight-medium">
                                                                 <div onclick="location.href=''" class=" btn badge badge-danger font-weight-bold"> Nhắc nhở</div>
                                                             </td>
                                                             </tr>
+
+                                                        @php
+                                                    }
+                                                }
+                                            }
+
+                                        @endphp
+                                         <tr>
+
+
                                     </tbody>
                                 </table>
                             </div>
@@ -274,7 +282,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
 
         </div>

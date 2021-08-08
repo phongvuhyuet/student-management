@@ -195,7 +195,7 @@
                                                                                       ->count();
                                                                                   $warn_count = $class->member
                                                                                       ->where('role_id', 2)
-                                                                                      ->where('so_lan_nhac_nho', '>=', 2)
+                                                                                      ->where('so_lan_nhac_nho', '>', 2)
                                                                                       ->count();
                                                                                   $countXs = 0;
                                                                                   $countG = 0;
@@ -451,7 +451,7 @@
                                                                       } else {
                                                                           $progress_type = 'bg-success';
                                                                       }
-                                                                      
+
                                                                   @endphp
                                                                   <div class="progress">
                                                                       <div class="progress-bar align-middle {{ $progress_type }}"
@@ -493,13 +493,13 @@
 
                                                               <td class="icon_style"
                                                                   style="  font-size: 19px;
-                                                                                                                                                                                                                margin: 0;
-                                                                                                                                                                                                                padding: 16px;
-                                                                                                                                                                                                                display: flex;
-                                                                                                                                                                                                                justify-content: start;
-                                                                                                                                                                                                                align-content: center;
-                                                                                                                                                                                                                align-items: center;
-                                                                                                                                                                                                                cursor: pointer">
+                                                                                                                                                                                                                        margin: 0;
+                                                                                                                                                                                                                        padding: 16px;
+                                                                                                                                                                                                                        display: flex;
+                                                                                                                                                                                                                        justify-content: start;
+                                                                                                                                                                                                                        align-content: center;
+                                                                                                                                                                                                                        align-items: center;
+                                                                                                                                                                                                                        cursor: pointer">
 
 
                                                                   <a href="/task/{{ $task->id }}/edit"

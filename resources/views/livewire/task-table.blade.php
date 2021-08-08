@@ -3,7 +3,8 @@
         <p class="card-title">Công việc</p>
         <div class='row'>
             <div class='col-md-1' name='label' style='padding-right: 0px;'>
-                <div class='d-flex justify-content-center align-item-center' style=' padding: 11px 0px 11px 0px; heigth: 54px;'>
+                <div class='d-flex justify-content-center align-item-center'
+                    style=' padding: 11px 0px 11px 0px; heigth: 54px;'>
                     <label class="p-1 m-0 pr-1" style=''>Xếp theo</label>
                 </div>
             </div>
@@ -71,10 +72,10 @@
             </div>
 
 
-            <div class="col-md-3" name='search' style='padding: 0px 30px 0px 0px;'>
+            <div class="col-md-3" name='search' style='padding: 0px 0px 0px 0px;'>
                 <input wire:model.debounce.300ms="search" type="text"
                     class="appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    placeholder="Tìm kiếm id, tên, trạng thái" style="overflow: hidden;text-overflow: ellipsis">
+                    placeholder="ID, tên công việc, người liên quan" style="overflow: hidden;text-overflow: ellipsis">
                 <span style="cursor:pointer ;position: absolute;font-size: 23px; top: 11px;right: 29px;"
                     class="input-group-text border-0 p-0 bg-transparent fw-bolder fs-2" id="search-addon">
                     <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="hover"
@@ -126,7 +127,7 @@
                                 } else {
                                     $progress_type = 'bg-success';
                                 }
-                                
+
                             @endphp
                             <div class="progress">
                                 <div class="progress-bar align-middle {{ $progress_type }}" role="progressbar"
