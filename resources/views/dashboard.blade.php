@@ -265,9 +265,8 @@
                                                                               </td>
                                                                           </tr>
                                                                           <tr>
-                                                                              <td class="text-muted">Sinh viên chuyên cần loại
-                                                                                  tốt
-                                                                              </td>
+                                                                              <td class="text-muted">Sinh viên có điểm rèn luyện
+                                                                                  tốt</td>
                                                                               <td class="w-100 px-0">
                                                                                   <div class="progress progress-md mx-4">
                                                                                       <div class="progress-bar bg-info"
@@ -494,13 +493,13 @@
 
                                                               <td class="icon_style"
                                                                   style="  font-size: 19px;
-                                                                                                                                                                                                        margin: 0;
-                                                                                                                                                                                                        padding: 16px;
-                                                                                                                                                                                                        display: flex;
-                                                                                                                                                                                                        justify-content: start;
-                                                                                                                                                                                                        align-content: center;
-                                                                                                                                                                                                        align-items: center;
-                                                                                                                                                                                                        cursor: pointer">
+                                                                                                                                                                                                                margin: 0;
+                                                                                                                                                                                                                padding: 16px;
+                                                                                                                                                                                                                display: flex;
+                                                                                                                                                                                                                justify-content: start;
+                                                                                                                                                                                                                align-content: center;
+                                                                                                                                                                                                                align-items: center;
+                                                                                                                                                                                                                cursor: pointer">
 
 
                                                                   <a href="/task/{{ $task->id }}/edit"
