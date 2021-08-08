@@ -70,7 +70,12 @@ function calculateGPA($student)
         $sumMark += $mark * $course->so_TC;
         $sumCredit += $course->so_TC;
     }
-    return number_format((float) $sumMark / $sumCredit, 2, '.', '');
+    if ($sumCredit == 0) {
+        return 0;
+    } else {
+        return number_format((float) $sumMark / $sumCredit, 2, '.', '');
+    }
+
 }
 
 function getAccumulatedCredits($student)
