@@ -1,5 +1,5 @@
 @extends('layouts.admin') @section('main')
-
+   
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"></script>
     <div class="main-panel">
@@ -236,7 +236,7 @@
                     <div class="btn badge badge-danger font-weight-bold d-flex align-items-center p-1 ">Cảnh báo tất cả
                     </div>
                 </div>
-                <div class="table-responsive" style=" overflow:hidden;
+                <div class="table-responsive " style=" overflow:hidden;
     overflow-y: scroll;
     overflow-x: scroll;
     height: 400px;">
