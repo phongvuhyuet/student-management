@@ -1,29 +1,27 @@
 <div>
     <div>
-        <p class="card-title">Kết quả học tập</p>
-        <div class="row">
+        <p class="card-title">Danh sách sinh viên</p>
+        <div class='row'>
             <div class='col-md-1' name='label' style='padding-right: 0px;'>
-                <div class='d-flex justify-content-center align-item-center' style=' padding: 11px 0px 11px 0px; heigth: 54px;'>
+                <div class='d-flex justify-content-center align-item-center'
+                    style=' padding: 11px 0px 11px 0px; heigth: 54px;'>
                     <label class="p-1 m-0 pr-1" style=''>Xếp theo</label>
                 </div>
             </div>
-
             <div class="col-md-2" name='select1'>
                 <select wire:model="orderBy"
                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-state">
-                    <option value="msv">MSV</option>
-                    <option value="name">Tên</option>
-                    <option value="AccumulatedCredits">Số TC</option>
-                    <option value="GPA">GPA</option>
-                    <option value="SoTinNo">Số TC đang nợ</option>
+                    <option value="name">Họ và Tên</option>
+                    <option value="email">Email</option>
+                    <option value="msv">Mã số sinh viên</option>
+                    <option value="date_of_birth">Ngày sinh</option>
                 </select>
                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     </svg>
                 </div>
             </div>
-
             <div class="col-md-2" name='select2'>
                 <select wire:model="orderAsc"
                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -36,7 +34,6 @@
                     </svg>
                 </div>
             </div>
-
             <div class="col-md-1" name='select3'>
                 <select wire:model="perPage"
                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -51,75 +48,62 @@
                     </svg>
                 </div>
             </div>
-
-            <div class="col-md-2" name='select4'>
-                <select wire:model="class"
-                    class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="grid-state">
-                    <option value="all">Tất cả các lớp</option>
-                    @foreach ($classes as $class)
-                        <option value="{{ $class->id }}">{{ $class->name }}</option>
-                    @endforeach
-                </select>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                    </svg>
+            <div class="col-md-3" name='add'>
+                <div class='d-flex justify-content-center align-item-center' style=' padding: 11px 0px 11px 0px;'>
+                    <a href="/class/{{ $id }}/create" class="text-reset text-decoration-none d-flex ">
+                        <label class="p-1 m-0 pr-1">Thêm học sinh</label>
+                        <ion-icon style="font-size: 32px; cursor: pointer;" name="add-circle-outline" role="img"
+                            class="md hydrated" aria-label="add circle outline">
+                        </ion-icon>
+                    </a>
                 </div>
             </div>
-
-            <div class='col-md-1'></div>
 
             <div class="col-md-3" name='search' style='padding: 0px 30px 0px 0px;'>
                 <input wire:model.debounce.300ms="search" type="text"
                     class="appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    placeholder="Tìm kiếm tên hoặc mã sinh viên">
+                    placeholder="Tìm kiếm tên, email, mã sinh viên">
                 <span style="cursor:pointer ;position: absolute;font-size: 23px; top: 11px;right: 29px;"
                     class="input-group-text border-0 p-0 bg-transparent fw-bolder fs-2" id="search-addon">
                     <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="hover"
                         colors="primary:#121331,secondary:#08a88a" style="width:32px;height:32px">
                     </lord-icon>
+                </span>
             </div>
+
         </div>
         <br>
     </div>
+
     <div class="table-responsive">
         <br>
         <table class="table table-hover">
+
             <thead>
                 <tr>
-                    <th>Mã SV</th>
-                    <th>Tên SV</th>
+                    <th>
+                        STT
+                    </th>
+                    <th>Họ và Tên</th>
+                    <th>Email</th>
+                    <th>Mã số sinh viên</th>
+                    <th>Ngày sinh</th>
                     <th>Lớp</th>
-                    <th>Số TC tích lũy</th>
-                    <th>GPA</th>
-                    <th>Số TC đang nợ</th>
-                    <th>Số lần nhắc nhở</th>
+                    <th>Khoa</th>
                 </tr>
             </thead>
+
+            {{-- insert data here --}}
             <tbody>
-                @php
-                    $studentss;
-                    if ($orderBy !== 'msv' && $orderBy !== 'name') {
-                        if ($orderAsc) {
-                            $studentss = $students->sortBy($orderBy);
-                        } else {
-                            $studentss = $students->sortByDesc($orderBy);
-                        }
-                    } else {
-                        $studentss = $students;
-                    }
-                @endphp
-
-                @foreach ($studentss as $student)
-
-                    <tr onclick="location.href='/marks/{{ $student->id }}'" style="cursor: pointer">
-                        <td>{{ $student->msv }}</td>
+                @foreach ($students as $student)
+                    <tr>
+                        <td>{{ $loop->index + 1 }}</td>
                         <td>{{ $student->name }}</td>
+                        <td>{{ $student->email }}</td>
+                        <td>{{ $student->msv }}</td>
+                        <td>{{ $student->date_of_birth }}</td>
                         <td>{{ $student->class->name }}</td>
-                        <td>{{ $student->AccumulatedCredits }}</td>
-                        <td>{{ number_format((float) $student->GPA, 2, '.', '') }}</td>
-                        <td>{{ $student->SoTinNo }}</td>
-                        <td>{{ $student->so_lan_nhac_nho }}</td>
+                        <td>{{ $student->class->faculty }}</td>
                     </tr>
                 @endforeach
             </tbody>
