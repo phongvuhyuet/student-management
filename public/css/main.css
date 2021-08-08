@@ -9,10 +9,10 @@
     cursor: pointer;
 }
 
-.chatbox {
+/* .chatbox {
     height: 80vh !important;
     overflow-y: scroll;
-}
+} */
 
 .message-box {
     height: 70vh !important;

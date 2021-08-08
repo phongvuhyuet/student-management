@@ -38,6 +38,12 @@
                     <span class="menu-title">Thống kê</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/chat">
+                    <i class="ti-comments menu-icon"></i>
+                    <span class="menu-title">Tin nhắn</span>
+                </a>
+            </li>
         </ul>
     </nav>
 
