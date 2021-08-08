@@ -9,11 +9,10 @@ class Message extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
-
-    public function creator()
+    protected $fillable = ['message', 'user_id', 'receiver_id', 'is_seen'];
+    public function user()
     {
-        return $this->belongsTo(User::class, 'creator_id');
+        return $this->belongsTo(User::class);
     }
 
     public function receiver()

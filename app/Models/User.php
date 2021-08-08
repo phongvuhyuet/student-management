@@ -76,7 +76,7 @@ class User extends Authenticatable
 
     public function messagesCreated()
     {
-        return $this->hasMany(Message::class, 'creator_id');
+        return $this->hasMany(Message::class, 'user_id');
     }
 
     public function messagesReceived()
