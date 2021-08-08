@@ -1,61 +1,79 @@
 <div>
+    <div>
+        <p class="card-title">Danh sách sinh viên</p>
+        <div class='row'>
+            <div class='col-md-1' name='label' style='padding-right: 0px;'>
+                <div class='d-flex justify-content-center align-item-center' style=' padding: 11px 0px 11px 0px; heigth: 54px;'>
+                    <label class="p-1 m-0 pr-1" style=''>Xếp theo</label>
+                </div>
+            </div>
+            <div class="col-md-2" name='select1'>
+                <select wire:model="orderBy"
+                    class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-state">
+                    <option value="name">Họ và Tên</option>
+                    <option value="email">Email</option>
+                    <option value="msv">Mã số sinh viên</option>
+                    <option value="dat_of_birth">Ngày sinh</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    </svg>
+                </div>
+            </div>
+            <div class="col-md-2" name='select2'>
+                <select wire:model="orderAsc"
+                    class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-state">
+                    <option value="1">Tăng dần</option>
+                    <option value="0">Giảm dần</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    </svg>
+                </div>
+            </div>
+            <div class="col-md-1" name='select3'>
+                <select wire:model="perPage"
+                    class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-state">
+                    <option>10</option>
+                    <option>25</option>
+                    <option>50</option>
+                    <option>100</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    </svg>
+                </div>
+            </div>
+            <div class="col-md-3" name='add' >
+                <div class='d-flex justify-content-center align-item-center' style=' padding: 11px 0px 11px 0px;'>
+                    <a href="/class/{{ $id }}/create" class="text-reset text-decoration-none d-flex ">
+                        <label class="p-1 m-0 pr-1">Thêm học sinh</label>
+                        <ion-icon style="font-size: 32px; cursor: pointer;" name="add-circle-outline" role="img"
+                            class="md hydrated" aria-label="add circle outline">
+                        </ion-icon>
+                    </a>
+                </div>
+            </div>
 
-    <a href="/class/{{ $id }}/create"
-        class=" text-reset flex flex-row-reverse align-self-center text-decoration-none">
-        <div class="d-flex flex-row align-items-center align-self-center ">
-            <p class="p-0 m-0 pr-1">
-                Thêm học sinh
-            </p>
-            <ion-icon style="font-size: 30px;cursor: pointer;" name="add-circle-outline">
-            </ion-icon>
-        </div>
-    </a>
+            <div class="col-md-3" name='search' style='padding: 0px 30px 0px 0px;'>
+                <input wire:model.debounce.300ms="search" type="text"
+                    class="appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    placeholder="Tìm kiếm tên, email, mã sinh viên">
+                <span style="cursor:pointer ;position: absolute;font-size: 23px; top: 11px;right: 29px;"
+                    class="input-group-text border-0 p-0 bg-transparent fw-bolder fs-2" id="search-addon">
+                    <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="hover"
+                        colors="primary:#121331,secondary:#08a88a" style="width:32px;height:32px">
+                    </lord-icon>
+                </span>
+            </div>
 
-    <div class="w-3/6 mx-1">
-        <input wire:model.debounce.300ms="search" type="text"
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            placeholder="Tìm kiếm tên, email, mã sinh viên">
-    </div>
-    <div class="w-1/6 relative mx-1">
-        <select wire:model="orderBy"
-            class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            id="grid-state">
-            <option value="name">Họ và Tên</option>
-            <option value="email">Email</option>
-            <option value="msv">Mã số sinh viên</option>
-            <option value="dat_of_birth">Ngày sinh</option>
-        </select>
-        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-            </svg>
         </div>
+        <br>
     </div>
-    <div class="w-1/6 relative mx-1">
-        <select wire:model="orderAsc"
-            class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            id="grid-state">
-            <option value="1">Tăng dần</option>
-            <option value="0">Giảm dần</option>
-        </select>
-        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-            </svg>
-        </div>
-    </div>
-    <div class="w-1/6 relative mx-1">
-        <select wire:model="perPage"
-            class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            id="grid-state">
-            <option>10</option>
-            <option>25</option>
-            <option>50</option>
-            <option>100</option>
-        </select>
-        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-            </svg>
-        </div>
-    </div>
+
     <div class="table-responsive">
         <br>
         <table class="table table-hover">

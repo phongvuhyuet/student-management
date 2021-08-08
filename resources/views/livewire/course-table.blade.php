@@ -2,8 +2,11 @@
     <div>
         <p class="card-title">Môn học</p>
         <div class='row'>
-            <div class='col-md-1 d-flex justify-content-center align-item-center' style='padding-right: 0px;' name='label'>
-                <label style='margin: 13px 0px 5px 0px;'>Xếp theo</label>
+            <div class='col-md-1' name='label' style='padding-right: 0px;'>
+                <div class='d-flex justify-content-center align-item-center'
+                    style=' padding: 11px 0px 11px 0px; heigth: 54px;'>
+                    <label class="p-1 m-0 pr-1" style=''>Xếp theo</label>
+                </div>
             </div>
 
             <div class="col-md-2" name='select1'>
@@ -51,17 +54,17 @@
             </div>
 
             <div class="col-md-3" name='add'>
-                <div class='d-flex justify-content-center align-item-center' style=' padding: 13px 0px 13px 0px;'>
-                    <a href="/task/create" class="text-reset text-decoration-none d-flex ">
-                        <p class="p-1 m-0 pr-1">Thêm môn học</p>
-                        <ion-icon style="font-size: 27px; cursor: pointer;" name="add-circle-outline" role="img"
+                <div class='d-flex justify-content-center align-item-center' style=' padding: 11px 0px 11px 0px;'>
+                    <a href="/course/create" class="text-reset text-decoration-none d-flex ">
+                        <label class="p-1 m-0 pr-1">Thêm môn học</label>
+                        <ion-icon style="font-size: 32px; cursor: pointer;" name="add-circle-outline" role="img"
                             class="md hydrated" aria-label="add circle outline">
                         </ion-icon>
                     </a>
                 </div>
             </div>
 
-            <div class="col-md-3" name='search'>
+            <div class="col-md-3" name='search' style='padding: 0px 30px 0px 0px;'>
                 <input wire:model.debounce.300ms="search" type="text"
                     class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     placeholder="Tìm kiếm tên, mã môn, năm học">
@@ -109,14 +112,16 @@
                             <div class='d-flex justify-content-start' style="font-size: 20px;">
                                 <a href="course/{{ $course->id }}/edit"
                                     class="mr-3 text-reset flex align-self-center text-decoration-none">
-                                    <ion-icon name="create-outline"></ion-icon>
+                                    <ion-icon name="create-outline" role="img" class="md hydrated"
+                                        aria-label="create outline"></ion-icon>
                                 </a>
                                 <div></div>
                                 <form action='/course/{{ $course->id }}' method='POST' class="pl-3">
                                     @csrf
                                     @method('delete')
                                     <button type="submit" class="bg-transparent border-0">
-                                        <ion-icon name="trash-outline"></ion-icon>
+                                        <ion-icon name="trash-outline" role="img" class="md hydrated"
+                                            aria-label="trash outline"></ion-icon>
                                     </button>
                                 </form>
                             </div>
