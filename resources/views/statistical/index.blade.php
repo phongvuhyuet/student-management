@@ -238,6 +238,7 @@
                                             <th>Lớp</th>
                                             <th>GPA</th>
                                             <th>Số tín đang nợ</th>
+                                            <th>Số lần cảnh báo</th>
                                             <th>Năm</th>
                                             <th>Cảnh báo</th>
 
@@ -261,7 +262,7 @@
                                                             <td class="font-weight-bold">LOL</td>
                                                             <td class="font-weight-bold">29</td>
                                                             <td class="font-weight-bold">6</td>
-
+                                                            <td class="font-weight-bold">6</td>
                                                             <td class="font-weight-medium">
                                                                 <div onclick="location.href=''" class=" btn badge badge-danger font-weight-bold"> Nhắc nhở</div>
                                                             </td>

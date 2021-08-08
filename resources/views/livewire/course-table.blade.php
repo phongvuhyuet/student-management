@@ -67,7 +67,7 @@
             <div class="col-md-3" name='search' style='padding: 0px 30px 0px 0px;'>
                 <input wire:model.debounce.300ms="search" type="text"
                     class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    placeholder="Tìm kiếm tên, mã môn, năm học">
+                    placeholder="Tìm kiếm tên, mã môn, năm học" style="overflow: hidden;text-overflow: ellipsis">
                 <span style="cursor:pointer ;position: absolute;font-size: 23px; top: 11px;right: 29px;"
                     class="input-group-text border-0 p-0 bg-transparent fw-bolder fs-2" id="search-addon">
                     <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="hover"
