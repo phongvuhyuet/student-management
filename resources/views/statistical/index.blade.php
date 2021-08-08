@@ -1,4 +1,5 @@
 @extends('layouts.admin') @section('main')
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"></script>
     <div class="main-panel">
@@ -217,6 +218,62 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+
+                  <div class="row">
+                <div class="col-md-12">
+                    <div class="card overflow-auto " style="max-height: 479px">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-middle ">
+                                <h4 class="card-title">Các sinh viên thuộc diện nguy cơ thôi học </h4>
+                                <div class="btn badge badge-danger font-weight-bold d-flex align-items-center p-1 ">Cảnh báo                                    tất cả</div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table" id="classInfo">
+                                    <thead>
+                                        <tr>
+                                            <th>Họ và tên</th>
+                                            <th>Mã số sinh viên</th>
+                                            <th>Lớp</th>
+                                            <th>GPA</th>
+                                            <th>Số tín đang nợ</th>
+                                            <th>Năm</th>
+                                            <th>Cảnh báo</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @php
+                                            foreach ($classes as $class) {
+                                                foreach ($class->member->where('role_id', 2) as $student) {
+                                                
+                                                }
+                                            }
+                                           
+                                        @endphp
+                                         <tr>
+                                                
+                                                            <td class="font-weight-bold">Nguyen Van An</td>
+                                                            <td>LMAO</td>
+                                                            <td>K64J</td>
+                                                            <td class="font-weight-bold">LOL</td>
+                                                            <td class="font-weight-bold">29</td>
+                                                            <td class="font-weight-bold">6</td>
+
+                                                            <td class="font-weight-medium">
+                                                                <div onclick="location.href=''" class=" btn badge badge-danger font-weight-bold"> Nhắc nhở</div>
+                                                            </td>
+                                                            </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                
             </div>
 
         </div>
