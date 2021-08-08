@@ -2,9 +2,10 @@
     <div>
         <p class="card-title">Kết quả học tập</p>
         <div class="row">
-            <div class='col-md-1 d-flex justify-content-center align-item-center' style='padding-right: 0px;'
-                name='label'>
-                <label style='margin: 13px 0px 5px 0px;'>Xếp theo</label>
+            <div class='col-md-1' name='label' style='padding-right: 0px;'>
+                <div class='d-flex justify-content-center align-item-center' style=' padding: 11px 0px 11px 0px; heigth: 54px;'>
+                    <label class="p-1 m-0 pr-1" style=''>Xếp theo</label>
+                </div>
             </div>
 
             <div class="col-md-2" name='select1'>
@@ -68,7 +69,7 @@
 
             <div class='col-md-1'></div>
 
-            <div class="col-md-3" name='search'>
+            <div class="col-md-3" name='search' style='padding: 0px 30px 0px 0px;'>
                 <input wire:model.debounce.300ms="search" type="text"
                     class="appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     placeholder="Tìm kiếm tên hoặc mã sinh viên">

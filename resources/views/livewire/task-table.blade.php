@@ -2,8 +2,10 @@
     <div>
         <p class="card-title">Công việc</p>
         <div class='row'>
-            <div class='col-md-1 d-flex justify-content-center align-item-center' style='padding-right: 0px;' name='label'>
-                <label style='margin: 13px 0px 5px 0px;'>Xếp theo</label>
+            <div class='col-md-1' name='label' style='padding-right: 0px;'>
+                <div class='d-flex justify-content-center align-item-center' style=' padding: 11px 0px 11px 0px; heigth: 54px;'>
+                    <label class="p-1 m-0 pr-1" style=''>Xếp theo</label>
+                </div>
             </div>
             <div class="col-md-2" name='select1'>
                 <select wire:model="orderBy"
@@ -57,10 +59,10 @@
 
             <div class='col-md-3' name='add'>
                 @can('manage-tasks')
-                    <div class='d-flex justify-content-center align-item-center' style=' padding: 13px 0px 13px 0px;'>
+                    <div class='d-flex justify-content-center align-item-center' style=' padding: 11px 0px 11px 0px;'>
                         <a href="/task/create" class="text-reset text-decoration-none d-flex ">
-                            <p class="p-1 m-0 pr-1">Thêm công việc</p>
-                            <ion-icon style="font-size: 27px; cursor: pointer;" name="add-circle-outline" role="img"
+                            <label class="p-1 m-0 pr-1">Thêm công việc</label>
+                            <ion-icon style="font-size: 32px; cursor: pointer;" name="add-circle-outline" role="img"
                                 class="md hydrated" aria-label="add circle outline">
                             </ion-icon>
                         </a>
@@ -69,7 +71,7 @@
             </div>
 
 
-            <div class="col-md-3" name='search'>
+            <div class="col-md-3" name='search' style='padding: 0px 30px 0px 0px;'>
                 <input wire:model.debounce.300ms="search" type="text"
                     class="appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     placeholder="Tìm kiếm id, tên, trạng thái,...">

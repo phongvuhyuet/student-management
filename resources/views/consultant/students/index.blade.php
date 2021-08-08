@@ -44,7 +44,7 @@
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <p class="card-title">Danh sách sinh viên</p>
+                        
                         @livewireStyles
                         <livewire:student-table :classId="$id">
                             @livewireScripts
