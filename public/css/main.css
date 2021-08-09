@@ -9,17 +9,10 @@
     cursor: pointer;
 }
 
-<<<<<<< HEAD
 /* .chatbox {
     height: 80vh !important;
     overflow-y: scroll;
 } */
-=======
-.chatbox {
-    height: 80vh !important;
-    overflow-y: scroll;
-}
->>>>>>> 022005ddc15d7a621648aa61d85f3dd23a789a81
 
 .message-box {
     height: 70vh !important;
@@ -38,12 +31,14 @@
 
 .received {
     margin-right: auto !important;
+    border-bottom-left-radius: unset;
 }
 
 .sent {
     margin-left: auto !important;
     background: #3490dc;
     color: white !important;
+    border-bottom-right-radius: unset;
 }
 
 .sent small {

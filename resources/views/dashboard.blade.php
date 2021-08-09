@@ -60,7 +60,7 @@
                                   <div class="carousel-inner">
                                       <div class="carousel-item  active" style="height: 780px; object-fit: cover">
                                           <img class="d-block w-100 h-100 "
-                                              src="{{ asset('images/dashboard/404-not-found.jpg') }}"
+                                              src="{{ asset('images/dashboard/doan-thanh-nien.jpg') }}"
                                               data-color="lightblue" alt="First Image">
                                           <div class="carousel-caption d-md-block">
                                               {{-- <h5>First Image</h5> --}}
@@ -68,7 +68,7 @@
                                       </div>
                                       <div class="carousel-item " style="height: 780px; object-fit: cover">
                                           <img class="d-block w-100 h-100"
-                                              src="{{ asset('images/dashboard/doan-thanh-nien.jpg') }}"
+                                              src="{{ asset('images/dashboard/404-not-found.jpg') }}"
                                               data-color="firebrick" alt="Second Image">
                                           <div class="carousel-caption d-md-block">
                                               {{-- <h5>Second Image</h5> --}}
@@ -451,7 +451,7 @@
                                                                       } else {
                                                                           $progress_type = 'bg-success';
                                                                       }
-
+                                                                      
                                                                   @endphp
                                                                   <div class="progress">
                                                                       <div class="progress-bar align-middle {{ $progress_type }}"
@@ -493,13 +493,13 @@
 
                                                               <td class="icon_style"
                                                                   style="  font-size: 19px;
-                                                                                                                                                                                                                        margin: 0;
-                                                                                                                                                                                                                        padding: 16px;
-                                                                                                                                                                                                                        display: flex;
-                                                                                                                                                                                                                        justify-content: start;
-                                                                                                                                                                                                                        align-content: center;
-                                                                                                                                                                                                                        align-items: center;
-                                                                                                                                                                                                                        cursor: pointer">
+                                                                                                                                                                                                                                        margin: 0;
+                                                                                                                                                                                                                                        padding: 16px;
+                                                                                                                                                                                                                                        display: flex;
+                                                                                                                                                                                                                                        justify-content: start;
+                                                                                                                                                                                                                                        align-content: center;
+                                                                                                                                                                                                                                        align-items: center;
+                                                                                                                                                                                                                                        cursor: pointer">
 
 
                                                                   <a href="/task/{{ $task->id }}/edit"
