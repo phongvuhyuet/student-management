@@ -212,7 +212,9 @@
         </div>
     </div>
     <span class="d-flex justify-content-end">{!! $courses->links('livewire::bootstrap') !!}</span>
-    <button class="btn btn-primary" onclick="location.href = '/view-grade'"
-        style="    border-radius: 4px; background-color: rgb(78 79 172)">Trở
-        về</button>
+    @if (auth()->user()->role_id == 1)
+        <button class="btn btn-primary" onclick="location.href = '/view-grade'"
+            style="    border-radius: 4px; background-color: rgb(78 79 172)">Trở
+            về</button>
+    @endif
 </div>
