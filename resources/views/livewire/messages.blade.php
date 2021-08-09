@@ -22,12 +22,14 @@
 
                                         @if ($user->id !== auth()->id())
                                             @php
+                                                $select = false;
+
                                                 $not_seen =
                                                     App\Models\Message::where('user_id', $user->id)
                                                         ->where('receiver_id', auth()->id())
                                                         ->where('is_seen', false)
                                                         ->get() ?? null;
-                                                
+
                                             @endphp
                                             <div wire:click="getUser({{ $user->id }})" class="text-dark link"
                                                 data-bs-toggle="tooltip" data-bs-placement="top"
@@ -35,11 +37,8 @@
                                                 style="border-radius: 10px;margin-bottom: 16px">
                                                 <li class="list-group-item d-flex rounded-1"
                                                     style="padding: 7px 10px; cursor: pointer;">
-
                                                     <div>
-                                                        {{-- <img src="../../../public/images/faces/face1.jpg"
-                                                            class="rounded-circle" alt=""
-                                                            style="background: red;height: 45px;width: 45px;"> --}}
+
                                                         <box-icon type='solid'
                                                             style="background: transparent;     fill: #4b49ac; height: 45px;width: 45px;"
                                                             name='user-circle'></box-icon>
@@ -52,9 +51,9 @@
                                                             <i class="fa fa-circle text-success online-icon">
                                                         @endif
 
-                                                        </i> {{ $user->name }}
+                                                        </i> {{ $user->name . ' ' . $user->msv }}
                                                         @if (filled($not_seen))
-                                                            <div class="badge badge-success rounded">
+                                                            <div class="badge badge-danger rounded">
                                                                 {{ $not_seen->count() }}
                                                             </div>
                                                         @endif
@@ -77,8 +76,11 @@
     margin-bottom: 0;
   background-color: #8d8bf1 !important;
   border-radius: 10px;
-    border-bottom: 1px solid #e3e3e3;">
-                                @if (isset($sender)) {{ $sender->name }}
+    border-bottom: 1px solid #e3e3e3;
+        border-bottom-right-radius: unset;
+    ">
+                                @if (isset($sender))
+                                    {{ $sender->name . ' ' . $sender->msv }}
                                 @endif
                             </div>
                             <div class="card-body flex-shrink-1 message-box" style="height: 580px;"
@@ -87,9 +89,10 @@
                                     @foreach ($allmessages as $mgs)
                                         <div class="single-message @if ($mgs->user_id ==
                                         auth()->id()) sent @else received @endif">
-                                            <p class="font-weight-bolder my-0">{{ $mgs->user->name }}</p>
-                                            {{ $mgs->message }}
-                                            <br><small class="text-muted w-100">Sent
+                                            <p class="font-weight-bolder my-0" style="font-size: 16px">
+                                                {{ $mgs->message }}</p>
+
+                                            <small class="text-muted w-100">Gửi
                                                 <em>{{ $mgs->created_at }}</em></small>
                                         </div>
 
@@ -97,24 +100,27 @@
                                 @endif
 
                             </div>
+                            @if (isset($sender))
+                                <div class="card-footer">
+                                    <form wire:submit.prevent="SendMessage">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <input wire:model="message"
+                                                    class="form-control input shadow-none w-100 d-inline-block"
+                                                    placeholder="Nhập tin nhắn ở đây" required>
+                                            </div>
 
-                            <div class="card-footer">
-                                <form wire:submit.prevent="SendMessage">
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <input wire:model="message"
-                                                class="form-control input shadow-none w-100 d-inline-block"
-                                                placeholder="Nhập tin nhắn ở đây" required>
-                                        </div>
+                                            <div class="col-md-4">
 
-                                        <div class="col-md-4">
-                                            <button type="submit" class="btn btn-primary d-inline-block w-100"
-                                                style="    border-radius: 4px;"><i class="far fa-paper-plane"></i>
-                                                Gửi</button>
+                                                <button type="submit" class="btn btn-primary d-inline-block w-100"
+                                                    style="    border-radius: 4px;"><i class="far fa-paper-plane"></i>
+                                                    Gửi</button>
+
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
-                            </div>
+                                    </form>
+                                </div>
+                            @endif
 
                         </div>
                     </div>
@@ -123,3 +129,13 @@
         </div>
     </div>
 </div>
+<<<<<<< HEAD
+=======
+
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>
+>>>>>>> e5dbb906cd46f38cb178cfe8bfff4aaa577aa734

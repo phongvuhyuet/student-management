@@ -23,17 +23,19 @@ class Task extends Model
             $result->where('receiver_id', Auth::user()->id);
         }
         if (!empty($search)) {
-            $result->where('id', 'like', '%' . $search . '%')
-                ->orWhere('name', 'like', '%' . $search . '%');
-            if (Gate::allows('manage-tasks')) {
-                $result->orWhereHas('receiver', function (Builder $query) use ($search) {
-                    $query->where('name', 'like', '%' . $search . '%');
-                });
-            } else {
-                $result->orWhereHas('creator', function (Builder $query) use ($search) {
-                    $query->where('name', 'like', '%' . $search . '%');
-                });
-            }
+            $result->where(function ($query) use ($search) {
+                $query->where('id', 'like', '%' . $search . '%')
+                    ->orWhere('name', 'like', '%' . $search . '%');
+                if (Gate::allows('manage-tasks')) {
+                    $query->orWhereHas('receiver', function (Builder $query) use ($search) {
+                        $query->where('name', 'like', '%' . $search . '%');
+                    });
+                } else {
+                    $query->orWhereHas('creator', function (Builder $query) use ($search) {
+                        $query->where('name', 'like', '%' . $search . '%');
+                    });
+                }
+            });
         }
         return $result;
     }

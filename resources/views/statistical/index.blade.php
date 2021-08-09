@@ -1,5 +1,5 @@
 @extends('layouts.admin') @section('main')
-   
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"></script>
     <div class="main-panel">
@@ -36,7 +36,6 @@
 
                                             @foreach ($classes as $class)
                                                 <option value="{{ $class->name }}">{{ $class->name }}</option>
-
                                             @endforeach
                                         </select>
                                     </div>
@@ -163,7 +162,6 @@
                                                     }
                                                     if ($tongHocPhi - $daNop != 0) {
                                                         @endphp
-                                                                                                    //    @endphp
                                                           <tr>
 
                                                             <td class="font-weight-bold">{{ $student->name }}</td>
@@ -285,7 +283,7 @@
                                         }
                                     }
                                 }
-                                
+
                             @endphp
                             <tr>
 
@@ -301,7 +299,7 @@
 </div>
 
 
-                  
+
 
         </div>
     </div>
@@ -320,9 +318,12 @@
                 data: {},
                 success: function(data) {
                     classInfo = Object.assign({}, data);
+                    console.log(classInfo)
                 },
             }).then((x) => {
-
+                console.log('Hello')
+                let className = document.getElementById('select-class').value;
+                setChartByClassName(className)
             })
         })
         let defaultChartConfig = {
@@ -372,11 +373,8 @@
                     title: {
                         display: true,
                         text: (ctx) => {
-                            const {
-                                intersect,
-                                mode
-                            } = ctx.chart.options.interaction;
-                            return '';
+                        const {intersect, mode} = ctx.chart.options.interaction;
+                        return '';
                         },
                         font: {
                             size: 23
@@ -403,24 +401,21 @@
         const setChartByClassName = (className) => {
             // console.log(className)
             if (className) {
-
                 let chartDataset = myChart.data.datasets;
                 let chartData = chartDataset[0].data;
                 let classData = Object.values(classInfo[className]);
 
                 if (classData.length == chartData.length) {
-                    console.log(myChart.data.datasets[0].data)
                     for (let i = 0; i < classData.length; i++) {
                         myChart.data.datasets[0].data[i] = classData[i];
                     }
-
                     myChart.update()
                 }
             }
         }
-        setTimeout(() => {
-            setChartByClassName(className)
-        }, 1000)
+        // setTimeout(() => {
+        //     setChartByClassName(className)
+        // }, 1000)
 
         const changeChartType = () => {
             // clear data and destroy chart
@@ -428,11 +423,12 @@
             myChart.destroy();
             // creat new chart config
             const newConfig = Object.assign({}, defaultChartConfig)
-            console.log(newConfig)
+            // console.log(newConfig)
             //handle on change chart type
             let chartType = document.getElementById('select-chart-type').value;
             //set chart type to new chart type
             if (chartType) {
+               
                 newConfig.type = chartType;
                 //creat a new chart with new config and data
                 myChart = new Chart(ctx, newConfig)
