@@ -31,7 +31,8 @@ class StudentTable extends Component
         $students->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc');
         return view('livewire.student-table', [
             'students' => $students->paginate($this->perPage),
-            'id' => $this->classId,
+            'id'       => $this->classId,
+            'class'    => Classes::find($this->classId),
         ]);
     }
 }

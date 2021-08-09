@@ -3,12 +3,14 @@
         .select {
             padding: 0px 5px 0px 0px;
         }
+
     </style>
 
     <div>
-        <p class="card-title">Danh sách sinh viên</p>
+        <p class="card-title text-center " style="margin-bottom: 40px">Danh sách sinh viên - {{ $class->name }}</p>
         <div class='row'>
-            <div class='col-md-1 d-flex justify-content-center align-item-center' name='label' style='padding-right: 0px; height: 54px;'>
+            <div class='col-md-1 d-flex justify-content-center align-item-center' name='label'
+                style='padding-right: 0px; height: 54px;'>
                 <div class='' style='margin: 0;
                     position: absolute;
                     top: 50%;

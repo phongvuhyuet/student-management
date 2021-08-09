@@ -205,7 +205,9 @@
                                     @foreach ($students as $student)
                                         <li>
                                             <div class="d-flex">
-                                                <img src="images/faces/face1.jpg" alt="user">
+                                               <box-icon type='solid'
+                                                            style="background: transparent;     fill: #4b49ac; height: 45px;width: 45px;"
+                                                            name='user-circle'></box-icon>
                                                 <div>
                                                     <p class="text-info mb-1"> {{ $student->name }}</p>
                                                     <p class="mb-0"> {{ $student->hoan_canh }}</p>
