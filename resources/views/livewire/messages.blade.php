@@ -23,13 +23,13 @@
                                         @if ($user->id !== auth()->id())
                                             @php
                                                 $select = false;
-                                                
+
                                                 $not_seen =
                                                     App\Models\Message::where('user_id', $user->id)
                                                         ->where('receiver_id', auth()->id())
                                                         ->where('is_seen', false)
                                                         ->get() ?? null;
-                                                
+
                                             @endphp
                                             <div wire:click="getUser({{ $user->id }})" class="text-dark link"
                                                 data-bs-toggle="tooltip" data-bs-placement="top"
@@ -51,7 +51,7 @@
                                                             <i class="fa fa-circle text-success online-icon">
                                                         @endif
 
-                                                        </i> {{ $user->name }}
+                                                        </i> {{ $user->name . ' ' . $user->msv }}
                                                         @if (filled($not_seen))
                                                             <div class="badge badge-danger rounded">
                                                                 {{ $not_seen->count() }}
@@ -79,7 +79,8 @@
     border-bottom: 1px solid #e3e3e3;
         border-bottom-right-radius: unset;
     ">
-                                @if (isset($sender)) {{ $sender->name }}
+                                @if (isset($sender))
+                                    {{ $sender->name . ' ' . $sender->msv }}
                                 @endif
                             </div>
                             <div class="card-body flex-shrink-1 message-box" style="height: 580px;"
@@ -99,24 +100,27 @@
                                 @endif
 
                             </div>
+                            @if (isset($sender))
+                                <div class="card-footer">
+                                    <form wire:submit.prevent="SendMessage">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <input wire:model="message"
+                                                    class="form-control input shadow-none w-100 d-inline-block"
+                                                    placeholder="Nhập tin nhắn ở đây" required>
+                                            </div>
 
-                            <div class="card-footer">
-                                <form wire:submit.prevent="SendMessage">
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <input wire:model="message"
-                                                class="form-control input shadow-none w-100 d-inline-block"
-                                                placeholder="Nhập tin nhắn ở đây" required>
-                                        </div>
+                                            <div class="col-md-4">
 
-                                        <div class="col-md-4">
-                                            <button type="submit" class="btn btn-primary d-inline-block w-100"
-                                                style="    border-radius: 4px;"><i class="far fa-paper-plane"></i>
-                                                Gửi</button>
+                                                <button type="submit" class="btn btn-primary d-inline-block w-100"
+                                                    style="    border-radius: 4px;"><i class="far fa-paper-plane"></i>
+                                                    Gửi</button>
+
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
-                            </div>
+                                    </form>
+                                </div>
+                            @endif
 
                         </div>
                     </div>

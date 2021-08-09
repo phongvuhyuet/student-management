@@ -1,5 +1,5 @@
 @extends('layouts.admin') @section('main')
-   
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"></script>
     <div class="main-panel">
@@ -163,7 +163,6 @@
                                                     }
                                                     if ($tongHocPhi - $daNop != 0) {
                                                         @endphp
-                                                                                                    //    @endphp
                                                           <tr>
 
                                                             <td class="font-weight-bold">{{ $student->name }}</td>
@@ -285,7 +284,7 @@
                                         }
                                     }
                                 }
-                                
+
                             @endphp
                             <tr>
 
@@ -301,7 +300,7 @@
 </div>
 
 
-                  
+
 
         </div>
     </div>

@@ -30,7 +30,7 @@ class Messages extends Component
             $users = Auth::user()->class->consultant;
             $users = collect([$users]);
         }
-        $sender = $this->sender;
+        $sender = (isset($this->sender)) ? $this->sender : $users->first();
         $this->allmessages;
         return view('livewire.messages', compact('users', 'sender'));
     }
