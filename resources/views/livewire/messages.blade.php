@@ -123,6 +123,7 @@
         </div>
     </div>
 </div>
+<<<<<<< HEAD
 
 <script>
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -130,3 +131,5 @@
         return new bootstrap.Tooltip(tooltipTriggerEl)
     })
 </script>
+=======
+>>>>>>> 022005ddc15d7a621648aa61d85f3dd23a789a81

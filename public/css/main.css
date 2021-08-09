@@ -9,10 +9,17 @@
     cursor: pointer;
 }
 
+<<<<<<< HEAD
 /* .chatbox {
     height: 80vh !important;
     overflow-y: scroll;
 } */
+=======
+.chatbox {
+    height: 80vh !important;
+    overflow-y: scroll;
+}
+>>>>>>> 022005ddc15d7a621648aa61d85f3dd23a789a81
 
 .message-box {
     height: 70vh !important;
