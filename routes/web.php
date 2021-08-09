@@ -33,6 +33,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     ]);
 })->name('dashboard');
 Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::view('/chat', 'chat.index');
     // Route::group(['middleware' => 'role:student', 'prefix' => 'student', 'as' => 'student.'], function () {
     //     // Route::resource('marks', MarkController::class);
     // });
