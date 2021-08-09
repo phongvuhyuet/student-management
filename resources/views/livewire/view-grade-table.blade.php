@@ -120,7 +120,7 @@
                         <td>{{ $student->AccumulatedCredits }}</td>
                         <td>{{ number_format((float) $student->GPA, 2, '.', '') }}</td>
                         <td>{{ $student->SoTinNo }}</td>
-                        <td>{{ $student->so_lan_nhac_nho }}</td>
+                        <td>{{ $student->so_lan_nhac_nho ?? 0 }}</td>
                     </tr>
                 @endforeach
             </tbody>

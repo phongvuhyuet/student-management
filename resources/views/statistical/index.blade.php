@@ -335,11 +335,7 @@
 
 
                 datasets: [{
-                    //          fill: {
-                    //     target: 'origin',
-                    //     above: 'rgb(255, 0, 0)',   // Area will be red above the origin
-                    //     below: 'rgb(0, 0, 255)'    // And blue below the origin
-                    //   }.
+                   
                     label: 'Học tập',
                     data: [0, 0, 0, 0, 0],
                     backgroundColor: [
@@ -386,8 +382,11 @@
 
                 scales: {
                     y: {
-                        beginAtZero: true
-                    }
+                        min: 0,
+                        beginAtZero: true,
+                       
+                    },
+                   
                 },
                 legend: {
                     position: 'right'
@@ -409,6 +408,9 @@
                     for (let i = 0; i < classData.length; i++) {
                         myChart.data.datasets[0].data[i] = classData[i];
                     }
+                    myChart.options.scales.y.beginAtZero = true;
+                    
+                    // myChart.options.scales.yAxes[0].ticks.beginAtZero = true;
                     myChart.update()
                 }
             }
@@ -422,15 +424,17 @@
             myChart.clear();
             myChart.destroy();
             // creat new chart config
-            const newConfig = Object.assign({}, defaultChartConfig)
+            const newConfig ={ ...defaultChartConfig}
+            // Object.assign({}, defaultChartConfig)
             // console.log(newConfig)
             //handle on change chart type
             let chartType = document.getElementById('select-chart-type').value;
             //set chart type to new chart type
             if (chartType) {
-               
+
                 newConfig.type = chartType;
                 //creat a new chart with new config and data
+                console.log(newConfig)
                 myChart = new Chart(ctx, newConfig)
             }
 

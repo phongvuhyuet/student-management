@@ -23,13 +23,13 @@
                                         @if ($user->id !== auth()->id())
                                             @php
                                                 $select = false;
-
+                                                
                                                 $not_seen =
                                                     App\Models\Message::where('user_id', $user->id)
                                                         ->where('receiver_id', auth()->id())
                                                         ->where('is_seen', false)
                                                         ->get() ?? null;
-
+                                                
                                             @endphp
                                             <div wire:click="getUser({{ $user->id }})" class="text-dark link"
                                                 data-bs-toggle="tooltip" data-bs-placement="top"
