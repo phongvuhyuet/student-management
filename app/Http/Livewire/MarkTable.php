@@ -34,6 +34,7 @@ class MarkTable extends Component
             'courses' => $courses->paginate($this->perPage),
             'orderBy' => $this->orderBy,
             'orderAsc' => $this->orderAsc,
+            'user' => User::find($this->userId),
         ]);
     }
 }
