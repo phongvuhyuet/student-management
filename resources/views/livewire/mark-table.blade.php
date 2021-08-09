@@ -3,10 +3,11 @@
         include 'utils.php';
     @endphp
     <div>
-        <p class="card-title">Kết quả học tập</p>
+        <p class="card-title">Kết quả học tập của {{ $user->name . ' ' . $user->msv }}</p>
         <div class="row">
             <div class='col-md-1' name='label' style='padding-right: 0px;'>
-                <div class='d-flex justify-content-center align-item-center' style=' padding: 11px 0px 11px 0px; heigth: 54px;'>
+                <div class='d-flex justify-content-center align-item-center'
+                    style=' padding: 11px 0px 11px 0px; heigth: 54px;'>
                     <label class="p-1 m-0 pr-1" style=''>Xếp theo</label>
                 </div>
             </div>
@@ -59,8 +60,7 @@
                     id="grid-state">
                     <option class="dropdown-item" value="all" selected>Tất cả kì học
                     </option>
-                    <option class="dropdown-item" value="12021">211 - Học kỳ 1 năm 2021-2022
-                    </option>
+
                     <option class="dropdown-item" value="22020">202 - Học kỳ 2 năm 2020-2021
                     </option>
                     <option class="dropdown-item" value="12020">201 - Học kỳ 1 năm 2020-2021
@@ -212,4 +212,7 @@
         </div>
     </div>
     <span class="d-flex justify-content-end">{!! $courses->links('livewire::bootstrap') !!}</span>
+    <button class="btn btn-primary" onclick="location.href = '/view-grade'"
+        style="    border-radius: 4px; background-color: rgb(78 79 172)">Trở
+        về</button>
 </div>
