@@ -33,6 +33,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     ]);
 })->name('dashboard');
 Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::view('/chat', 'chat.index');
     // Route::group(['middleware' => 'role:student', 'prefix' => 'student', 'as' => 'student.'], function () {
     //     // Route::resource('marks', MarkController::class);
     // });
@@ -43,7 +44,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         // Route::resource('users', UserController::class);
     });
     Route::resource('task', TaskController::class);
-    Route::resource('course', CourseController::class);
+
     Route::get('/marks/{id}', [StudentController::class, 'getCourses']);
     Route::group(['middleware' => 'role:consultant', 'as' => 'consultant.'], function () {
         Route::get('classes', [StudentController::class, 'classes']);
@@ -67,7 +68,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
             ]);
         });
         Route::post('class/{id}/create', [StudentController::class, 'createStudent']);
+        Route::resource('course', CourseController::class);
+        Route::get('/statistical', [StatisticalController::class, 'index']);
+        Route::get('classChart', [ClassController::class, 'index']);
     });
 });
-Route::get('/statistical', [StatisticalController::class, 'index']);
-Route::get('classChart', [ClassController::class, 'index']);

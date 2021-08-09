@@ -1,14 +1,23 @@
 <div>
+    <style>
+        .select {
+            padding: 0px 5px 0px 0px;
+        }
+    </style>
     <div>
         <p class="card-title">Kết quả học tập</p>
         <div class="row">
-            <div class='col-md-1' name='label' style='padding-right: 0px;'>
-                <div class='d-flex justify-content-center align-item-center' style=' padding: 11px 0px 11px 0px; heigth: 54px;'>
-                    <label class="p-1 m-0 pr-1" style=''>Xếp theo</label>
+            <div class='col-md-1 d-flex justify-content-center align-item-center' name='label' style='padding-right: 0px; height: 54px;'>
+                <div class='' style='margin: 0;
+                    position: absolute;
+                    top: 50%;
+                    -ms-transform: translateY(-50%);
+                    transform: translateY(-50%);
+                    '>
+                    <label class="p-1 m-0 pr-1 text-center" style=''>Xếp theo</label>
                 </div>
             </div>
-
-            <div class="col-md-2" name='select1'>
+            <div class="col-md-2 select" name='select1'>
                 <select wire:model="orderBy"
                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-state">
@@ -24,7 +33,7 @@
                 </div>
             </div>
 
-            <div class="col-md-2" name='select2'>
+            <div class="col-md-2 select" name='select2'>
                 <select wire:model="orderAsc"
                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-state">
@@ -37,7 +46,7 @@
                 </div>
             </div>
 
-            <div class="col-md-1" name='select3'>
+            <div class="col-md-1 select" name='select3'>
                 <select wire:model="perPage"
                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-state">
@@ -52,7 +61,7 @@
                 </div>
             </div>
 
-            <div class="col-md-2" name='select4'>
+            <div class="col-md-2 select" name='select4'>
                 <select wire:model="class"
                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-state">
@@ -72,7 +81,7 @@
             <div class="col-md-3" name='search' style='padding: 0px 30px 0px 0px;'>
                 <input wire:model.debounce.300ms="search" type="text"
                     class="appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    placeholder="Tìm kiếm tên hoặc mã sinh viên">
+                    placeholder="Tìm kiếm tên hoặc mã sinh viên" style="overflow: hidden;text-overflow: ellipsis">
                 <span style="cursor:pointer ;position: absolute;font-size: 23px; top: 11px;right: 29px;"
                     class="input-group-text border-0 p-0 bg-transparent fw-bolder fs-2" id="search-addon">
                     <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="hover"

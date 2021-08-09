@@ -1,4 +1,5 @@
 @extends('layouts.admin') @section('main')
+   
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"></script>
     <div class="main-panel">
@@ -125,9 +126,17 @@
                                     nhở
                                     tất cả</div>
                             </div>
-                            <div class="table-responsive">
+                            <div class="table-responsive" style=" overflow:hidden;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    height: 400px;">
                                 <table class="table" id="classInfo">
-                                    <thead>
+                                    <thead style="top: 0;
+    z-index: 2;
+    position: sticky;
+    background: white;
+    max-height: 450px
+  ">
                                         <tr>
                                             <th>Họ và tên</th>
                                             <th>Mã số sinh viên</th>
@@ -218,6 +227,81 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+    <div class="col-md-12">
+        <div class="card " style="max-height: 479px">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-middle ">
+                    <h4 class="card-title">Các sinh viên thuộc diện nguy cơ thôi học </h4>
+                    <div class="btn badge badge-danger font-weight-bold d-flex align-items-center p-1 ">Cảnh báo tất cả
+                    </div>
+                </div>
+                <div class="table-responsive " style=" overflow:hidden;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    height: 400px;">
+                    <table class="table" id="classInfo">
+                        <thead style="top: 0;
+    z-index: 2;
+    position: sticky;
+    background: white;
+    max-height: 450px
+
+  ">
+                            <tr>
+                                <th>Họ và tên</th>
+                                <th>Mã số sinh viên</th>
+                                <th>Lớp</th>
+                                <th>GPA</th>
+                                <th>Số tín đang nợ</th>
+                                <th>Số lần cảnh báo</th>
+                                <th>Năm</th>
+                                <th>Cảnh báo</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @php
+                                $nguyCoStudents;
+                                foreach ($classes as $class) {
+                                    foreach ($class->member->where('role_id', 2) as $student) {
+                                        $soNam = (int) date('Y') - (int) substr($class->name, 3, 4);
+                                        if ($soNam >= 7 || $student->so_lan_nhac_nho >= 9 || $student->SoTinNo >= 28) {
+                                            @endphp
+                                                <td>{{ $student->name }}</td>
+                                                <td>{{ $student->msv }}</td>
+                                                <td class="font-weight-bold">{{ $class->name }}</td>
+                                                <td class="font-weight-bold">{{ $student->GPA }}</td>
+                                                <td class="font-weight-bold">{{ $student->SoTinNo }}</td>
+                                                <td class="font-weight-bold">{{ round($student->so_lan_nhac_nho/3) }}</td>
+                                                <td class="font-weight-bold">{{ $soNam }}</td>
+                                                <td class="font-weight-medium">
+                                                    <div onclick="location.href=''" class=" btn badge badge-danger font-weight-bold">Cảnh báo</div>
+                                                </td>
+                                                </tr>
+
+                                            @php
+                                        }
+                                    }
+                                }
+                                
+                            @endphp
+                            <tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+                  
 
         </div>
     </div>
