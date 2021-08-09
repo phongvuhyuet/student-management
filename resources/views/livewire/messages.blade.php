@@ -22,6 +22,8 @@
 
                                         @if ($user->id !== auth()->id())
                                             @php
+                                                $select = false;
+                                                
                                                 $not_seen =
                                                     App\Models\Message::where('user_id', $user->id)
                                                         ->where('receiver_id', auth()->id())
@@ -35,11 +37,8 @@
                                                 style="border-radius: 10px;margin-bottom: 16px">
                                                 <li class="list-group-item d-flex rounded-1"
                                                     style="padding: 7px 10px; cursor: pointer;">
-
                                                     <div>
-                                                        {{-- <img src="../../../public/images/faces/face1.jpg"
-                                                            class="rounded-circle" alt=""
-                                                            style="background: red;height: 45px;width: 45px;"> --}}
+
                                                         <box-icon type='solid'
                                                             style="background: transparent;     fill: #4b49ac; height: 45px;width: 45px;"
                                                             name='user-circle'></box-icon>
@@ -54,7 +53,7 @@
 
                                                         </i> {{ $user->name }}
                                                         @if (filled($not_seen))
-                                                            <div class="badge badge-success rounded">
+                                                            <div class="badge badge-danger rounded">
                                                                 {{ $not_seen->count() }}
                                                             </div>
                                                         @endif
@@ -77,7 +76,9 @@
     margin-bottom: 0;
   background-color: #8d8bf1 !important;
   border-radius: 10px;
-    border-bottom: 1px solid #e3e3e3;">
+    border-bottom: 1px solid #e3e3e3;
+        border-bottom-right-radius: unset;
+    ">
                                 @if (isset($sender)) {{ $sender->name }}
                                 @endif
                             </div>
@@ -87,9 +88,10 @@
                                     @foreach ($allmessages as $mgs)
                                         <div class="single-message @if ($mgs->user_id ==
                                         auth()->id()) sent @else received @endif">
-                                            <p class="font-weight-bolder my-0">{{ $mgs->user->name }}</p>
-                                            {{ $mgs->message }}
-                                            <br><small class="text-muted w-100">Sent
+                                            <p class="font-weight-bolder my-0" style="font-size: 16px">
+                                                {{ $mgs->message }}</p>
+
+                                            <small class="text-muted w-100">Gửi
                                                 <em>{{ $mgs->created_at }}</em></small>
                                         </div>
 
@@ -123,7 +125,6 @@
         </div>
     </div>
 </div>
-<<<<<<< HEAD
 
 <script>
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -131,5 +132,3 @@
         return new bootstrap.Tooltip(tooltipTriggerEl)
     })
 </script>
-=======
->>>>>>> 022005ddc15d7a621648aa61d85f3dd23a789a81
