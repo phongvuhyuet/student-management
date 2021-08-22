@@ -8,10 +8,14 @@
 * Phạm Hoàng Giang
 
 ## Main features: 
-* Xác thực hai yếu tố, quản lý phiên đăng nhập
-* Thêm mới sinh viên trong phạm vi quản lý của cố vấn học tập
-* Tổng hợp được kết quả học tập của sinh viên trong từng học kỳ
-* Có chức năng giao và nhận nhiệm vụ, cập nhật tiến độ.
-* Có chức năng chat giữa cố vấn và sinh viên
-* Có chức năng tổng hợp sinh viên thuộc diện có nguy cơ nghỉ học, thiếu học phí
+* 二要素認証、ログインセッション管理
+* 指導教官の管理下に新しい学生を追加します
+* 各学期の学生の学習結果を要約します
+* タスクの割り当てと受信、進行状況の更新の機能があります。
+* アドバイザーと学生のチャット機能があります
+* 授業料不足で中退する恐れのある生徒をまとめる機能があります
+## Database:
+![image](https://user-images.githubusercontent.com/70512647/130360252-459d4c01-d656-4267-a25b-bbd5c7aeb216.png)
+## Deployment:
+http://uet-student-management.herokuapp.com/
 
