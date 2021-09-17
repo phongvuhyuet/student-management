@@ -25,7 +25,7 @@
 
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
-                    <img src="http://localhost:8001/api/getAvatar" alt="{{ $this->user->name }}"
+                    <img src="{{ env('APP_URL') }}:8000/getAvatar" alt="{{ $this->user->name }}"
                         class="rounded-full h-20 w-20 object-cover">
                 </div>
 

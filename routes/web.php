@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,9 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::redirect('/', 'login', 301);
+Route::get('getAvatar', function () {
+    return Storage::download(Auth::user()->profile_photo_path);
+});
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     $classes = Classes::with('member')->with('member.courses')->where('consultant_id', Auth::user()->id)->get();
