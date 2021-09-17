@@ -17,7 +17,7 @@
 ## Database:
 ![image](https://user-images.githubusercontent.com/70512647/130360252-459d4c01-d656-4267-a25b-bbd5c7aeb216.png)
 ## Deployment:
-http://uet-student-management.herokuapp.com/
+http://uet-consultant-support.herokuapp.com/
 * コンサルタントのアカウント：　
 * emai: thutt@vnu.edu.vn 
 * password: password
