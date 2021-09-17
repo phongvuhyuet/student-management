@@ -25,8 +25,9 @@
 
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
-                    <img src="{{ env('APP_URL') }}:80/getAvatar" alt="{{ $this->user->name }}"
+                    <img src="{{ Auth::user()->profile_photo_url }}" alt="{{ $this->user->name }}"
                         class="rounded-full h-20 w-20 object-cover">
+
                 </div>
 
                 <!-- New Profile Photo Preview -->
@@ -49,7 +50,6 @@
                 <x-jet-input-error for="photo" class="mt-2" />
             </div>
         @endif
-
         <!-- Name -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="name" value="{{ __('Họ và tên') }}" />
