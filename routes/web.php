@@ -5,6 +5,7 @@ use App\Http\Controllers\Consultant\StudentController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\StatisticalController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\WarnController;
 use App\Models\Classes;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -75,5 +76,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::resource('course', CourseController::class);
         Route::get('/statistical', [StatisticalController::class, 'index']);
         Route::get('classChart', [ClassController::class, 'index']);
+        Route::get('/warn_hoc_phi', [WarnController::class, 'warnHocPhiAll']);
+        Route::get('/warn_hoc_phi/{id}', [WarnController::class, 'warnHocPhi']);
+        Route::get('/warn_nghi_hoc', [WarnController::class, 'warnNghiHocAll']);
+        Route::get('/warn_nghi_hoc/{id}', [WarnController::class, 'warnNghiHoc']);
     });
 });

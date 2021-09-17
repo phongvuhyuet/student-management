@@ -1,5 +1,5 @@
-@extends('layouts.admin') @section('main')
-
+@extends('layouts.admin') 
+@section('main')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"></script>
     <div class="main-panel">
@@ -121,7 +121,9 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-middle ">
                                 <h4 class="card-title">Các sinh viên muộn học phí</h4>
-                                <div class="btn badge badge-danger font-weight-bold d-flex align-items-center p-1 ">Nhắc
+                                <div class="btn badge badge-danger font-weight-bold d-flex align-items-center p-1 "
+                                    onclick="location.href='/warn_hoc_phi'"
+                                >Nhắc
                                     nhở
                                     tất cả</div>
                             </div>
@@ -172,7 +174,7 @@
                                                             <td class="font-weight-bold">{{ $tongHocPhi - $daNop }}</td>
 
                                                             <td class="font-weight-medium">
-                                                                <div class=" btn badge badge-danger font-weight-bold"> Nhắc nhở</div>
+                                                                <div class=" btn badge badge-danger font-weight-bold" onclick="location.href='/warn_hoc_phi/{{ $student->id }}'"> Nhắc nhở</div>
                                                             </td>
                                                             </tr>
                                                           @php
@@ -233,7 +235,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-middle ">
                     <h4 class="card-title">Các sinh viên thuộc diện nguy cơ thôi học </h4>
-                    <div class="btn badge badge-danger font-weight-bold d-flex align-items-center p-1 ">Cảnh báo tất cả
+                    <div class="btn badge badge-danger font-weight-bold d-flex align-items-center p-1 " onclick="location.href='/warn_nghi_hoc'">Cảnh báo tất cả
                     </div>
                 </div>
                 <div class="table-responsive " style=" overflow:hidden;
@@ -277,7 +279,7 @@
                                                 <td class="font-weight-bold">{{ round($student->so_lan_nhac_nho/3) }}</td>
                                                 <td class="font-weight-bold">{{ $soNam }}</td>
                                                 <td class="font-weight-medium">
-                                                    <div onclick="location.href=''" class=" btn badge badge-danger font-weight-bold">Cảnh báo</div>
+                                                    <div onclick="location.href='/warn_nghi_hoc/{{ $student->id }}'" class=" btn badge badge-danger font-weight-bold">Cảnh báo</div>
                                                 </td>
                                                 </tr>
 
@@ -337,7 +339,7 @@
 
 
                 datasets: [{
-                   
+
                     label: 'Học tập',
                     data: [0, 0, 0, 0, 0],
                     backgroundColor: [
@@ -386,9 +388,9 @@
                     y: {
                         min: 0,
                         beginAtZero: true,
-                       
+
                     },
-                   
+
                 },
                 legend: {
                     position: 'right'
@@ -411,7 +413,7 @@
                         myChart.data.datasets[0].data[i] = classData[i];
                     }
                     myChart.options.scales.y.beginAtZero = true;
-                    
+
                     // myChart.options.scales.yAxes[0].ticks.beginAtZero = true;
                     myChart.update()
                 }
