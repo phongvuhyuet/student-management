@@ -2,11 +2,20 @@
 
 namespace Database\Seeders;
 
+use App\Models\Classes;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    // number of class = number of consultant * 2
+    public const NUMBER_OF_TASK = 10000;
+    public const NUMBER_OF_STUDENT = 10000;
+    public const NUMBER_OF_CONSULTANT = 125;
+    public const NUMBER_OF_CLASS = 250;
+    public const NUMBER_OF_COURSE = 30;
+    public const NUMBER_OF_MESSAGE = 10000;
+
     /**
      * Seed the application's database.
      *
@@ -14,41 +23,82 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $courses = \App\Models\Course::factory(10)->create();
-        $class = \App\Models\Classes::factory()->create();
-        $tasks = \App\Models\Task::factory(10)->create();
+        $classes = \App\Models\Classes::factory(self::NUMBER_OF_CLASS)->create();
+        $students = User::factory(self::NUMBER_OF_STUDENT)
+            ->create();
+        $consultants = User::factory(self::NUMBER_OF_CONSULTANT)
+            ->create([
+                'role_id' => 1,
+                'so_lan_nhac_nho' => null,
+                'diem_chuyen_can' => null,
+                'hoan_canh' => null,
+            ]);
+        $consultants->each(function ($consultant, $key) {
+            $classes = Classes::where('id', '>', $key * 2);
+            $classes->each(function ($class) use ($consultant) {
+                $class->update([
+                    'consultant_id' => $consultant->id,
+                ]);
+            });
+        });
+        $courses = \App\Models\Course::factory(self::NUMBER_OF_COURSE)->create();
+        $students->each(function ($student) use ($classes, $courses) {
+            $student->update([
+                'class_id' => $classes->random()->id,
+            ]);
+            $student->courses()->attach($courses->random(20), [
+                'gk' => 1,
+                'ck' => 1,
+                'is_dong_hoc' => 1,
+            ]);
+        });
+        // Attend::all()->each(function ($attend) {
+        //     $attend->update([
+        //         'gk' => rand(0, 10),
+        //         'ck' => rand(0, 10),
+        //         'is_dong_hoc' => rand(0, 1),
+        //     ]);
+        // });
 
-        User::factory(10)->hasAttached($courses, [
-            'gk' => random_int(0, 10),
-            'ck' => random_int(0, 10),
-        ])
-            ->for($class, 'class')
-            ->create();
-        $user1 = User::create(
-            [
-                'name'              => '$this->faker->name()',
-                'email'             => 'a@gmail.com',
-                'email_verified_at' => now(),
-                'password'          => bcrypt('phong'), // password
-                'remember_token' => "abcdedasdd",
-                'date_of_birth'     => '2021/12/31',
-                'role_id'           => 1,
-                'class_id'          => $class->id,
-                'so_lan_nhac_nho'   => null,
-                'msv'               => 19020392,
-            ]
-        );
-        $class->update([
-            'consultant_id' => $user1->id,
-        ]);
-        $class2 = \App\Models\Classes::factory()->create([
-            'consultant_id' => $user1->id,
-        ]);
-        User::factory(10)->hasAttached($courses, [
-            'gk' => random_int(0, 10),
-            'ck' => random_int(0, 10),
-        ])
-            ->for($class2, 'class')
-            ->create();
+        foreach ($courses as $course) {
+            foreach ($course->users as $user) {
+                $user->pivot->gk = rand(0, 10);
+                $user->pivot->ck = rand(0, 10);
+                $user->pivot->is_dong_hoc = rand(0, 1);
+                $user->pivot->save();
+            }
+        }
+
+        $tasks = \App\Models\Task::factory(self::NUMBER_OF_TASK)->create();
+        $tasks->each(function ($task) use ($consultants) {
+
+            $creator = $consultants->random();
+            $task->update([
+                'creator_id' => $creator->id,
+                'receiver_id' => User::where('role_id', 2)
+                    ->whereIn('class_id', Classes::where('consultant_id', $creator->id)->pluck('id'))
+                    ->get()->random()->id,
+            ]);
+        });
+        $messages = \App\Models\Message::factory(self::NUMBER_OF_MESSAGE)->create();
+        $messages->each(function ($message) {
+            $message->update([
+                'user_id' => User::all()->random()->id,
+            ]);
+            if ($message->user->role_id == 1) {
+                $message->update([
+                    'receiver_id' => User::where('role_id', 2)
+                        ->whereIn('class_id', Classes::where('consultant_id', $message->user->id)->pluck('id'))
+                        ->get()->random()->id,
+                ]);
+            } else {
+                $message->update([
+                    'receiver_id' => User::where('role_id', 1)
+                        ->whereHas('consult', function ($query) use ($message) {
+                            $query->where('classes.id', $message->user->class_id);
+                        })->get()->random()->id,
+                ]);
+            }
+        });
     }
 }

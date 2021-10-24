@@ -14,7 +14,9 @@ class Course extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'attends', 'course_id', 'user_id')->withPivot(['gk', 'ck', 'is_dong_hoc']);
+        return $this->belongsToMany(User::class, 'attends', 'course_id', 'user_id')
+            ->withPivot(['gk', 'ck', 'is_dong_hoc'])
+            ->using(Attend::class);
     }
 
     public static function toCharMark($mark)

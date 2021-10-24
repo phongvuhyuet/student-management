@@ -27,7 +27,7 @@ class CourseFactory extends Factory
             'so_TC' => $this->faker->numberBetween(1, 5),
             'year' => $this->faker->numberBetween(2016, 2022),
             'term' => $this->faker->numberBetween(1, 3),
-            'maMH' => preg_replace('/\s/', '_', $name) . '_' . $this->faker->unique()->numberBetween(1, 1000)
+            'maMH' => preg_replace('/\s/', '_', $name) . '_' . $this->faker->unique()->numberBetween(1, 1000000),
         ];
     }
 }

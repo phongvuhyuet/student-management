@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Task;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\User;
 
 class TaskFactory extends Factory
 {
@@ -28,8 +27,8 @@ class TaskFactory extends Factory
             'name' => $this->faker->name(),
             'progress' => $this->faker->numberBetween(0, 100),
             'detail' => $this->faker->sentence(),
-            'receiver_id' => User::factory(),
-            'creator_id' => User::factory(),
+            'receiver_id' => 1,
+            'creator_id' => 1,
         ];
     }
 }
