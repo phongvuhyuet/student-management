@@ -14,6 +14,8 @@ class Task extends Model
 
     protected $guarded = [];
 
+    protected $searchable = ['name'];
+
     public static function search($search)
     {
         $result = static::query();
@@ -24,7 +26,7 @@ class Task extends Model
         }
         if (!empty($search)) {
             $result->where(function ($query) use ($search) {
-                $query->where('id', 'like', '%' . $search . '%')
+                $query->where('id', $search)
                     ->orWhere('name', 'like', '%' . $search . '%');
                 if (Gate::allows('manage-tasks')) {
                     $query->orWhereHas('receiver', function (Builder $query) use ($search) {
