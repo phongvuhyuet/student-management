@@ -14,8 +14,10 @@ class AddIndexToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->index('name');
-            $table->index('date_of_birth');
+            $table->index(['id', 'msv']);
+            $table->index(['id', 'name']);
+            $table->index(['id', 'msv', 'name']);
+            $table->index(['id', 'name', 'msv']);
         });
     }
 
@@ -27,7 +29,11 @@ class AddIndexToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropIndex(['last_activity', 'name', 'date_of_birth', 'class_id']);
+            $table->dropIndex(['id', 'msv']);
+            $table->dropIndex(['id', 'name']);
+            $table->dropIndex(['id', 'msv', 'name']);
+            $table->dropIndex(['id', 'name', 'msv']);
+            $table->dropIndex('name');
         });
     }
 }

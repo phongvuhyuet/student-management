@@ -27,7 +27,9 @@ class AddIndexToMessagesTable extends Migration
     public function down()
     {
         Schema::table('messages', function (Blueprint $table) {
-            $table->dropIndex(['user_id', 'receiver_id']);
+            $table->dropIndex('messages_user_id_index');
+            $table->dropIndex('messages_receiver_id_index');
+
         });
     }
 }

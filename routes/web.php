@@ -30,12 +30,15 @@ Route::get('getAvatar', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    $classes = Classes::with('member')->with('member.courses')->where('consultant_id', Auth::user()->id)->get();
-    $tasks = Auth::user()->tasksCreated;
+    $classes = Classes::with(['member:id,role_id,diem_chuyen_can,so_lan_nhac_nho,class_id', 'member.courses:id,so_TC'])
+        ->where('consultant_id', Auth::user()->id)->get(['id', 'name']);
+    $tasks = Auth::user()->tasksCreated();
+
     return view('dashboard', [
         'classes' => $classes,
-        'tasks' => $tasks,
+        'tasks' => $tasks->with('creator:id,name,msv')->with('receiver:id,name,msv')->get(['status', 'receiver_id', 'creator_id', 'id', 'deadline', 'name', 'progress']),
     ]);
+
 })->name('dashboard');
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::view('/chat', 'chat.index');

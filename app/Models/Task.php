@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class Task extends Model
@@ -29,12 +30,15 @@ class Task extends Model
                 $query->where('id', $search)
                     ->orWhere('name', 'like', '%' . $search . '%');
                 if (Gate::allows('manage-tasks')) {
+
                     $query->orWhereHas('receiver', function (Builder $query) use ($search) {
-                        $query->where('name', 'like', '%' . $search . '%');
+                        $query->from(DB::raw('`users` USE INDEX (users_id_name_index)'));
+                        $query->where('name', 'like', $search . '%');
                     });
                 } else {
                     $query->orWhereHas('creator', function (Builder $query) use ($search) {
-                        $query->where('name', 'like', '%' . $search . '%');
+                        $query->from(DB::raw('`users` USE INDEX (users_id_name_index)'));
+                        $query->where('name', 'like', $search . '%');
                     });
                 }
             });

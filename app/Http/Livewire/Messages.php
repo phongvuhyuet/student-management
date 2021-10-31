@@ -16,18 +16,27 @@ class Messages extends Component
     {
         $users;
         if (Auth::user()->role_id == 1) {
-            $first = true;
-            $users = User::where('role_id', 2)->whereIn('id', Auth::user()->consult->first()->member->where('role_id', 2)->pluck('id'));
-            foreach (Auth::user()->consult as $class) {
-                if ($first) {
-                    $first = false;
-                    continue;
-                }
-                $users->orWhereIn('id', $class->member->where('role_id', 2)->pluck('id'));
-            }
-            $users = $users->get();
+            // $first = true;
+            // $users = User::where('role_id', 2)
+            //     ->whereIn('id', Auth::user()
+            //             ->consult->first()
+            //             ->member->where('role_id', 2)
+            //             ->pluck('id'));
+            // foreach (Auth::user()->consult as $class) {
+            //     if ($first) {
+            //         $first = false;
+            //         continue;
+            //     }
+            //     $users->orWhereIn('id', $class
+            //             ->member
+            //             ->where('role_id', 2)
+            //             ->pluck('id'));
+            // }
+            $users = User::whereIn('class_id', auth()->user()->consult()->get('id'))->where('role_id', 2);
+
+            $users = $users->with('messagesCreated:receiver_id,is_seen,user_id,id')->get(['id', 'name', 'is_online', 'msv']);
         } else {
-            $users = Auth::user()->class->consultant;
+            $users = Auth::user()->class->consultant->with('messagesCreated');
             $users = collect([$users]);
         }
         $sender = (isset($this->sender)) ? $this->sender : $users->first();
@@ -37,9 +46,15 @@ class Messages extends Component
     public function mountdata()
     {
         if (isset($this->sender->id)) {
-            $this->allmessages = Message::where('user_id', auth()->id())->where('receiver_id', $this->sender->id)->orWhere('user_id', $this->sender->id)->where('receiver_id', auth()->id())->orderBy('id', 'desc')->get();
+            $this->allmessages = Message::where('user_id', auth()->id())
+                ->where('receiver_id', $this->sender->id)
+                ->orWhere('user_id', $this->sender->id)
+                ->where('receiver_id', auth()->id())
+                ->orderBy('id', 'desc')
+                ->get(['id', 'user_id', 'receiver_id', 'message', 'created_at']);
 
-            $not_seen = Message::where('user_id', $this->sender->id)->where('receiver_id', auth()->id());
+            $not_seen = Message::where('user_id', $this->sender->id)
+                ->where('receiver_id', auth()->id());
             $not_seen->update(['is_seen' => true]);
         }
 
@@ -64,7 +79,11 @@ class Messages extends Component
     {
         $user = User::find($userId);
         $this->sender = $user;
-        $this->allmessages = Message::where('user_id', auth()->id())->where('receiver_id', $userId)->orWhere('user_id', $userId)->where('receiver_id', auth()->id())->orderBy('id', 'desc')->get();
+        $this->allmessages = Message::where('user_id', auth()->id())
+            ->where('receiver_id', $userId)
+            ->orWhere('user_id', $userId)
+            ->where('receiver_id', auth()->id())
+            ->orderBy('id', 'desc')->get(['id', 'user_id', 'receiver_id', 'message', 'created_at']);
     }
 
 }

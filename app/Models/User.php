@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\FullTextSearch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -17,6 +18,7 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use FullTextSearch;
 
     /**
      * The attributes that are mass assignable.
@@ -205,23 +207,25 @@ class User extends Authenticatable
     {
 
         $result = static::query();
+
         $result->where(function ($query) {
-            $first = true;
-            $query->where('role_id', 2)->whereIn('id', Auth::user()->consult->first()->member->where('role_id', 2)->pluck('id'));
-            foreach (Auth::user()->consult as $class) {
-                if ($first) {
-                    $first = false;
-                    continue;
-                }
-                $query->orWhereIn('id', $class->member->where('role_id', 2)->pluck('id'));
-            }
+            // $first = true;
+            // $query->where('role_id', 2)->whereIn('id', Auth::user()->consult->first()->member->where('role_id', 2)->pluck('id'));
+            // foreach (Auth::user()->consult as $class) {
+            //     if ($first) {
+            //         $first = false;
+            //         continue;
+            //     }
+            //     $query->orWhereIn('id', $class->member->where('role_id', 2)->pluck('id'));
+            // }
+            $query->whereIn('class_id', auth()->user()->consult()->get('id'))->where('role_id', 2);
         });
 
         if (!empty($search)) {
 
             $result->where(function ($query) use ($search) {
-                $query->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('msv', 'like', '%' . $search . '%');
+                $query->where('name', 'like', $search . '%')
+                    ->orWhere('msv', 'like', $search . '%');
             });
         }
         return $result;

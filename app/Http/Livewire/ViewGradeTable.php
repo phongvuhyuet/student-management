@@ -26,10 +26,12 @@ class ViewGradeTable extends Component
             $students->where('class_id', $this->class);
         }
         return view('livewire.view-grade-table', [
-            'students' => $students->with('courses')->with('class')->paginate($this->perPage),
+            'students' => $students->with(['courses:id,so_TC', 'class:id,name'])->paginate($this->perPage,
+                ['id', 'msv', 'name', 'class_id', 'so_lan_nhac_nho']
+            ),
             'orderBy' => $this->orderBy,
             'orderAsc' => $this->orderAsc,
-            'classes' => Auth::user()->consult,
+            'classes' => Auth::user()->consult()->get(['id', 'name']),
         ]);
     }
 }

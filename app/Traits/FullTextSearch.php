@@ -48,4 +48,20 @@ trait FullTextSearch
 
         return $query;
     }
+
+    /**
+     * Scope a query that matches a full text search of term.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $term
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSearchOr($query, $term)
+    {
+        $columns = implode(',', $this->searchable);
+
+        $query->orWhereRaw("MATCH ({$columns}) AGAINST (? IN BOOLEAN MODE)", $this->fullTextWildcards($term));
+
+        return $query;
+    }
 }

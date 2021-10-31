@@ -16,11 +16,12 @@ class StatisticalController extends Controller
      */
     public function index()
     {
-        $classes = Classes::with('member')->with('member.courses')->where('consultant_id', Auth::user()->id)->get();
-        $tasks = Auth::user()->tasksCreated;
+        $classes = Classes::with(['member:id,name,msv,hoan_canh,role_id,diem_chuyen_can,so_lan_nhac_nho,class_id', 'member.courses:id,so_TC'])
+            ->where('consultant_id', Auth::user()->id)->get(['id', 'name']);
+        $tasks = Auth::user()->tasksCreated();
         return view('statistical.index', [
             'classes' => $classes,
-            'tasks'   => $tasks,
+            'tasks' => $tasks->with('creator:id,name,msv')->with('receiver:id,name,msv')->get(['status', 'receiver_id', 'creator_id', 'id', 'deadline', 'name', 'progress']),
         ]);
     }
 

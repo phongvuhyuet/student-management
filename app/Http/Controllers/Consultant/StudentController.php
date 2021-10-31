@@ -28,8 +28,11 @@ class StudentController extends Controller
 
     public function classes()
     {
-        $classes = Auth::user()->consult;
-        return view('consultant.students.classes', ['classes' => $classes]);
+        $classes = Auth::user()->consult();
+        return view('consultant.students.classes', [
+            'classes' => $classes->with('member:id,role_id,class_id')->get(['id', 'name']),
+
+        ]);
     }
 
     public function getCourses($id)

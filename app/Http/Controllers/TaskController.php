@@ -6,7 +6,6 @@ use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller
 {
@@ -23,13 +22,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks;
-        if (Gate::denies('manage-tasks')) {
-            $tasks = Task::where('receiver_id', Auth::user()->id);
-        } else {
-            $tasks = Task::where('creator_id', Auth::user()->id);
-        }
-        return view('task.index', ['tasks' => $tasks->get()]);
+
+        return view('task.index');
     }
 
     /**
@@ -42,7 +36,7 @@ class TaskController extends Controller
         // $users = User::where('role_id', 2)->where('class', Auth::user()->class)->where('faculty', Auth::user()->faculty)->get();
         $users = [];
         foreach (Auth::user()->consult as $class) {
-            foreach ($class->member->where('role_id', 2) as $user) {
+            foreach ($class->member()->where('role_id', 2)->get(['id', 'name', 'msv']) as $user) {
                 array_push($users, $user);
             }
         }

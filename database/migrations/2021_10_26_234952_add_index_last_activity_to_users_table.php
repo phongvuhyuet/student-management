@@ -26,7 +26,7 @@ class AddIndexLastActivityToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropIndex('last_activity');
+            $table->dropIndex('users_last_activity_index');
         });
     }
 }

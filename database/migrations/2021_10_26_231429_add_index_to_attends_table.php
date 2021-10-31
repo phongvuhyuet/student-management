@@ -26,8 +26,7 @@ class AddIndexToAttendsTable extends Migration
     public function down()
     {
         Schema::table('attends', function (Blueprint $table) {
-            $table->dropForeign('attends_user_id_foreign');
-            $table->dropIndex(['user_id', 'course_id']);
+            $table->dropIndex('attends_user_id_index');
         });
     }
 }

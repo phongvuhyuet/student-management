@@ -25,10 +25,13 @@
                                                 $select = false;
                                                 
                                                 $not_seen =
-                                                    App\Models\Message::where('user_id', $user->id)
-                                                        ->where('receiver_id', auth()->id())
+                                                    // App\Models\Message::where('user_id', $user->id)
+                                                    //     ->where('receiver_id', auth()->id())
+                                                    //     ->where('is_seen', false)
+                                                    //     ->get() ?? null;
+                                                    $user->messagesCreated->where('receiver_id', auth()->id())
                                                         ->where('is_seen', false)
-                                                        ->get() ?? null;
+                                                         ?? null
                                                 
                                             @endphp
                                             <div wire:click="getUser({{ $user->id }})" class="text-dark link"
