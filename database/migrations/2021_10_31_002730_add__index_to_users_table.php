@@ -33,7 +33,6 @@ class AddIndexToUsersTable extends Migration
             $table->dropIndex(['id', 'name']);
             $table->dropIndex(['id', 'msv', 'name']);
             $table->dropIndex(['id', 'name', 'msv']);
-            $table->dropIndex('name');
         });
     }
 }

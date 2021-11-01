@@ -36,11 +36,11 @@ class Messages extends Component
 
             $users = $users->with('messagesCreated:receiver_id,is_seen,user_id,id')->get(['id', 'name', 'is_online', 'msv']);
         } else {
-            $users = Auth::user()->class->consultant->with('messagesCreated');
+            $users = Auth::user()->class->consultant;
             $users = collect([$users]);
         }
         $sender = (isset($this->sender)) ? $this->sender : $users->first();
-        $this->allmessages;
+        // $this->allmessages;
         return view('livewire.messages', compact('users', 'sender'));
     }
     public function mountdata()
