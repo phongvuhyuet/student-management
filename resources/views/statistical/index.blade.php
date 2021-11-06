@@ -65,30 +65,22 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                       
                                         @foreach ($classes as $class)
-                                            @php
-                                                $students = $class->member->where('role_id', 2);
-                                                $totalMoney = 0;
-                                                $paidMoney = 0;
-                                                $so_sinh_vien_no_hp = 0;
-                                                foreach ($students as $student) {
-                                                    $checkNoHocPhi = false;
-                                                    foreach ($student->courses as $course) {
-                                                        $totalMoney += $course->so_TC * 300000;
-                                                        if ($course->pivot->is_dong_hoc) {
-                                                            $paidMoney += $course->so_TC * 300000;
-                                                        } else {
-                                                            $checkNoHocPhi = true;
-                                                        }
-                                                    }
-                                                    if ($checkNoHocPhi) {
-                                                        $so_sinh_vien_no_hp++;
-                                                    }
-                                                }
-                                            @endphp
-
-                                        @endforeach
-                                        @foreach ($classes as $class)
+                                        @php
+                                        $studentss = $students->where('class_id', $class->id);
+                                       $totalMoney = 0;
+                                       $paidMoney = 0;
+                                       $so_sinh_vien_no_hp = 0;
+                                       foreach ($studentss as $student) {
+                                      
+                                       $totalMoney += 300000 * $student->so_TC;
+                                       $paidMoney += 300000 * $student->so_TC - $student->hocPhiChuaNop;
+                                       if ($student->hocPhiChuaNop > 0) {
+                                           $so_sinh_vien_no_hp ++;
+                                       }
+                                   }
+                                   @endphp
                                             <tr>
                                                 <td>{{ $class->name }}</td>
                                                 <td class="font-weight-bold">{{ $totalMoney }}VND</td>
@@ -153,15 +145,11 @@
 
                                         @php
                                             foreach ($classes as $class) {
-                                                foreach ($class->member->where('role_id', 2) as $student) {
-                                                    $tongHocPhi = 0;
-                                                    $daNop = 0;
-                                                    foreach ($student->courses as $course) {
-                                                        $tongHocPhi += $course->so_TC * 300000;
-                                                        if ($course->pivot->is_dong_hoc) {
-                                                            $daNop += $course->so_TC * 300000;
-                                                        }
-                                                    }
+
+                                                foreach ($students->where('class_id', $class->id) as $student) {
+                                                    $tongHocPhi = 300000 * $student->so_TC;
+                                                    $daNop = $tongHocPhi - $student->hocPhiChuaNop;
+                                                    
                                                     if ($tongHocPhi - $daNop != 0) {
                                                         @endphp
                                                           <tr>
@@ -196,15 +184,13 @@
                             <p class="card-title">Một số sinh viên thuộc diện khó khăn</p>
                             <ul class="icon-data-list">
                                 @php
-                                    $studentss = [];
-                                    foreach ($classes as $class) {
-                                        array_push($studentss, $class->member->where('role_id', 2)->where('hoan_canh', '<>', null));
-                                    }
-                                    $studentss = collect($studentss);
+                                 
+                                    $studentss = $students->where('hoan_canh', '<>', null);
+                                   
                                 @endphp
 
-                                @foreach ($studentss as $students)
-                                    @foreach ($students as $student)
+                                @foreach ($studentss as $student)
+                                    
                                         <li>
                                             <div class="d-flex">
                                                <box-icon type='solid'
@@ -217,7 +203,7 @@
                                                 </div>
                                             </div>
                                         </li>
-                                    @endforeach
+                                   
                                 @endforeach
 
 
@@ -267,7 +253,7 @@
                             @php
                                 $nguyCoStudents;
                                 foreach ($classes as $class) {
-                                    foreach ($class->member->where('role_id', 2) as $student) {
+                                    foreach ($students->where('class_id', $class->id) as $student) {
                                         $soNam = (int) date('Y') - (int) substr($class->name, 3, 4);
                                         if ($soNam >= 7 || $student->so_lan_nhac_nho >= 9 || $student->SoTinNo >= 28) {
                                             @endphp
@@ -275,7 +261,7 @@
                                                 <td>{{ $student->msv }}</td>
                                                 <td class="font-weight-bold">{{ $class->name }}</td>
                                                 <td class="font-weight-bold">{{ $student->GPA }}</td>
-                                                <td class="font-weight-bold">{{ $student->SoTinNo }}</td>
+                                                <td class="font-weight-bold">{{ $student->so_tin_no }}</td>
                                                 <td class="font-weight-bold">{{ round($student->so_lan_nhac_nho/3) }}</td>
                                                 <td class="font-weight-bold">{{ $soNam }}</td>
                                                 <td class="font-weight-medium">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ClassController extends Controller
 {
@@ -89,14 +90,15 @@ class ClassController extends Controller
     {
         $data = [];
         $classes = Auth::user()->consult;
+        $students = collect(DB::select('call calClasses(' . auth()->user()->id . ')'));
         foreach ($classes as $class) {
             $countXs = 0;
             $countG = 0;
             $countK = 0;
             $countTb = 0;
             $countY = 0;
-            foreach ($class->member->where('role_id', 2) as $student) {
-                $gpa = $this->calculateGPA($student);
+            foreach ($students->where('class_id', $class->id) as $student) {
+                $gpa = $student->GPA;
                 if ($gpa >= 3.6) {
                     $countXs++;
                 } elseif ($gpa >= 3.2) {

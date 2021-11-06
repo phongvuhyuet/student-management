@@ -34,11 +34,14 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     $classes = Classes::
         where('consultant_id', Auth::user()->id)->get(['id', 'name']);
     $tasks = Auth::user()->tasksCreated()->whereRaw('deadline - CAST(CURRENT_TIMESTAMP AS DATE) <= 7')->whereRaw('deadline - CAST(CURRENT_TIMESTAMP AS DATE) >= 0');
+    $task_count = DB::select('call calTask(' . auth()->user()->id . ')');
+
     $students = DB::select('call calClasses(' . auth()->user()->id . ')');
     return view('dashboard', [
         'classes' => $classes,
         'tasks' => $tasks->with('creator:id,name,msv')->with('receiver:id,name,msv')->get(['status', 'receiver_id', 'creator_id', 'id', 'deadline', 'name', 'progress']),
         'students' => collect($students),
+        'task_count' => collect($task_count),
     ]);
 
 })->name('dashboard');

@@ -120,7 +120,7 @@
                                             <p class=" mb-2">Số lượng sinh viên:
                                                 {{ $students->where('class_id', $class->id)->count() }}</p>
                                             <p>Số lượng công việc:
-                                                {{ $tasks->whereIn('receiver_id', $class->member->where('role_id', 2)->pluck('id'))->count() }}
+                                                {{ $task_count->where('id', $class->id)->first()->task_count }}
                                             </p>
                                         </div>
                                     </div>

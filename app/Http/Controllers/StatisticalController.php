@@ -6,6 +6,7 @@ use App\Models\Classes;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class StatisticalController extends Controller
 {
@@ -16,12 +17,15 @@ class StatisticalController extends Controller
      */
     public function index()
     {
-        $classes = Classes::with(['member:id,name,msv,hoan_canh,role_id,diem_chuyen_can,so_lan_nhac_nho,class_id', 'member.courses:id,so_TC'])
-            ->where('consultant_id', Auth::user()->id)->get(['id', 'name']);
-        $tasks = Auth::user()->tasksCreated();
+
+        $classes = Classes::
+            where('consultant_id', Auth::user()->id)->get(['id', 'name']);
+        // $tasks = Auth::user()->tasksCreated()->whereRaw('deadline - CAST(CURRENT_TIMESTAMP AS DATE) <= 7')->whereRaw('deadline - CAST(CURRENT_TIMESTAMP AS DATE) >= 0');
+        $students = DB::select('call calClasses(' . auth()->user()->id . ')');
         return view('statistical.index', [
             'classes' => $classes,
-            'tasks' => $tasks->with('creator:id,name,msv')->with('receiver:id,name,msv')->get(['status', 'receiver_id', 'creator_id', 'id', 'deadline', 'name', 'progress']),
+            // 'tasks' => $tasks->with('creator:id,name,msv')->with('receiver:id,name,msv')->get(['status', 'receiver_id', 'creator_id', 'id', 'deadline', 'name', 'progress']),
+            'students' => collect($students),
         ]);
     }
 

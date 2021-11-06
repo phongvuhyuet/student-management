@@ -26,7 +26,7 @@ class AddIndexToAttendsTable extends Migration
     public function down()
     {
         Schema::table('attends', function (Blueprint $table) {
-            $table->dropIndex('attends_user_id_index');
+            // $table->dropIndex('attends_user_id_index');
         });
     }
 }
