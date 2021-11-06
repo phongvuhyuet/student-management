@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Message;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\User;
 
 class MessageFactory extends Factory
 {
@@ -23,9 +22,10 @@ class MessageFactory extends Factory
     public function definition()
     {
         return [
-            'content' => $this->faker->sentence(),
-            'receiver_id' => User::factory(),
-            'creator_id' => User::factory(),
+            'message' => $this->faker->sentence(),
+            'receiver_id' => 1,
+            'user_id' => 1,
+            'is_seen' => $this->faker->numberBetween(0, 1),
         ];
     }
 }
