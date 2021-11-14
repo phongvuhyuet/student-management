@@ -255,7 +255,7 @@
                                 foreach ($classes as $class) {
                                     foreach ($students->where('class_id', $class->id) as $student) {
                                         $soNam = (int) date('Y') - (int) substr($class->name, 3, 4);
-                                        if ($soNam >= 7 || $student->so_lan_nhac_nho >= 9 || $student->SoTinNo >= 28) {
+                                        if ($soNam >= 7 || $student->so_lan_nhac_nho >= 9 || $student->so_tin_no >= 28) {
                                             @endphp
                                                 <td>{{ $student->name }}</td>
                                                 <td>{{ $student->msv }}</td>
